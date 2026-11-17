@@ -1,10 +1,15 @@
 # CookingStudio
 
-A self-hosted cooking app for a two-person household that wants to learn to cook by doing. It walks you through recipes step by step, teaches the classic sauces, plans the week against each person's diet rules, writes the shopping list, keeps track of what is in the fridge and logs what you ate. It runs on your own machine in Docker, keeps everything in your own Postgres, and every AI feature uses a **local model in Ollama**, so no recipe, food log or health number has to leave the box.
+**A cooking school and a private health tracker in one self-hosted app.** CookingStudio teaches you to cook by doing, plans the week against each person's diet rules and writes the shopping list. Then it follows what that food does: what you ate, your nutrients and their gaps, your glucose curves, your weight trend and your lab results, side by side. It runs on your own machine in Docker, keeps everything in your own Postgres, and every AI feature uses a **local model in Ollama**, so no recipe, food log, glucose reading or lab value has to leave the box.
 
 ## Why it exists
 
-Recipe apps show you a recipe. They do not teach you why the onions should go soft before the garlic goes in, they do not know that one of you eats no meat and the other counts carbs, and they do not turn a week of dinners into one shopping list that skips what is already in the cupboard. CookingStudio does those things, and it checks every diet rule in code instead of trusting a model to remember them.
+Recipe apps show you a recipe. Health apps show you a number. Neither connects the two. CookingStudio does:
+
+- **In the kitchen:** it teaches why the onions go soft before the garlic goes in, knows that one of you eats no meat and the other counts carbs, and turns a week of dinners into one shopping list that skips what is already in the cupboard.
+- **In your health data:** what you cooked flows straight into the food log, and from there into weekly nutrient numbers, glycemic load per meal, glucose curves with meal markers, a weight trend, and a timeline that puts your intake next to your lab results. When a nutrient runs low, it suggests foods that fit your own diet rules, and the planner can cook them next week.
+
+Every diet rule and every health number is computed in code, never left to a model to remember or invent. Your health data is private per person: nobody else in the household sees it.
 
 ## What you get
 
