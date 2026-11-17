@@ -20,10 +20,24 @@ Recipe apps show you a recipe. They do not teach you why the onions should go so
 | **Kitchen and stock** | Fridge, freezer, pantry and spices with best-before dates, an equipment list, and "use it up" suggestions for what expires soon. |
 | **Ingredient guide** | What each ingredient is, substitutes, storage, freezing, and what it tastes like. |
 | **Food log** | Log planned meals in one tap, copy a day or a meal, recent foods, search the USDA table by grams, or snap a photo and let the local vision model estimate it. Day, Week, Month, 3-month, 6-month and Year views with averages over logged days against your targets. |
-| **Health (private per person)** | Lab results (manual or imported from a lab PDF by the local model), weight, CGM glucose curves from a CSV export with meal markers, micronutrient tracking against reference intakes, and a weekly report. Each person sees only their own data. |
+| **Health (private per person)** | Weekly nutrition numbers, micronutrient gaps with foods that close them, lab results (by hand or from a lab PDF), a food-and-lab timeline, weight trend, CGM glucose curves from FreeStyle Libre or Dexcom exports, and a weekly report. Each person sees only their own data; details [below](#health-in-detail-private-per-person). |
 | **Teach me / import** | Type any dish and the local model writes a beginner recipe; or import from a URL or a JSON export. Every draft is validated and rule-checked before it is saved. |
 | **New this week** | Optionally generates a few new recipes per week from gaps in the library (a missing sauce, produce in season, stock about to expire). They wait as drafts until you approve them. |
 | **API keys** | Per-person, scoped keys so a script or an AI assistant can log food, weight or shopping on your behalf. |
+
+### Health, in detail (private per person)
+
+Every number below is computed in code from what you logged (planned meals fill the days you did not log). A model never invents a value. Each person sees only their own data: there is no partner view on health, glucose, labs or the report.
+
+| Part | What it does |
+|---|---|
+| **Weekly numbers** | Per day and per meal: net carbs, sugar, fibre, protein, saturated fat, fat quality, alcohol, oily-fish meals and the glycemic load of each meal (from a static GI table). The page shows which days came from the food log and which from the plan. |
+| **Micronutrients** | Pick the nutrients you want to watch on your profile (for example vitamin D, B12, iron, omega-3). Intake is compared with adult reference intakes from EFSA (and US NIH where noted) for a general, male or female reference group. For a gap, it lists foods from the ingredient guide that are rich in that nutrient and still fit your rules (vegetarian, avoid list, alcohol, added sugar). |
+| **Lab results** | Add values by hand or import a lab PDF: the local model reads the report, you check the values, then they are saved. Every marker keeps its full history, and you can set the date of your next blood test. |
+| **Food and lab timeline** | Weekly intake averages next to the lab values measured that week, so you can see patterns to talk through with your doctor. It shows patterns, not causes. |
+| **Weight** | Weigh-ins with a smoothed trend line and the change over the last 7 days, so one salty dinner does not look like a gain. |
+| **Glucose (CGM)** | Import the CSV export from FreeStyle Libre (LibreView) or Dexcom Clarity. Values in mmol/L are converted to mg/dL. Day curves carry markers for the meals you logged, with the daily average, lowest and highest value and time in range (70–180 mg/dL). |
+| **Weekly report** | One page per person: the week's averages, nutrient coverage, oily-fish meals, weight trend and the next blood-test date. If Ollama is running, the local model adds a short plain-language summary of those numbers. Lab values are never passed to the model for the report. |
 
 Nutrition comes only from the USDA SR Legacy table (per 100 g, including micronutrients and omega-3 fatty acids). Macros are never taken from a model.
 
