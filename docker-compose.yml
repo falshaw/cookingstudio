@@ -1,0 +1,171 @@
+# =============================================================================
+# CookingStudio - Docker Compose
+# =============================================================================
+#   cp .env.example .env    # fill in every change-me value
+#   docker compose up -d --build
+#
+# Host ports (all bound to 127.0.0.1, override in .env):
+#   app        COOKINGSTUDIO_PORT     default 3030
+#   postgres   COOKINGSTUDIO_DB_PORT  default 15432 (only needed for npm run dev / seeding from the host)
+#
+# Local AI is optional. Text and vision models run in Ollama on the HOST
+# (http://host.docker.internal:11434). Picture painting with ComfyUI on the host
+# (http://host.docker.internal:8188) is OFF unless IMAGE_GENERATION=on. Without them
+# the app works; AI jobs stay queued. Every seeded recipe, step, ingredient and technique ships with its picture
+# (prisma/seed-images), so nothing needs rendering. Nothing is sent to an outside service.
+# =============================================================================
+
+name: cookingstudio
+
+services:
+  cookingstudio-postgres:
+    image: postgres:16.16-alpine@sha256:0adbf25a9e96d38823bb813f3ac0ed41fadb665c88f1df7fe6dbfb060cbdc106
+    restart: unless-stopped
+    stop_grace_period: 30s
+    ports:
+      - "127.0.0.1:${COOKINGSTUDIO_DB_PORT:-15432}:5432"
+    environment:
+      POSTGRES_USER: kitchen
+      POSTGRES_DB: kitchen
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD required in .env}
+      APP_DB_PASSWORD: ${APP_DB_PASSWORD:?APP_DB_PASSWORD required in .env}
+    volumes:
+      - cookingstudio-pgdata:/var/lib/postgresql/data
+      - ./database/init-app-user.sh:/docker-entrypoint-initdb.d/02-init-app-user.sh:ro
+    networks:
+      - cookingstudio-network
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: "0.5"
+          pids: 200
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - FOWNER
+      - SETGID
+      - SETUID
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kitchen -h 127.0.0.1 -d kitchen"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  # One-shot: creates the schema and seeds the two logins, the USDA nutrition table, the
+  # ingredient guide and the recipe library, connected as the database owner (the runtime
+  # role has no DDL). Idempotent — safe on every `up`; existing recipes and profiles are kept.
+  cookingstudio-init:
+    image: cookingstudio-init:local
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: builder
+    restart: "no"
+    command: ["sh", "-c", "npx prisma db push && npx tsx prisma/seed.ts"]
+    environment:
+      - DATABASE_URL=postgresql://kitchen:${POSTGRES_PASSWORD}@cookingstudio-postgres:5432/kitchen
+      - SEED_ALEX_EMAIL=${SEED_ALEX_EMAIL:-alex@example.com}
+      - SEED_ALEX_PASSWORD=${SEED_ALEX_PASSWORD:?SEED_ALEX_PASSWORD required in .env (12+ characters)}
+      - SEED_SAM_EMAIL=${SEED_SAM_EMAIL:-sam@example.com}
+      - SEED_SAM_PASSWORD=${SEED_SAM_PASSWORD:?SEED_SAM_PASSWORD required in .env (12+ characters)}
+    depends_on:
+      cookingstudio-postgres:
+        condition: service_healthy
+    networks:
+      - cookingstudio-network
+    # The builder stage has no USER; run as the image's unprivileged `node` user (uid 1000).
+    user: "node"
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+
+  cookingstudio-app:
+    image: cookingstudio:local
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    stop_grace_period: 30s
+    ports:
+      - "127.0.0.1:${COOKINGSTUDIO_PORT:-3030}:3000"
+    environment:
+      - NODE_ENV=production
+      - JWT_SECRET=${JWT_SECRET:?JWT_SECRET required in .env (openssl rand -hex 32)}
+      # Set true when the app is served over HTTPS (browsers accept a Secure cookie on http://127.0.0.1 too).
+      - COOKIE_SECURE=${COOKIE_SECURE:-false}
+      # 0 = ignore X-Forwarded-For; set 1 only behind a reverse proxy that overwrites it.
+      - TRUST_PROXY=${TRUST_PROXY:-0}
+      # Host allowlist (DNS-rebinding guard, 421 otherwise). Must include the host:port you open in the browser.
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS:-127.0.0.1:${COOKINGSTUDIO_PORT:-3030},localhost:${COOKINGSTUDIO_PORT:-3030},127.0.0.1:3000,localhost:3000}
+      # Household settings
+      - APP_TIMEZONE=${APP_TIMEZONE:-UTC}
+      - SHOP_REGION=${SHOP_REGION:-}
+      - TUNA_MAX_PER_WEEK=${TUNA_MAX_PER_WEEK:-}
+      # Local AI (optional). DATA RULE: health data (lab PDFs, weight, food photos) may go to this
+      # LOCAL Ollama only, and lab values are never put into recipe / plan / feed prompts.
+      - LLM_PROVIDER=ollama
+      - OLLAMA_URL=${OLLAMA_URL:-http://host.docker.internal:11434}
+      - OLLAMA_MODEL=${OLLAMA_MODEL:-gemma4:12b}
+      - OLLAMA_VISION_MODEL=${OLLAMA_VISION_MODEL:-qwen2.5vl:7b}
+      # Recipe pictures (optional, off by default): IMAGE_GENERATION=on sends missing pictures to ComfyUI
+      # with a FLUX model. Off = nothing reaches ComfyUI; recipes without a picture show a placeholder.
+      - COMFYUI_URL=${COMFYUI_URL:-http://host.docker.internal:8188}
+      - COMFYUI_MODEL=${COMFYUI_MODEL:-}
+      - IMAGES_DIR=/data/images
+      - IMAGE_GENERATION=${IMAGE_GENERATION:-off}
+      # WORKER=off keeps every AI job queued (no GPU use).
+      - WORKER=${WORKER:-on}
+      # Runtime connects as the least-privilege role kitchen_app (CRUD only, no DDL).
+      - DATABASE_URL=postgresql://kitchen_app:${APP_DB_PASSWORD}@cookingstudio-postgres:5432/kitchen
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      cookingstudio-init:
+        condition: service_completed_successfully
+      cookingstudio-postgres:
+        condition: service_healthy
+    networks:
+      - cookingstudio-network
+    volumes:
+      # read-only root fs — the only writable path is the generated-images volume.
+      - cookingstudio-images:/data/images
+    deploy:
+      resources:
+        limits:
+          memory: 768M
+          cpus: "1"
+          pids: 200
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp:size=100m
+      - /app/.next/cache:size=200m
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  cookingstudio-network:
+    driver: bridge
+
+volumes:
+  cookingstudio-pgdata:
+  cookingstudio-images:

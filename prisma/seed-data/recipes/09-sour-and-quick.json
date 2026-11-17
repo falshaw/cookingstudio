@@ -1,0 +1,1928 @@
+[
+ {
+  "level": 2,
+  "kind": "plan",
+  "serv": 2,
+  "fridge": 2,
+  "freezer": 0,
+  "spice": 0,
+  "cuisine": "european",
+  "reheat": "Pan or microwave 2 minutes.",
+  "left": "Next day's lunch.",
+  "meals": [
+   "dinner"
+  ],
+  "slug": "sour-onion-chicken",
+  "title": "Chicken in a sour onion and vinegar sauce",
+  "desc": "A sour onion-and-vinegar sauce, traditionally served with kidneys, here on chicken thighs. Green beans on the side.",
+  "prep": 7,
+  "cook": 18,
+  "protein": "chicken",
+  "flav": [
+   "sour",
+   "savoury"
+  ],
+  "equip": [
+   "heavy-pan",
+   "saucepan"
+  ],
+  "trouble": [
+   [
+    "Sauce too sharp",
+    "One more spoon of cream, bubble 30 seconds."
+   ],
+   [
+    "Onions burn",
+    "Lower the heat and add a splash of the stock."
+   ]
+  ],
+  "goes": "Lettuce with vinegar dressing.",
+  "ing": [
+   [
+    "chicken-thighs",
+    400,
+    "g",
+    400,
+    "cut into strips",
+    ""
+   ],
+   [
+    "onion",
+    2,
+    "pc",
+    300,
+    "thinly sliced",
+    ""
+   ],
+   [
+    "butter",
+    20,
+    "g",
+    20,
+    "",
+    ""
+   ],
+   [
+    "plain-flour",
+    1,
+    "tsp",
+    3,
+    "",
+    ""
+   ],
+   [
+    "chicken-stock",
+    200,
+    "ml",
+    200,
+    "",
+    ""
+   ],
+   [
+    "cider-vinegar",
+    3,
+    "tbsp",
+    45,
+    "",
+    ""
+   ],
+   [
+    "dijon-mustard",
+    2,
+    "tsp",
+    10,
+    "",
+    ""
+   ],
+   [
+    "cream",
+    50,
+    "ml",
+    50,
+    "",
+    ""
+   ],
+   [
+    "bay-leaf",
+    1,
+    "pc",
+    0.5,
+    "",
+    ""
+   ],
+   [
+    "salt",
+    0.75,
+    "tsp",
+    4.5,
+    "",
+    ""
+   ],
+   [
+    "black-pepper",
+    0.5,
+    "tsp",
+    1,
+    "",
+    ""
+   ],
+   [
+    "green-beans",
+    400,
+    "g",
+    400,
+    "ends trimmed",
+    ""
+   ],
+   [
+    "parsley",
+    0.25,
+    "bunch",
+    8,
+    "chopped",
+    ""
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Put the green beans on in salted boiling water for 7 minutes, then drain.",
+    "w": "",
+    "c": "Bright green, still a little bite.",
+    "m": "—",
+    "who": "either",
+    "min": 8,
+    "tech": "none",
+    "tmr": 420,
+    "img": "green beans boiling in a small pot"
+   },
+   {
+    "t": "Brown the chicken in half the butter on high heat for 6 minutes, then take it out. Add the rest of the butter and the onions and fry 6 minutes on medium until golden.",
+    "w": "Golden onions give the dark base of a sour-kidney sauce.",
+    "c": "Chicken browned at the edges, onions soft and golden.",
+    "m": "Pale onions: the sauce stays thin and sharp.",
+    "who": "either",
+    "min": 12,
+    "tech": "sear",
+    "tmr": 360,
+    "img": "thinly sliced onions softly fried until golden brown in butter in a heavy pan, loose soft onion strips, not battered, not onion rings"
+   },
+   {
+    "t": "Make the sauce: dust the onions with the flour, stir 30 seconds, pour in the stock, vinegar, mustard and bay leaf, scrape up the brown bits and bubble 3 minutes until it coats a spoon. Stir in the cream and the chicken, warm 2 minutes, season and scatter parsley.",
+    "w": "Vinegar against browned onions and a little cream: that is the classic sour-kidney taste.",
+    "c": "Glossy brown sauce that coats the back of a spoon.",
+    "m": "Boiling hard after the cream: it can split.",
+    "who": "either",
+    "min": 6,
+    "tech": "deglaze",
+    "tmr": 180,
+    "img": "chicken strips in a glossy brown sour onion sauce"
+   }
+  ],
+  "lesson": "s1-pan-juice-cream"
+ },
+ {
+  "level": 3,
+  "kind": "plan",
+  "serv": 2,
+  "fridge": 2,
+  "freezer": 0,
+  "spice": 0,
+  "cuisine": "european",
+  "reheat": "Pan or microwave 2 minutes.",
+  "left": "Next day's lunch.",
+  "meals": [
+   "dinner"
+  ],
+  "slug": "lemon-caper-meatballs",
+  "title": "Meatballs in a lemon-caper cream sauce",
+  "desc": "A classic: soft meatballs simmered in stock, then a white sauce sharpened with lemon and capers. Broccoli on the side.",
+  "prep": 10,
+  "cook": 20,
+  "protein": "beef",
+  "flav": [
+   "sour",
+   "creamy"
+  ],
+  "equip": [
+   "saucepan",
+   "whisk"
+  ],
+  "trouble": [
+   [
+    "Meatballs fall apart",
+    "Barely simmer them; a rolling boil breaks them."
+   ],
+   [
+    "Sauce lumpy",
+    "Whisk the stock in a little at a time."
+   ]
+  ],
+  "goes": "Broccoli, or boiled potatoes.",
+  "ing": [
+   [
+    "beef-mince",
+    400,
+    "g",
+    400,
+    "",
+    ""
+   ],
+   [
+    "egg",
+    1,
+    "pc",
+    50,
+    "",
+    ""
+   ],
+   [
+    "breadcrumbs",
+    10,
+    "g",
+    10,
+    "",
+    ""
+   ],
+   [
+    "onion",
+    0.5,
+    "pc",
+    60,
+    "grated",
+    ""
+   ],
+   [
+    "salt",
+    1,
+    "tsp",
+    6,
+    "",
+    ""
+   ],
+   [
+    "black-pepper",
+    0.5,
+    "tsp",
+    1,
+    "",
+    ""
+   ],
+   [
+    "chicken-stock",
+    500,
+    "ml",
+    500,
+    "",
+    ""
+   ],
+   [
+    "butter",
+    15,
+    "g",
+    15,
+    "",
+    ""
+   ],
+   [
+    "plain-flour",
+    8,
+    "g",
+    8,
+    "",
+    ""
+   ],
+   [
+    "cream",
+    100,
+    "ml",
+    100,
+    "",
+    ""
+   ],
+   [
+    "capers",
+    2,
+    "tbsp",
+    20,
+    "drained",
+    ""
+   ],
+   [
+    "lemon",
+    0.5,
+    "pc",
+    20,
+    "juiced",
+    ""
+   ],
+   [
+    "broccoli",
+    400,
+    "g",
+    400,
+    "florets",
+    ""
+   ],
+   [
+    "parsley",
+    0.25,
+    "bunch",
+    8,
+    "chopped",
+    ""
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Mix the mince with the egg, breadcrumbs, grated onion, salt and pepper. Roll 10 balls.",
+    "w": "",
+    "c": "Smooth balls that hold their shape.",
+    "m": "—",
+    "who": "either",
+    "min": 6,
+    "tech": "none",
+    "tmr": 0,
+    "img": "ten raw meatballs on a board"
+   },
+   {
+    "t": "Bring the stock to a bare simmer, add the meatballs and poach 12 minutes. Steam the broccoli over it or in a second pot for the last 6 minutes. Lift out the meatballs, keep 400 ml of the stock.",
+    "w": "Poaching keeps them soft; the stock becomes the sauce.",
+    "c": "Meatballs float and are firm.",
+    "m": "Boiling hard: they break.",
+    "who": "either",
+    "min": 13,
+    "tech": "none",
+    "tmr": 720,
+    "img": "meatballs poaching in a pot of stock"
+   },
+   {
+    "t": "Make the sauce: melt the butter, stir in the flour for 1 minute, whisk in the 400 ml stock bit by bit and simmer 3 minutes until it coats a spoon. Stir in the cream, capers and lemon juice, put the meatballs back for 2 minutes and scatter parsley.",
+    "w": "Lemon and capers make the white sauce sour; that is the point of the dish.",
+    "c": "Smooth, pale sauce that coats the back of a spoon.",
+    "m": "All the stock at once: lumps.",
+    "who": "either",
+    "min": 6,
+    "tech": "roux",
+    "tmr": 180,
+    "img": "meatballs in a pale lemon caper cream sauce"
+   }
+  ],
+  "lesson": "veloute"
+ },
+ {
+  "level": 2,
+  "kind": "plan",
+  "serv": 2,
+  "fridge": 2,
+  "freezer": 0,
+  "spice": 0,
+  "cuisine": "european",
+  "reheat": "Pan or microwave 2 minutes.",
+  "left": "Next day's lunch.",
+  "meals": [
+   "dinner"
+  ],
+  "slug": "sour-spiced-beef-patties",
+  "title": "Beef patties in a sour spiced gravy",
+  "desc": "The sour, spiced gravy of a slow Sunday pot roast (vinegar, bay, cloves, allspice), on quick beef patties. No sugar, no raisins. Carrots on the side.",
+  "prep": 8,
+  "cook": 17,
+  "protein": "beef",
+  "flav": [
+   "sour",
+   "spiced"
+  ],
+  "equip": [
+   "heavy-pan",
+   "saucepan"
+  ],
+  "trouble": [
+   [
+    "Gravy thin",
+    "Bubble one more minute, or a pinch more corn flour mixed in water."
+   ],
+   [
+    "Patties dry",
+    "Don't press them down in the pan."
+   ]
+  ],
+  "goes": "Carrots; red cabbage if you have it.",
+  "ing": [
+   [
+    "beef-mince",
+    400,
+    "g",
+    400,
+    "",
+    ""
+   ],
+   [
+    "egg",
+    1,
+    "pc",
+    50,
+    "",
+    ""
+   ],
+   [
+    "onion",
+    1,
+    "pc",
+    150,
+    "half grated, half sliced",
+    ""
+   ],
+   [
+    "salt",
+    1,
+    "tsp",
+    6,
+    "",
+    ""
+   ],
+   [
+    "black-pepper",
+    0.5,
+    "tsp",
+    1,
+    "",
+    ""
+   ],
+   [
+    "sunflower-oil",
+    1,
+    "tbsp",
+    14,
+    "",
+    ""
+   ],
+   [
+    "tomato-paste",
+    1,
+    "tbsp",
+    16,
+    "",
+    ""
+   ],
+   [
+    "beef-stock",
+    250,
+    "ml",
+    250,
+    "",
+    ""
+   ],
+   [
+    "red-wine-vinegar",
+    2,
+    "tbsp",
+    30,
+    "",
+    ""
+   ],
+   [
+    "bay-leaf",
+    1,
+    "pc",
+    0.5,
+    "",
+    ""
+   ],
+   [
+    "cloves",
+    2,
+    "pc",
+    0.5,
+    "",
+    ""
+   ],
+   [
+    "allspice",
+    0.25,
+    "tsp",
+    0.5,
+    "",
+    ""
+   ],
+   [
+    "corn-flour",
+    1,
+    "tsp",
+    3,
+    "mixed with 1 tbsp water",
+    ""
+   ],
+   [
+    "carrot",
+    4,
+    "pc",
+    400,
+    "sliced",
+    ""
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Boil the carrots in salted water for 12 minutes, then drain.",
+    "w": "",
+    "c": "Soft but not mushy.",
+    "m": "—",
+    "who": "either",
+    "min": 12,
+    "tech": "none",
+    "tmr": 720,
+    "img": "sliced carrots in a pot"
+   },
+   {
+    "t": "Mix the mince with the egg, the grated half of the onion, salt and pepper; shape 4 patties. Fry them in the oil 4 minutes a side on medium-high, then take them out.",
+    "w": "",
+    "c": "Brown crust both sides.",
+    "m": "Turning too early: they stick and tear.",
+    "who": "either",
+    "min": 9,
+    "tech": "sear",
+    "tmr": 240,
+    "img": "four round beef mince patties browning in a frying pan, only the patties in the pan, no egg"
+   },
+   {
+    "t": "Make the sauce in the patty pan: fry the sliced onion and tomato paste 2 minutes, pour in the stock and vinegar, add bay, cloves and allspice, scrape up the brown bits and bubble 3 minutes. Stir in the corn flour and bubble 1 minute until it coats a spoon. Put the patties back for 2 minutes.",
+    "w": "Vinegar plus clove and allspice is the pot-roast taste, without marinating for days.",
+    "c": "Dark, glossy, coats the back of a spoon.",
+    "m": "Leaving the cloves in to serve: fish them out.",
+    "who": "either",
+    "min": 7,
+    "tech": "deglaze",
+    "tmr": 180,
+    "img": "patties in a dark glossy gravy in a pan"
+   }
+  ],
+  "lesson": "red-wine-pan-sauce"
+ },
+ {
+  "level": 2,
+  "kind": "plan",
+  "serv": 2,
+  "fridge": 2,
+  "freezer": 0,
+  "spice": 0,
+  "cuisine": "european",
+  "reheat": "Pan or microwave 2 minutes.",
+  "left": "Next day's lunch.",
+  "meals": [
+   "dinner"
+  ],
+  "slug": "steak-sour-onion-gravy",
+  "title": "Steak with crispy onions and a sour onion gravy",
+  "desc": "Steak with a heap of crisp-edged onions and a short, sharp gravy from the pan, the classic way. Carrots on the side. Counts as red meat.",
+  "prep": 5,
+  "cook": 15,
+  "protein": "beef",
+  "flav": [
+   "savoury",
+   "sour"
+  ],
+  "equip": [
+   "heavy-pan"
+  ],
+  "trouble": [
+   [
+    "Steak grey",
+    "Pan hotter and dry the steak first."
+   ],
+   [
+    "Onions soggy",
+    "Fry them in batches, don't crowd the pan."
+   ]
+  ],
+  "goes": "Carrots or green beans.",
+  "ing": [
+   [
+    "sirloin-steak",
+    2,
+    "pc",
+    400,
+    "dry, at room temperature",
+    ""
+   ],
+   [
+    "onion",
+    2,
+    "pc",
+    300,
+    "thin rings",
+    ""
+   ],
+   [
+    "plain-flour",
+    1,
+    "tsp",
+    3,
+    "for the onions",
+    ""
+   ],
+   [
+    "sunflower-oil",
+    1,
+    "tbsp",
+    14,
+    "",
+    ""
+   ],
+   [
+    "butter",
+    20,
+    "g",
+    20,
+    "",
+    ""
+   ],
+   [
+    "beef-stock",
+    150,
+    "ml",
+    150,
+    "",
+    ""
+   ],
+   [
+    "red-wine-vinegar",
+    1,
+    "tbsp",
+    15,
+    "",
+    ""
+   ],
+   [
+    "dijon-mustard",
+    1,
+    "tsp",
+    5,
+    "",
+    ""
+   ],
+   [
+    "salt",
+    0.75,
+    "tsp",
+    4.5,
+    "",
+    ""
+   ],
+   [
+    "black-pepper",
+    0.5,
+    "tsp",
+    1,
+    "",
+    ""
+   ],
+   [
+    "carrot",
+    3,
+    "pc",
+    300,
+    "sticks",
+    ""
+   ],
+   [
+    "parsley",
+    0.25,
+    "bunch",
+    8,
+    "chopped",
+    ""
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Boil the carrot sticks in salted water 10 minutes. Dust the onion rings with the flour and fry them in the butter on medium 8 minutes until golden; take them out.",
+    "w": "",
+    "c": "Golden, crisp edges.",
+    "m": "—",
+    "who": "either",
+    "min": 10,
+    "tech": "none",
+    "tmr": 600,
+    "img": "a heavy pan of thinly sliced onions fried golden with crisp brown edges, loose soft onion strips, not battered, not onion rings, a pot of carrot sticks beside it"
+   },
+   {
+    "t": "Salt the steaks and fry in the oil on high heat 3 minutes a side, then rest them 3 minutes on a plate.",
+    "w": "Resting keeps the juice in the meat.",
+    "c": "Dark crust.",
+    "m": "Cutting straight away: the juice runs out.",
+    "who": "either",
+    "min": 9,
+    "tech": "sear",
+    "tmr": 180,
+    "img": "two steaks searing in a hot pan"
+   },
+   {
+    "t": "Make the sauce in the steak pan: pour in the stock, vinegar and mustard, scrape up the brown bits and bubble 2 minutes until it coats a spoon. Pour it over the steaks and pile the onions on top.",
+    "w": "The steak crust in the pan is the flavour of the gravy.",
+    "c": "Short, glossy gravy.",
+    "m": "Washing the pan first.",
+    "who": "either",
+    "min": 3,
+    "tech": "deglaze",
+    "tmr": 120,
+    "img": "steak topped with a heap of fried onions and gravy"
+   }
+  ],
+  "lesson": "red-wine-pan-sauce"
+ },
+ {
+  "level": 2,
+  "kind": "plan",
+  "serv": 2,
+  "fridge": 2,
+  "freezer": 0,
+  "spice": 0,
+  "cuisine": "italian",
+  "reheat": "Pan or microwave 2 minutes.",
+  "left": "Next day's lunch.",
+  "meals": [
+   "dinner"
+  ],
+  "slug": "pollo-all-aceto",
+  "title": "Pollo all'aceto: chicken thighs in garlic-vinegar sauce",
+  "desc": "An Italian home dish: chicken thighs browned, then glazed with red-wine vinegar, garlic and rosemary. Sharp and quick. Broccoli on the side.",
+  "prep": 5,
+  "cook": 20,
+  "protein": "chicken",
+  "flav": [
+   "sour",
+   "garlicky"
+  ],
+  "equip": [
+   "heavy-pan",
+   "saucepan"
+  ],
+  "trouble": [
+   [
+    "Too sharp",
+    "Bubble 1 minute longer: the vinegar mellows."
+   ],
+   [
+    "Garlic bitter",
+    "Add it after the chicken has browned, not before."
+   ]
+  ],
+  "goes": "Broccoli or green beans.",
+  "ing": [
+   [
+    "chicken-thighs",
+    400,
+    "g",
+    400,
+    "",
+    ""
+   ],
+   [
+    "olive-oil",
+    1,
+    "tbsp",
+    14,
+    "",
+    ""
+   ],
+   [
+    "garlic",
+    4,
+    "clove",
+    20,
+    "sliced thin",
+    ""
+   ],
+   [
+    "rosemary",
+    1,
+    "sprig",
+    2,
+    "",
+    ""
+   ],
+   [
+    "red-wine-vinegar",
+    4,
+    "tbsp",
+    60,
+    "",
+    ""
+   ],
+   [
+    "chicken-stock",
+    100,
+    "ml",
+    100,
+    "",
+    ""
+   ],
+   [
+    "butter",
+    10,
+    "g",
+    10,
+    "",
+    ""
+   ],
+   [
+    "salt",
+    0.75,
+    "tsp",
+    4.5,
+    "",
+    ""
+   ],
+   [
+    "black-pepper",
+    0.5,
+    "tsp",
+    1,
+    "",
+    ""
+   ],
+   [
+    "broccoli",
+    400,
+    "g",
+    400,
+    "florets",
+    ""
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Steam or boil the broccoli 5 minutes and drain.",
+    "w": "",
+    "c": "Bright green, tender stems.",
+    "m": "—",
+    "who": "either",
+    "min": 6,
+    "tech": "none",
+    "tmr": 300,
+    "img": "broccoli florets in a pot"
+   },
+   {
+    "t": "Salt the chicken and brown it skin- or smooth-side down in the oil on medium-high 7 minutes, turn and cook 5 more. Add the garlic and rosemary for the last 2 minutes.",
+    "w": "",
+    "c": "Deep golden, cooked through.",
+    "m": "Garlic in too early: it burns.",
+    "who": "either",
+    "min": 12,
+    "tech": "sear",
+    "tmr": 420,
+    "img": "chicken thighs browning with sliced garlic and rosemary"
+   },
+   {
+    "t": "Make the sauce: pour in the vinegar and stock, scrape up the brown bits and bubble 3 minutes, turning the chicken, until it is glossy and coats a spoon. Swirl in the butter.",
+    "w": "The vinegar cooks down into a sharp glaze around the chicken.",
+    "c": "Syrupy glaze on the chicken.",
+    "m": "Taking it off too early: harsh and thin.",
+    "who": "either",
+    "min": 4,
+    "tech": "deglaze",
+    "tmr": 180,
+    "img": "chicken thighs glazed in a glossy vinegar sauce"
+   }
+  ],
+  "lesson": "red-wine-pan-sauce"
+ },
+ {
+  "level": 2,
+  "kind": "plan",
+  "serv": 2,
+  "fridge": 2,
+  "freezer": 0,
+  "spice": 0,
+  "cuisine": "european",
+  "reheat": "Pan or microwave 2 minutes.",
+  "left": "Next day's lunch.",
+  "meals": [
+   "dinner"
+  ],
+  "slug": "pork-medallions-mustard-cream",
+  "title": "Pork medallions in mustard-vinegar cream, with broccoli",
+  "desc": "Pork tenderloin medallions in a sharp mustard cream with a dash of vinegar. 25 minutes. Counts as red meat.",
+  "prep": 7,
+  "cook": 18,
+  "protein": "pork",
+  "flav": [
+   "creamy",
+   "tangy"
+  ],
+  "equip": [
+   "heavy-pan",
+   "saucepan"
+  ],
+  "trouble": [
+   [
+    "Pork dry",
+    "Medallions need only 3 minutes a side."
+   ],
+   [
+    "Sauce split",
+    "Keep it at a gentle bubble after the cream."
+   ]
+  ],
+  "goes": "Broccoli.",
+  "ing": [
+   [
+    "pork-tenderloin",
+    400,
+    "g",
+    400,
+    "cut into 2 cm medallions",
+    ""
+   ],
+   [
+    "butter",
+    15,
+    "g",
+    15,
+    "",
+    ""
+   ],
+   [
+    "shallot",
+    1,
+    "pc",
+    30,
+    "finely chopped",
+    ""
+   ],
+   [
+    "white-wine-vinegar",
+    1,
+    "tbsp",
+    15,
+    "",
+    ""
+   ],
+   [
+    "chicken-stock",
+    100,
+    "ml",
+    100,
+    "",
+    ""
+   ],
+   [
+    "dijon-mustard",
+    1,
+    "tbsp",
+    15,
+    "",
+    ""
+   ],
+   [
+    "cream",
+    100,
+    "ml",
+    100,
+    "",
+    ""
+   ],
+   [
+    "salt",
+    0.75,
+    "tsp",
+    4.5,
+    "",
+    ""
+   ],
+   [
+    "black-pepper",
+    0.5,
+    "tsp",
+    1,
+    "",
+    ""
+   ],
+   [
+    "broccoli",
+    400,
+    "g",
+    400,
+    "florets",
+    ""
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Steam or boil the broccoli 5 minutes and drain.",
+    "w": "",
+    "c": "Bright green.",
+    "m": "—",
+    "who": "either",
+    "min": 6,
+    "tech": "none",
+    "tmr": 300,
+    "img": "broccoli florets in a pot"
+   },
+   {
+    "t": "Salt the pork medallions and fry them in the butter on medium-high 3 minutes a side; put them on a plate.",
+    "w": "",
+    "c": "Golden both sides, just pink inside.",
+    "m": "Crowding the pan: they steam grey.",
+    "who": "either",
+    "min": 7,
+    "tech": "sear",
+    "tmr": 180,
+    "img": "pork medallions browning in a pan"
+   },
+   {
+    "t": "Make the sauce in the pork pan: soften the shallot 1 minute, add the vinegar and stock and scrape up the brown bits, stir in the mustard and cream and bubble 2 minutes until it coats a spoon. Return the pork and its juices for 1 minute.",
+    "w": "",
+    "c": "Pale, glossy, coats the back of a spoon.",
+    "m": "Boiling hard: the cream splits.",
+    "who": "either",
+    "min": 5,
+    "tech": "deglaze",
+    "tmr": 120,
+    "img": "pork medallions in a creamy mustard sauce"
+   }
+  ],
+  "lesson": "s1-mustard-cream"
+ },
+ {
+  "level": 2,
+  "kind": "plan",
+  "serv": 2,
+  "fridge": 1,
+  "freezer": 0,
+  "spice": 0,
+  "cuisine": "european",
+  "reheat": "Eat cold.",
+  "left": "Keeps a day in the fridge; it gets better.",
+  "meals": [
+   "lunch"
+  ],
+  "slug": "chicken-cheese-salad",
+  "title": "Chicken and cheese salad with onion in a sharp dressing",
+  "desc": "A sausage-salad-style dish made with leftover chicken instead of sausage: strips of chicken and cheese, onion rings, a sharp vinegar dressing. No cooking, 8 minutes.",
+  "prep": 8,
+  "cook": 0,
+  "protein": "chicken",
+  "flav": [
+   "sour",
+   "fresh"
+  ],
+  "equip": [
+   "chefs-knife",
+   "bowls"
+  ],
+  "trouble": [
+   [
+    "Dull",
+    "More vinegar and pepper."
+   ]
+  ],
+  "goes": "A slice of rye bread.",
+  "ing": [
+   [
+    "chicken-breast",
+    300,
+    "g",
+    300,
+    "cooked (last night's), cut in strips",
+    ""
+   ],
+   [
+    "emmental",
+    100,
+    "g",
+    100,
+    "cut in strips",
+    ""
+   ],
+   [
+    "red-onion",
+    1,
+    "pc",
+    120,
+    "thin rings",
+    ""
+   ],
+   [
+    "red-pepper",
+    1,
+    "pc",
+    160,
+    "thin strips",
+    ""
+   ],
+   [
+    "white-wine-vinegar",
+    3,
+    "tbsp",
+    45,
+    "",
+    ""
+   ],
+   [
+    "sunflower-oil",
+    2,
+    "tbsp",
+    27,
+    "",
+    ""
+   ],
+   [
+    "dijon-mustard",
+    1,
+    "tsp",
+    5,
+    "",
+    ""
+   ],
+   [
+    "salt",
+    0.5,
+    "tsp",
+    3,
+    "",
+    ""
+   ],
+   [
+    "black-pepper",
+    0.5,
+    "tsp",
+    1,
+    "",
+    ""
+   ],
+   [
+    "spring-onion",
+    1,
+    "pc",
+    15,
+    "sliced",
+    ""
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Put the chicken, Emmental, onion rings and pepper strips in a bowl.",
+    "w": "",
+    "c": "All in thin strips.",
+    "m": "Thick onion: slice it thin.",
+    "who": "either",
+    "min": 5,
+    "tech": "knife-cuts",
+    "tmr": 0,
+    "img": "a large glass salad bowl on a kitchen table holding strips of cooked chicken, strips of yellow Emmental cheese, thin red onion rings and red pepper strips, no pan, no stove"
+   },
+   {
+    "t": "Make the sauce for this salad: whisk the vinegar, oil, mustard, salt and pepper with a fork for 30 seconds until cloudy, pour over, toss and leave 2 minutes. Scatter the spring onion.",
+    "w": "A salad like this lives on a sharp dressing.",
+    "c": "Glossy, everything coated.",
+    "m": "Too little vinegar: it tastes flat.",
+    "who": "either",
+    "min": 3,
+    "tech": "emulsify",
+    "tmr": 0,
+    "img": "a fork whisking a vinegar and oil dressing in a small glass bowl next to a salad bowl of chicken and cheese strips, no pan, no stove"
+   }
+  ],
+  "lesson": "s-ladolemono"
+ },
+ {
+  "level": 2,
+  "kind": "plan",
+  "serv": 2,
+  "fridge": 2,
+  "freezer": 0,
+  "spice": 0,
+  "cuisine": "european",
+  "reheat": "Pan or microwave 2 minutes.",
+  "left": "Next day's lunch.",
+  "meals": [
+   "lunch"
+  ],
+  "slug": "mince-broccoli-skillet",
+  "title": "Mince and broccoli pan with a mustard-vinegar glaze",
+  "desc": "Twelve minutes, one pan: browned beef mince and small broccoli florets in a short mustard-vinegar glaze.",
+  "prep": 3,
+  "cook": 9,
+  "protein": "beef",
+  "flav": [
+   "savoury",
+   "tangy"
+  ],
+  "equip": [
+   "heavy-pan"
+  ],
+  "trouble": [
+   [
+    "Mince grey",
+    "Hotter pan, don't stir for the first 2 minutes."
+   ]
+  ],
+  "goes": "Eat as is.",
+  "ing": [
+   [
+    "beef-mince",
+    250,
+    "g",
+    250,
+    "",
+    ""
+   ],
+   [
+    "sunflower-oil",
+    1,
+    "tbsp",
+    14,
+    "",
+    ""
+   ],
+   [
+    "onion",
+    0.5,
+    "pc",
+    60,
+    "chopped",
+    ""
+   ],
+   [
+    "garlic",
+    1,
+    "clove",
+    5,
+    "sliced",
+    ""
+   ],
+   [
+    "broccoli",
+    300,
+    "g",
+    300,
+    "small florets",
+    ""
+   ],
+   [
+    "paprika",
+    1,
+    "tsp",
+    2,
+    "",
+    ""
+   ],
+   [
+    "dijon-mustard",
+    2,
+    "tsp",
+    10,
+    "",
+    ""
+   ],
+   [
+    "cider-vinegar",
+    1,
+    "tbsp",
+    15,
+    "",
+    ""
+   ],
+   [
+    "water",
+    3,
+    "tbsp",
+    45,
+    "",
+    ""
+   ],
+   [
+    "salt",
+    0.5,
+    "tsp",
+    3,
+    "",
+    ""
+   ],
+   [
+    "black-pepper",
+    0.25,
+    "tsp",
+    0.5,
+    "",
+    ""
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Brown the mince with the onion in the oil on high heat 5 minutes. Add the broccoli, garlic, paprika and 2 tbsp of the water, lid on, 4 minutes.",
+    "w": "The lid steams the broccoli in the same pan.",
+    "c": "Broccoli bright and just tender.",
+    "m": "—",
+    "who": "either",
+    "min": 9,
+    "tech": "sear",
+    "tmr": 240,
+    "img": "mince and broccoli florets in a pan"
+   },
+   {
+    "t": "Make the sauce: stir in the mustard, vinegar and the last spoon of water, scrape the pan and bubble 1 minute until glossy and it coats the mince. Season.",
+    "w": "",
+    "c": "Shiny, nothing watery in the pan.",
+    "m": "—",
+    "who": "either",
+    "min": 2,
+    "tech": "deglaze",
+    "tmr": 60,
+    "img": "glossy mince and broccoli in a pan"
+   }
+  ],
+  "lesson": "red-wine-pan-sauce"
+ },
+ {
+  "level": 2,
+  "kind": "plan",
+  "serv": 2,
+  "fridge": 1,
+  "freezer": 0,
+  "spice": 0,
+  "cuisine": "european",
+  "reheat": "Eat cold.",
+  "left": "Keeps a day in the fridge.",
+  "meals": [
+   "lunch"
+  ],
+  "slug": "beef-salad",
+  "title": "Sliced beef salad in a sharp vinegar dressing",
+  "desc": "Beef salad: thin slices of leftover steak with red onion, pepper and chives in a sour vinegar dressing. No cooking with leftovers, 8 minutes. Counts as red meat.",
+  "prep": 8,
+  "cook": 0,
+  "protein": "beef",
+  "flav": [
+   "sour",
+   "fresh"
+  ],
+  "equip": [
+   "chefs-knife",
+   "bowls"
+  ],
+  "trouble": [
+   [
+    "Beef tough",
+    "Slice it thin, across the grain."
+   ]
+  ],
+  "goes": "Lettuce.",
+  "ing": [
+   [
+    "sirloin-steak",
+    250,
+    "g",
+    250,
+    "cooked (leftover), sliced thin",
+    ""
+   ],
+   [
+    "red-onion",
+    0.5,
+    "pc",
+    60,
+    "thin rings",
+    ""
+   ],
+   [
+    "red-pepper",
+    1,
+    "pc",
+    160,
+    "thin strips",
+    ""
+   ],
+   [
+    "lettuce",
+    100,
+    "g",
+    100,
+    "",
+    ""
+   ],
+   [
+    "white-wine-vinegar",
+    3,
+    "tbsp",
+    45,
+    "",
+    ""
+   ],
+   [
+    "sunflower-oil",
+    2,
+    "tbsp",
+    27,
+    "",
+    ""
+   ],
+   [
+    "dijon-mustard",
+    1,
+    "tsp",
+    5,
+    "",
+    ""
+   ],
+   [
+    "salt",
+    0.5,
+    "tsp",
+    3,
+    "",
+    ""
+   ],
+   [
+    "black-pepper",
+    0.5,
+    "tsp",
+    1,
+    "",
+    ""
+   ],
+   [
+    "spring-onion",
+    1,
+    "pc",
+    15,
+    "sliced",
+    ""
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Slice the beef thinly across the grain and put it in a bowl with the onion rings and pepper strips.",
+    "w": "",
+    "c": "Thin slices.",
+    "m": "—",
+    "who": "either",
+    "min": 5,
+    "tech": "knife-cuts",
+    "tmr": 0,
+    "img": "thin slices of cooked pink beef with red onion rings and red pepper strips in a large glass salad bowl on a kitchen table, no pan, no stove"
+   },
+   {
+    "t": "Make the sauce for this salad: whisk the vinegar, oil, mustard, salt and pepper with a fork for 30 seconds until cloudy, pour it over the beef and toss. Serve on the lettuce with the spring onion.",
+    "w": "",
+    "c": "Glossy, everything coated.",
+    "m": "—",
+    "who": "either",
+    "min": 3,
+    "tech": "emulsify",
+    "tmr": 0,
+    "img": "beef salad with a vinegar dressing served on lettuce leaves on a plate, no pan, no stove"
+   }
+  ],
+  "lesson": "s-ladolemono"
+ },
+ {
+  "level": 2,
+  "kind": "plan",
+  "serv": 2,
+  "fridge": 1,
+  "freezer": 0,
+  "spice": 0,
+  "cuisine": "european",
+  "reheat": "Pan or microwave 2 minutes.",
+  "left": "Next day's lunch.",
+  "meals": [
+   "lunch"
+  ],
+  "slug": "paprika-chicken-bowl",
+  "title": "Paprika chicken bowl with tomatoes and quick-pickled onion",
+  "desc": "Thin chicken strips fried in 6 minutes, over lettuce with tomatoes and pepper, and red onion pickled in vinegar while the chicken cooks. 12 minutes.",
+  "prep": 5,
+  "cook": 7,
+  "protein": "chicken",
+  "flav": [
+   "sour",
+   "fresh"
+  ],
+  "equip": [
+   "heavy-pan",
+   "bowls"
+  ],
+  "trouble": [
+   [
+    "Onion too strong",
+    "Leave it in the vinegar the full 5 minutes."
+   ]
+  ],
+  "goes": "Eat as is.",
+  "ing": [
+   [
+    "chicken-breast",
+    300,
+    "g",
+    300,
+    "thin strips",
+    ""
+   ],
+   [
+    "paprika",
+    1,
+    "tsp",
+    2,
+    "",
+    ""
+   ],
+   [
+    "olive-oil",
+    1.5,
+    "tbsp",
+    20,
+    "",
+    ""
+   ],
+   [
+    "red-onion",
+    0.5,
+    "pc",
+    60,
+    "thin rings",
+    ""
+   ],
+   [
+    "red-wine-vinegar",
+    2,
+    "tbsp",
+    30,
+    "",
+    ""
+   ],
+   [
+    "cherry-tomato",
+    200,
+    "g",
+    200,
+    "halved",
+    ""
+   ],
+   [
+    "red-pepper",
+    1,
+    "pc",
+    160,
+    "strips",
+    ""
+   ],
+   [
+    "lettuce",
+    100,
+    "g",
+    100,
+    "",
+    ""
+   ],
+   [
+    "salt",
+    0.75,
+    "tsp",
+    4.5,
+    "",
+    ""
+   ],
+   [
+    "black-pepper",
+    0.25,
+    "tsp",
+    0.5,
+    "",
+    ""
+   ],
+   [
+    "parsley",
+    0.25,
+    "bunch",
+    8,
+    "chopped",
+    ""
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Put the onion rings in the vinegar with a pinch of salt and leave them. Toss the chicken with paprika and salt and fry in the oil on high heat 6 minutes.",
+    "w": "Five minutes in vinegar turns the onion pink and mild.",
+    "c": "Chicken golden; onion bright pink.",
+    "m": "—",
+    "who": "either",
+    "min": 7,
+    "tech": "sear",
+    "tmr": 360,
+    "img": "paprika chicken strips frying next to a bowl of pink pickled onion"
+   },
+   {
+    "t": "Make the sauce: tip the tomatoes into the hot pan for 1 minute, press them with a fork, add 1 tbsp of the onion vinegar and scrape until it bubbles and coats the chicken. Pile it on the lettuce and pepper, top with the pickled onion and parsley.",
+    "w": "",
+    "c": "Juicy, glossy chicken.",
+    "m": "—",
+    "who": "either",
+    "min": 2,
+    "tech": "deglaze",
+    "tmr": 60,
+    "img": "chicken bowl with tomatoes lettuce and pickled red onion"
+   }
+  ],
+  "lesson": "s1-roast-tomato-feta"
+ },
+ {
+  "level": 2,
+  "kind": "plan",
+  "serv": 2,
+  "fridge": 0,
+  "freezer": 0,
+  "spice": 0,
+  "cuisine": "breakfast",
+  "reheat": "Eat fresh.",
+  "left": "Best eaten straight away.",
+  "meals": [
+   "breakfast"
+  ],
+  "slug": "scrambled-eggs-pancetta-onion",
+  "title": "Scrambled eggs with pancetta and onion",
+  "desc": "A slow Sunday breakfast: crisp pancetta and soft onion, folded into creamy scrambled eggs. Ten minutes.",
+  "prep": 2,
+  "cook": 8,
+  "protein": "egg",
+  "flav": [
+   "savoury",
+   "smoky"
+  ],
+  "equip": [
+   "non-stick",
+   "spatula"
+  ],
+  "trouble": [
+   [
+    "Eggs rubbery",
+    "Take them off the heat while still wet."
+   ]
+  ],
+  "goes": "Black coffee.",
+  "ing": [
+   [
+    "pancetta",
+    60,
+    "g",
+    60,
+    "diced",
+    ""
+   ],
+   [
+    "onion",
+    0.5,
+    "pc",
+    60,
+    "chopped",
+    ""
+   ],
+   [
+    "egg",
+    6,
+    "pc",
+    300,
+    "beaten with the salt",
+    ""
+   ],
+   [
+    "butter",
+    10,
+    "g",
+    10,
+    "",
+    ""
+   ],
+   [
+    "salt",
+    0.25,
+    "tsp",
+    1.5,
+    "",
+    ""
+   ],
+   [
+    "black-pepper",
+    0.25,
+    "tsp",
+    0.5,
+    "",
+    ""
+   ],
+   [
+    "spring-onion",
+    1,
+    "pc",
+    15,
+    "sliced",
+    ""
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Fry the pancetta in a dry pan on medium 4 minutes until crisp, add the onion and the butter and soften 2 minutes.",
+    "w": "",
+    "c": "Crisp pancetta, soft onion.",
+    "m": "—",
+    "who": "either",
+    "min": 6,
+    "tech": "none",
+    "tmr": 240,
+    "img": "crisp diced pancetta and onion in a pan"
+   },
+   {
+    "t": "Turn the heat to low, pour in the eggs and stir slowly 2–3 minutes until soft curds form. Off the heat, scatter spring onion and pepper.",
+    "w": "Low heat gives soft, creamy eggs.",
+    "c": "Soft folds, still glossy.",
+    "m": "High heat: dry and rubbery.",
+    "who": "either",
+    "min": 3,
+    "tech": "doneness",
+    "tmr": 0,
+    "img": "creamy scrambled eggs with pancetta and onion"
+   }
+  ]
+ },
+ {
+  "level": 2,
+  "kind": "prep",
+  "meals": [
+   "dinner"
+  ],
+  "serv": 6,
+  "fridge": 3,
+  "freezer": 90,
+  "spice": 1,
+  "cuisine": "european",
+  "slug": "weekend-goulash",
+  "title": "Weekend beef goulash with a sour paprika finish (6 portions, freezes)",
+  "desc": "A weekend pot: beef chunks braised slowly with lots of onion and paprika, finished with a dash of vinegar. Six portions: eat two, freeze four for weekday dinners. Counts as red meat.",
+  "prep": 15,
+  "cook": 90,
+  "protein": "beef",
+  "flav": [
+   "paprika",
+   "sour",
+   "rich"
+  ],
+  "equip": [
+   "stock-pot"
+  ],
+  "reheat": "From frozen: thaw overnight, warm 10 minutes in a pan.",
+  "left": "Freeze in single portions.",
+  "trouble": [
+   [
+    "Meat still tough",
+    "Another 20 minutes, lid on, low heat."
+   ],
+   [
+    "Paprika bitter",
+    "Take the pot off the heat before stirring it in."
+   ]
+  ],
+  "goes": "Broccoli or green beans; potatoes or rice.",
+  "ing": [
+   [
+    "beef-chunks",
+    1000,
+    "g",
+    1000,
+    "4 cm pieces, patted dry",
+    ""
+   ],
+   [
+    "sunflower-oil",
+    2,
+    "tbsp",
+    27,
+    "",
+    ""
+   ],
+   [
+    "onion",
+    4,
+    "pc",
+    600,
+    "sliced",
+    ""
+   ],
+   [
+    "garlic",
+    3,
+    "clove",
+    15,
+    "chopped",
+    ""
+   ],
+   [
+    "tomato-paste",
+    2,
+    "tbsp",
+    32,
+    "",
+    ""
+   ],
+   [
+    "paprika",
+    3,
+    "tbsp",
+    21,
+    "",
+    ""
+   ],
+   [
+    "smoked-paprika",
+    1,
+    "tsp",
+    2,
+    "",
+    ""
+   ],
+   [
+    "beef-stock",
+    750,
+    "ml",
+    750,
+    "",
+    ""
+   ],
+   [
+    "bay-leaf",
+    2,
+    "pc",
+    1,
+    "",
+    ""
+   ],
+   [
+    "red-pepper",
+    2,
+    "pc",
+    320,
+    "chunks",
+    ""
+   ],
+   [
+    "red-wine-vinegar",
+    2,
+    "tbsp",
+    30,
+    "",
+    ""
+   ],
+   [
+    "salt",
+    2,
+    "tsp",
+    12,
+    "",
+    ""
+   ],
+   [
+    "black-pepper",
+    1,
+    "tsp",
+    2,
+    "",
+    ""
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Brown the beef in the oil in two batches on high heat, 5 minutes each, and set aside. Fry the onions in the same pot 10 minutes on medium until soft and golden, add the garlic and tomato paste for 1 minute.",
+    "w": "Browning in batches gives colour; crowding steams the meat grey.",
+    "c": "Dark brown meat, golden onions.",
+    "m": "All the meat at once: it stews instead of browning.",
+    "who": "either",
+    "min": 21,
+    "tech": "sear",
+    "tmr": 600,
+    "img": "beef chunks browning in a large pot"
+   },
+   {
+    "t": "Take the pot off the heat, stir in both paprikas, then add the stock, bay leaves and beef. Lid on, lowest heat, 75 minutes; add the pepper chunks for the last 20.",
+    "w": "Paprika burns in seconds on direct heat.",
+    "c": "Meat falls apart under a fork.",
+    "m": "Paprika on the hot pan: bitter.",
+    "who": "either",
+    "min": 75,
+    "tech": "none",
+    "tmr": 4500,
+    "img": "goulash simmering in a large pot"
+   },
+   {
+    "t": "Make the sauce: lid off, stir in the vinegar, salt and pepper and bubble 10 minutes until it thickens and coats a spoon. Eat two portions, cool the rest and freeze in four single boxes.",
+    "w": "The vinegar at the end gives the sour finish you like.",
+    "c": "Thick, glossy, coats the back of a spoon.",
+    "m": "Freezing it hot: let it cool first.",
+    "who": "either",
+    "min": 10,
+    "tech": "reduce",
+    "tmr": 600,
+    "img": "thick red goulash in a pot with a ladle"
+   }
+  ],
+  "lesson": "s1-tomato-paste"
+ }
+]

@@ -1,0 +1,1170 @@
+[
+ {
+  "slug": "classic-marinara-sauce-fmlo",
+  "level": 4,
+  "kind": "lesson",
+  "meals": [
+   "dinner"
+  ],
+  "sauce": "tomato",
+  "title": "Classic Marinara Sauce",
+  "desc": "",
+  "serv": 4,
+  "prep": 10,
+  "cook": 25,
+  "fridge": 2,
+  "freezer": 0,
+  "reheat": "",
+  "left": "",
+  "variant": "",
+  "cuisine": "italian",
+  "protein": "none",
+  "flav": [
+   "herby",
+   "tangy",
+   "classic mediterranean"
+  ],
+  "spice": 0,
+  "equip": [
+   "saucepan",
+   "spatula",
+   "chefs-knife"
+  ],
+  "trouble": [
+   [
+    "Sauce tastes too acidic/sour.",
+    "Simmer for an extra 10 minutes or add a tiny pinch more salt to balance it."
+   ],
+   [
+    "Garlic burnt immediately.",
+    "Discard the oil and garlic, wipe the pan clean, and start over with lower heat."
+   ]
+  ],
+  "goes": "Pasta, polenta, or as a base for poached eggs",
+  "ing": [
+   [
+    "olive-oil",
+    2,
+    "tbsp",
+    30,
+    "none",
+    ""
+   ],
+   [
+    "garlic",
+    3,
+    "cloves",
+    15,
+    "thinly sliced",
+    ""
+   ],
+   [
+    "canned-tomatoes",
+    2,
+    "cans (400g)",
+    800,
+    "none",
+    ""
+   ],
+   [
+    "oregano",
+    1,
+    "tsp",
+    2,
+    "none",
+    ""
+   ],
+   [
+    "basil",
+    10,
+    "leaves",
+    5,
+    "torn",
+    ""
+   ],
+   [
+    "salt",
+    1,
+    "tsp",
+    5,
+    "none",
+    ""
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Heat the olive oil in a wide pan over medium heat.",
+    "w": "To create a base for sautéing without burning the garlic.",
+    "c": "Oil shimmers and flows easily; 2 mins",
+    "m": "Overheating until it smokes, which makes the sauce bitter.",
+    "who": "alex",
+    "min": 2,
+    "tech": "none",
+    "tmr": 120,
+    "img": "Close-up of golden olive oil shimmering in a stainless steel pan over a burner."
+   },
+   {
+    "t": "Add the sliced garlic and sauté until fragrant.",
+    "w": "To release aromatic oils from the garlic.",
+    "c": "Garlic becomes translucent and smells nutty, not brown; 2 mins",
+    "m": "Letting the garlic turn dark brown or black, which ruins the flavor.",
+    "who": "alex",
+    "min": 2,
+    "tech": "none",
+    "tmr": 120,
+    "img": "Close-up of thinly sliced garlic cloves sizzling in olive oil."
+   },
+   {
+    "t": "Pour in the crushed tomatoes and stir in the salt.",
+    "w": "To combine the base with the main body of the sauce.",
+    "c": "A thick, bubbling red mixture; 1 min",
+    "m": "Splashing hot tomato sauce on skin by pouring too quickly.",
+    "who": "alex",
+    "min": 1,
+    "tech": "none",
+    "tmr": 60,
+    "img": "Close-up of crushed canned tomatoes being poured into a pan with garlic."
+   },
+   {
+    "t": "Stir in the dried oregano and simmer on low heat.",
+    "w": "To allow flavors to meld and the acidity of the tomato to mellow.",
+    "c": "Sauce thickens slightly and smells herbal; 15 mins",
+    "m": "Boiling too vigorously, which causes the sauce to splatter and separate.",
+    "who": "sam",
+    "min": 15,
+    "tech": "none",
+    "tmr": 900,
+    "img": "Close-up of a bubbling red tomato sauce simmering gently in a pan."
+   },
+   {
+    "t": "Remove from heat and stir in the torn fresh basil.",
+    "w": "Fresh herbs lose flavor if cooked too long; adding at the end preserves brightness.",
+    "c": "Bright green leaves folded into deep red sauce; 1 min",
+    "m": "Adding basil while the pan is still on high heat, wilting it instantly.",
+    "who": "sam",
+    "min": 1,
+    "tech": "none",
+    "tmr": 60,
+    "img": "Close-up of fresh green basil leaves being stirred into a thick red marinara sauce."
+   }
+  ]
+ },
+ {
+  "slug": "lemon-garlic-halloumi-and-green-bean-saute-moao",
+  "level": 5,
+  "kind": "plan",
+  "meals": [
+   "dinner"
+  ],
+  "lesson": "s-ladolemono",
+  "title": "Mediterranean Lemon-Garlic Halloumi and Green Bean Sauté",
+  "desc": "",
+  "serv": 2,
+  "prep": 10,
+  "cook": 20,
+  "fridge": 2,
+  "freezer": 0,
+  "reheat": "",
+  "left": "",
+  "variant": "",
+  "cuisine": "mediterranean",
+  "protein": "halloumi",
+  "flav": [
+   "tangy",
+   "herby",
+   "salty",
+   "fresh"
+  ],
+  "spice": 0,
+  "equip": [
+   "saucepan",
+   "chefs-knife",
+   "tongs"
+  ],
+  "trouble": [
+   [
+    "Halloumi is too salty",
+    "Rinse the halloumi slices under cold water for 30 seconds before frying to remove excess surface brine."
+   ],
+   [
+    "Green beans are too tough",
+    "Add a tablespoon of water and cover with a lid for 2 minutes to steam them slightly before adding garlic."
+   ]
+  ],
+  "goes": "A side of fresh tomato slices or a simple lemon-parsley garnish.",
+  "ing": [
+   [
+    "halloumi-cheese",
+    0.5,
+    "block",
+    125,
+    "sliced into 1cm pieces",
+    "sam"
+   ],
+   [
+    "green-bean",
+    2,
+    "handfuls",
+    400,
+    "trimmed and halved",
+    ""
+   ],
+   [
+    "olive-oil",
+    2,
+    "tbsp",
+    30,
+    "none",
+    ""
+   ],
+   [
+    "garlic",
+    3,
+    "cloves",
+    10,
+    "minced",
+    ""
+   ],
+   [
+    "lemon",
+    1,
+    "tbsp",
+    15,
+    "freshly squeezed",
+    ""
+   ],
+   [
+    "oregano",
+    1,
+    "tsp",
+    2,
+    "none",
+    ""
+   ],
+   [
+    "chicken-breast",
+    1,
+    "piece",
+    200,
+    "cubed",
+    "alex"
+   ],
+   [
+    "cauliflower",
+    1,
+    "cup",
+    200,
+    "small bite-sized pieces",
+    "alex"
+   ],
+   [
+    "boiled-baby-potato",
+    6,
+    "pieces",
+    200,
+    "halved",
+    "sam"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Heat a splash of olive oil in a pan over medium-high heat. Sear the chicken until golden brown, about 6-8 minutes. Remove from pan and set aside.",
+    "w": "To cook the protein separately as per dietary requirements.",
+    "c": "Golden crust on meat; smells savory; 7 mins",
+    "m": "Overcrowding the pan which causes steaming instead of searing.",
+    "who": "alex",
+    "min": 8,
+    "tech": "none",
+    "tmr": 480,
+    "img": "Close-up of cubed chicken breast searing in a stainless steel skillet, golden brown edges, glistening oil, photo-realistic."
+   },
+   {
+    "t": "In the same pan (or a clean one), add olive oil and sauté the green beans. For Alex's portion, add cauliflower; for Sam's, add baby potatoes.",
+    "w": "To cook the base vegetables and handle the carb/veg swap.",
+    "c": "Beans turn bright green; potatoes slightly softened; 8 mins",
+    "m": "Adding garlic too early, which will cause it to burn before veg are tender.",
+    "who": "sam",
+    "min": 8,
+    "tech": "none",
+    "tmr": 480,
+    "img": "Close-up of bright green beans and cauliflower florets sautéing in olive oil in a pan, photo-realistic."
+   },
+   {
+    "t": "Stir in the minced garlic and dried oregano. Cook for 1 minute until fragrant.",
+    "w": "Garlic burns quickly; adding it late preserves flavor.",
+    "c": "Strong aromatic garlic scent; 1 min",
+    "m": "Leaving the pan unattended, leading to burnt bitter garlic.",
+    "who": "alex",
+    "min": 1,
+    "tech": "none",
+    "tmr": 60,
+    "img": "Close-up of minced garlic and dried oregano being stirred into green vegetables in a skillet, photo-realistic."
+   },
+   {
+    "t": "Either: Push the vegetables to the side. Add another splash of oil if needed and fry the halloumi slices until golden on both sides.",
+    "w": "Halloumi is best when charred and squeaky.",
+    "c": "Golden brown crust on cheese; 4 mins",
+    "m": "Flipping too early before a crust forms, causing the cheese to stick.",
+    "who": "either",
+    "min": 4,
+    "tech": "none",
+    "tmr": 240,
+    "img": "Close-up of halloumi slices frying in a pan next to green beans, golden brown sear marks, photo-realistic."
+   },
+   {
+    "t": "Drizzle lemon juice over everything and stir gently to combine. Return the cooked chicken to Alex's side of the pan.",
+    "w": "Acid from lemon balances the saltiness of halloumi and richness of oil.",
+    "c": "Sizzling sound as lemon hits hot pan; glossy finish; 2 mins",
+    "m": "Adding lemon too early, which can prevent browning in some steps.",
+    "who": "alex",
+    "min": 2,
+    "tech": "none",
+    "tmr": 120,
+    "img": "Close-up of fresh lemon juice being poured over a mixture of halloumi and green beans, steam rising, photo-realistic."
+   },
+   {
+    "t": "Make the sauce: lift everything onto the plates. Pour 3 tbsp water into the hot pan, scrape the brown chicken and halloumi bits off the bottom with a wooden spoon and let it bubble 1 minute. Off the heat, whisk in 1 tbsp olive oil, a squeeze of lemon and a pinch of oregano with a fork until cloudy, then spoon the sauce over.",
+    "w": "The brown bits hold the flavour, and lemon and oil turn them into a light Greek sauce.",
+    "c": "It is cloudy and slightly thick, not just oil sitting on water.",
+    "m": "Leaving the brown bits stuck to the pan, where all the taste is.",
+    "who": "either",
+    "min": 2,
+    "tech": "deglaze",
+    "tmr": 0,
+    "img": ""
+   }
+  ]
+ },
+ {
+  "slug": "slow-cooker-mediterranean-vegetable-stew-with-lemon-and-oreg-06zk",
+  "level": 5,
+  "kind": "prep",
+  "meals": [
+   "lunch",
+   "dinner"
+  ],
+  "lesson": "tomato-sauce",
+  "title": "Slow-Cooker Mediterranean Vegetable Stew with Lemon and Oregano",
+  "desc": "",
+  "serv": 6,
+  "prep": 20,
+  "cook": 480,
+  "fridge": 2,
+  "freezer": 0,
+  "reheat": "",
+  "left": "",
+  "variant": "",
+  "cuisine": "mediterranean",
+  "protein": "chicken",
+  "flav": [
+   "Lemony",
+   "Herby",
+   "Roasted",
+   "Hearty"
+  ],
+  "spice": 0,
+  "equip": [
+   "slow-cooker",
+   "saucepan",
+   "chefs-knife",
+   "air-fryer",
+   "measuring",
+   "containers"
+  ],
+  "trouble": [
+   [
+    "Stew is too thin/watery.",
+    "Simmer on High for 30 minutes without the lid to reduce liquid."
+   ],
+   [
+    "Stew tastes too acidic.",
+    "Add a pinch more salt or a small knob of butter during reheating."
+   ]
+  ],
+  "goes": "Crusty whole-grain bread or a side of fresh greens.",
+  "ing": [
+   [
+    "olive-oil",
+    3,
+    "tbsp",
+    45,
+    "none",
+    ""
+   ],
+   [
+    "onion",
+    2,
+    "medium",
+    300,
+    "diced",
+    ""
+   ],
+   [
+    "carrot",
+    2,
+    "large",
+    267,
+    "sliced rounds",
+    ""
+   ],
+   [
+    "green-beans",
+    300,
+    "g",
+    300,
+    "trimmed, cut in 3 cm pieces",
+    ""
+   ],
+   [
+    "red-pepper",
+    2,
+    "large",
+    400,
+    "chopped",
+    ""
+   ],
+   [
+    "canned-tomatoes",
+    2,
+    "cans",
+    800,
+    "none",
+    ""
+   ],
+   [
+    "vegetable-stock",
+    2,
+    "cups",
+    500,
+    "none",
+    ""
+   ],
+   [
+    "oregano",
+    2,
+    "tbsp",
+    10,
+    "none",
+    ""
+   ],
+   [
+    "garlic",
+    6,
+    "cloves",
+    30,
+    "minced",
+    ""
+   ],
+   [
+    "lemon",
+    3,
+    "tbsp",
+    45,
+    "freshly squeezed",
+    ""
+   ],
+   [
+    "salt",
+    2,
+    "tsp",
+    10,
+    "none",
+    ""
+   ],
+   [
+    "black-pepper",
+    1,
+    "tsp",
+    5,
+    "none",
+    ""
+   ],
+   [
+    "quinoa",
+    0.25,
+    "cups",
+    50,
+    "rinsed",
+    "sam"
+   ],
+   [
+    "cauliflower",
+    0.67,
+    "cups",
+    67,
+    "small pieces",
+    "alex"
+   ],
+   [
+    "chicken-breast",
+    1,
+    "piece",
+    180,
+    "cubed",
+    "alex"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Sauté the diced onion and carrot in olive oil in a pan until softened to build a flavor base.",
+    "w": "Developing sweetness through caramelization.",
+    "c": "Onions look translucent and smell sweet; 6 minutes.",
+    "m": "Burning the onions by using heat that is too high.",
+    "who": "alex",
+    "min": 6,
+    "tech": "none",
+    "tmr": 360,
+    "img": "Close-up of diced onions and carrots softening in golden olive oil in a stainless steel pan."
+   },
+   {
+    "t": "Transfer sautéed vegetables to the slow cooker; add the green beans, red bell pepper, minced garlic, canned tomatoes, vegetable stock, oregano, salt and pepper.",
+    "w": "Combining all base ingredients for slow infusion.",
+    "c": "A thick, colorful mixture of vegetables and red sauce; 5 minutes.",
+    "m": "Forgetting to add the stock, which may cause burning.",
+    "who": "sam",
+    "min": 5,
+    "tech": "none",
+    "tmr": 300,
+    "img": "Close-up of a ceramic slow cooker pot filled with chopped Mediterranean vegetables, diced tomatoes, and herbs."
+   },
+   {
+    "t": "Cover and cook on Low for 8 hours (or High for 4 hours). Make the sauce at the end: press a few pieces of tomato and carrot against the side with a spoon and stir for 2 minutes until the liquid thickens, then stir in the lemon juice.",
+    "w": "Slow cooking breaks down fibers while preserving nutrients.",
+    "c": "Vegetables are tender but not mushy; smells lemony and herby; 8 hours.",
+    "m": "Adding lemon juice at the start, which can make it taste bitter.",
+    "who": "either",
+    "min": 480,
+    "tech": "none",
+    "tmr": 28800,
+    "img": "Close-up of a bubbling, rich vegetable stew in a slow cooker with steam rising."
+   },
+   {
+    "t": "While the stew finishes, sear cubed chicken in a pan until golden brown and boil the quinoa according to the package instructions.",
+    "w": "Cooking proteins and grains separately to maintain texture and dietary needs.",
+    "c": "Chicken is browned on all sides; quinoa is fluffy; 15 minutes.",
+    "m": "Overcooking the chicken, making it dry.",
+    "who": "alex",
+    "min": 15,
+    "tech": "none",
+    "tmr": 900,
+    "img": "Split screen: golden brown chicken cubes in a pan and a pot of fluffy white quinoa."
+   },
+   {
+    "t": "For the low-carb swap, steam or sauté cauliflower florets until tender-crisp.",
+    "w": "Replacing grains with a vegetable to meet net carb limits.",
+    "c": "Cauliflower is pale white and slightly softened; 7 minutes.",
+    "m": "Oversteaming the cauliflower into mush.",
+    "who": "sam",
+    "min": 7,
+    "tech": "none",
+    "tmr": 420,
+    "img": "Close-up of steamed, tender cauliflower florets in a colander."
+   },
+   {
+    "t": "Divide the vegetable stew into 6 containers. Add quinoa to Sam's containers and cauliflower + seared chicken to Alex's.",
+    "w": "Meal prep organization for the week.",
+    "c": "Six equal portions distributed in airtight containers; 10 minutes.",
+    "m": "Mixing all proteins into one pot, ruining the vegetarian base.",
+    "who": "either",
+    "min": 10,
+    "tech": "none",
+    "tmr": 600,
+    "img": "Top-down view of six meal prep containers filled with vegetable stew, some with quinoa and others with chicken and cauliflower."
+   }
+  ]
+ },
+ {
+  "slug": "beef-bourguignon-tzj0",
+  "level": 5,
+  "kind": "lesson",
+  "meals": [
+   "dinner"
+  ],
+  "title": "Beef Bourguignon",
+  "desc": "",
+  "serv": 4,
+  "prep": 30,
+  "cook": 180,
+  "fridge": 2,
+  "freezer": 0,
+  "reheat": "",
+  "left": "",
+  "variant": "",
+  "cuisine": "",
+  "protein": "",
+  "flav": [],
+  "spice": 0,
+  "equip": [],
+  "trouble": [],
+  "goes": "",
+  "ing": [
+   [
+    "beef-chunks",
+    800,
+    "g",
+    800,
+    "cut into 4cm cubes",
+    ""
+   ],
+   [
+    "pancetta",
+    150,
+    "g",
+    150,
+    "cut into strips",
+    ""
+   ],
+   [
+    "carrot",
+    2,
+    "pc",
+    200,
+    "peeled and sliced into thick rounds",
+    ""
+   ],
+   [
+    "onion",
+    1,
+    "pc",
+    150,
+    "diced",
+    ""
+   ],
+   [
+    "garlic",
+    3,
+    "clove",
+    10,
+    "minced",
+    ""
+   ],
+   [
+    "beef-stock",
+    750,
+    "ml",
+    750,
+    "",
+    ""
+   ],
+   [
+    "red-wine-vinegar",
+    1,
+    "tbsp",
+    15,
+    "",
+    ""
+   ],
+   [
+    "tomato-paste",
+    2,
+    "tbsp",
+    30,
+    "",
+    ""
+   ],
+   [
+    "butter",
+    3,
+    "tbsp",
+    50,
+    "",
+    ""
+   ],
+   [
+    "plain-flour",
+    2,
+    "tbsp",
+    20,
+    "",
+    ""
+   ],
+   [
+    "olive-oil",
+    1,
+    "tbsp",
+    15,
+    "",
+    ""
+   ],
+   [
+    "salt",
+    1,
+    "tsp",
+    5,
+    "",
+    ""
+   ],
+   [
+    "black-pepper",
+    0.5,
+    "tsp",
+    2,
+    "",
+    ""
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Heat olive oil in a heavy pot over medium-high heat and fry bacon lardons until crisp.",
+    "w": "",
+    "c": "",
+    "m": "",
+    "who": "alex",
+    "min": 5,
+    "tech": "none",
+    "tmr": 0,
+    "img": "Close up of diced bacon sizzling in a cast iron pot with golden oil."
+   },
+   {
+    "t": "Remove bacon and sear beef chuck in the fat until browned on all sides.",
+    "w": "",
+    "c": "",
+    "m": "",
+    "who": "alex",
+    "min": 15,
+    "tech": "none",
+    "tmr": 0,
+    "img": "Close up of brown seared beef cubes in a pot."
+   },
+   {
+    "t": "Add carrots and onion to the pot and sauté until softened.",
+    "w": "",
+    "c": "",
+    "m": "",
+    "who": "alex",
+    "min": 8,
+    "tech": "none",
+    "tmr": 0,
+    "img": "Close up of sliced carrots and diced onions softening in a pot with beef."
+   },
+   {
+    "t": "Stir in minced garlic and tomato paste, cooking for one minute.",
+    "w": "",
+    "c": "",
+    "m": "",
+    "who": "sam",
+    "min": 2,
+    "tech": "none",
+    "tmr": 60,
+    "img": "Close up of a wooden spoon stirring red tomato paste into vegetables."
+   },
+   {
+    "t": "Sprinkle flour over the meat and vegetables, stirring well to coat.",
+    "w": "",
+    "c": "",
+    "m": "",
+    "who": "sam",
+    "min": 2,
+    "tech": "none",
+    "tmr": 0,
+    "img": "Close up of white flour being dusted over beef and carrots."
+   },
+   {
+    "t": "Pour in beef stock and red wine vinegar, scraping the bottom of the pot.",
+    "w": "",
+    "c": "",
+    "m": "",
+    "who": "alex",
+    "min": 3,
+    "tech": "none",
+    "tmr": 0,
+    "img": "Close up of brown stock being poured into a pot, deglazing the bottom."
+   },
+   {
+    "t": "Add salt, black pepper, and the cooked bacon back into the pot.",
+    "w": "",
+    "c": "",
+    "m": "",
+    "who": "sam",
+    "min": 2,
+    "tech": "none",
+    "tmr": 0,
+    "img": "Close up of salt and pepper being sprinkled over a stew."
+   },
+   {
+    "t": "Cover with a lid and place in a fan oven at 160°C for 2.5 hours.",
+    "w": "",
+    "c": "",
+    "m": "",
+    "who": "either",
+    "min": 150,
+    "tech": "none",
+    "tmr": 9000,
+    "img": "Close up of a heavy pot with a lid being slid into an oven."
+   },
+   {
+    "t": "Remove from oven and stir in butter to thicken and glaze the sauce.",
+    "w": "",
+    "c": "",
+    "m": "",
+    "who": "alex",
+    "min": 5,
+    "tech": "none",
+    "tmr": 0,
+    "img": "Close up of a knob of butter melting into a rich brown beef stew."
+   }
+  ]
+ },
+ {
+  "slug": "chicken-souvlaki-tf77",
+  "level": 5,
+  "kind": "lesson",
+  "meals": [
+   "dinner"
+  ],
+  "title": "Chicken Souvlaki",
+  "desc": "",
+  "serv": 2,
+  "prep": 20,
+  "cook": 15,
+  "fridge": 2,
+  "freezer": 0,
+  "reheat": "",
+  "left": "",
+  "variant": "",
+  "cuisine": "",
+  "protein": "",
+  "flav": [],
+  "spice": 0,
+  "equip": [],
+  "trouble": [],
+  "goes": "",
+  "ing": [
+   [
+    "chicken-breast",
+    2,
+    "pc",
+    500,
+    "cut into 3cm cubes",
+    ""
+   ],
+   [
+    "olive-oil",
+    2,
+    "tbsp",
+    30,
+    "",
+    ""
+   ],
+   [
+    "lemon",
+    1,
+    "tbsp",
+    15,
+    "",
+    ""
+   ],
+   [
+    "oregano",
+    1,
+    "tsp",
+    2,
+    "",
+    ""
+   ],
+   [
+    "salt",
+    1,
+    "tsp",
+    5,
+    "",
+    ""
+   ],
+   [
+    "black-pepper",
+    0.5,
+    "tsp",
+    2,
+    "",
+    ""
+   ],
+   [
+    "garlic",
+    2,
+    "clove",
+    6,
+    "minced",
+    ""
+   ]
+  ],
+  "steps": [
+   {
+    "t": "In a bowl, mix the olive oil, lemon juice, dried oregano, salt, black pepper, and garlic.",
+    "w": "",
+    "c": "",
+    "m": "",
+    "who": "sam",
+    "min": 3,
+    "tech": "none",
+    "tmr": 0,
+    "img": "Close-up of a glass bowl with olive oil, lemon juice, and herbs being whisked by a spoon."
+   },
+   {
+    "t": "Add the chicken breast to the marinade and stir until every piece is coated.",
+    "w": "",
+    "c": "",
+    "m": "",
+    "who": "sam",
+    "min": 2,
+    "tech": "none",
+    "tmr": 0,
+    "img": "Hands stirring cubed raw chicken in a yellow-green herb marinade."
+   },
+   {
+    "t": "Cover the bowl and let the chicken marinate in the fridge.",
+    "w": "",
+    "c": "",
+    "m": "",
+    "who": "either",
+    "min": 1,
+    "tech": "none",
+    "tmr": 3600,
+    "img": "A covered glass bowl of marinated chicken sitting on a refrigerator shelf."
+   },
+   {
+    "t": "Thread the marinated chicken pieces onto wooden skewers.",
+    "w": "",
+    "c": "",
+    "m": "",
+    "who": "sam",
+    "min": 5,
+    "tech": "none",
+    "tmr": 0,
+    "img": "Close-up of hands sliding cubed chicken onto wooden skewers."
+   },
+   {
+    "t": "Heat a grill pan or frying pan over medium-high heat until very hot.",
+    "w": "",
+    "c": "",
+    "m": "",
+    "who": "alex",
+    "min": 3,
+    "tech": "none",
+    "tmr": 0,
+    "img": "A cast iron grill pan heating up on a stove burner."
+   },
+   {
+    "t": "Place the skewers in the pan and sear without moving them for 3 minutes.",
+    "w": "",
+    "c": "",
+    "m": "",
+    "who": "alex",
+    "min": 3,
+    "tech": "none",
+    "tmr": 180,
+    "img": "Chicken skewers searing in a hot pan with visible grill marks forming."
+   },
+   {
+    "t": "Turn the skewers and cook for another 4-5 minutes until golden brown.",
+    "w": "",
+    "c": "",
+    "m": "",
+    "who": "alex",
+    "min": 5,
+    "tech": "none",
+    "tmr": 300,
+    "img": "Tongs flipping chicken skewers in a pan, juices bubbling."
+   },
+   {
+    "t": "Remove the skewers from the heat and let them rest on a plate.",
+    "w": "",
+    "c": "",
+    "m": "",
+    "who": "either",
+    "min": 2,
+    "tech": "none",
+    "tmr": 120,
+    "img": "Finished golden-brown chicken skewers resting on a white ceramic plate."
+   }
+  ]
+ },
+ {
+  "slug": "grilled-chicken-with-tzatziki-ks3v",
+  "level": 5,
+  "kind": "lesson",
+  "meals": [
+   "dinner"
+  ],
+  "title": "Grilled Chicken with Tzatziki",
+  "desc": "",
+  "serv": 2,
+  "prep": 20,
+  "cook": 15,
+  "fridge": 2,
+  "freezer": 0,
+  "reheat": "",
+  "left": "",
+  "variant": "",
+  "cuisine": "",
+  "protein": "",
+  "flav": [],
+  "spice": 0,
+  "equip": [],
+  "trouble": [],
+  "goes": "",
+  "ing": [
+   [
+    "chicken-breast",
+    2,
+    "pc",
+    400,
+    "",
+    ""
+   ],
+   [
+    "olive-oil",
+    2,
+    "tbsp",
+    30,
+    "",
+    ""
+   ],
+   [
+    "oregano",
+    1,
+    "tsp",
+    2,
+    "",
+    ""
+   ],
+   [
+    "salt",
+    1,
+    "tsp",
+    5,
+    "",
+    ""
+   ],
+   [
+    "black-pepper",
+    0.5,
+    "tsp",
+    2,
+    "",
+    ""
+   ],
+   [
+    "greek-yogurt",
+    1.25,
+    "cup",
+    300,
+    "",
+    ""
+   ],
+   [
+    "courgette",
+    1,
+    "pc",
+    150,
+    "grated and squeezed dry",
+    ""
+   ],
+   [
+    "garlic",
+    2,
+    "clove",
+    6,
+    "minced",
+    ""
+   ],
+   [
+    "lemon",
+    1,
+    "tbsp",
+    15,
+    "",
+    ""
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Mix olive oil, oregano, salt, and pepper in a bowl.",
+    "w": "",
+    "c": "",
+    "m": "",
+    "who": "sam",
+    "min": 2,
+    "tech": "none",
+    "tmr": 0,
+    "img": "Close-up of hands mixing oil and dried herbs in a glass bowl."
+   },
+   {
+    "t": "Coat the chicken breast in the herb mixture.",
+    "w": "",
+    "c": "",
+    "m": "",
+    "who": "either",
+    "min": 2,
+    "tech": "none",
+    "tmr": 0,
+    "img": "Hands rubbing a green herb oil marinade into raw chicken breasts."
+   },
+   {
+    "t": "Heat a pan over medium-high heat and sear the chicken for 6-8 minutes per side until internal temperature reaches 75°C.",
+    "w": "",
+    "c": "",
+    "m": "",
+    "who": "alex",
+    "min": 15,
+    "tech": "none",
+    "tmr": 0,
+    "img": "Close-up of golden brown grilled chicken breasts searing in a pan."
+   },
+   {
+    "t": "Combine strained Greek yogurt and minced garlic in a bowl.",
+    "w": "",
+    "c": "",
+    "m": "",
+    "who": "sam",
+    "min": 2,
+    "tech": "none",
+    "tmr": 0,
+    "img": "Mixing thick white yogurt with tiny bits of minced garlic."
+   },
+   {
+    "t": "Stir in the grated zucchini and lemon juice.",
+    "w": "",
+    "c": "",
+    "m": "",
+    "who": "sam",
+    "min": 2,
+    "tech": "none",
+    "tmr": 0,
+    "img": "Adding green shredded zucchini into a bowl of white yogurt."
+   },
+   {
+    "t": "Season the sauce with a pinch of salt and pepper.",
+    "w": "",
+    "c": "",
+    "m": "",
+    "who": "sam",
+    "min": 1,
+    "tech": "none",
+    "tmr": 0,
+    "img": "Sprinkling salt over a bowl of creamy tzatziki."
+   },
+   {
+    "t": "Let the chicken rest on a plate for 5 minutes before slicing.",
+    "w": "",
+    "c": "",
+    "m": "",
+    "who": "alex",
+    "min": 5,
+    "tech": "none",
+    "tmr": 300,
+    "img": "Grilled chicken breasts resting on a white ceramic plate."
+   },
+   {
+    "t": "Serve the sliced chicken alongside a generous scoop of the sauce.",
+    "w": "",
+    "c": "",
+    "m": "",
+    "who": "either",
+    "min": 2,
+    "tech": "none",
+    "tmr": 0,
+    "img": "Plated grilled chicken slices next to a bowl of creamy tzatziki."
+   }
+  ]
+ }
+]

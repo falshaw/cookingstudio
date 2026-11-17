@@ -1,0 +1,542 @@
+// CookingStudio — cooking practice app for a two-person household (lanes "alex" and "sam").
+// Prisma 7: no url here (prisma.config.ts), runtime uses the PrismaPg adapter.
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id                  String    @id @default(cuid())
+  slug                String    @unique // "alex" | "sam"
+  email               String    @unique
+  name                String
+  passwordHash        String
+  failedLoginAttempts Int       @default(0)
+  lockedUntil         DateTime?
+  lastLoginAt         DateTime?
+  createdAt           DateTime  @default(now())
+
+  sessions   Session[]
+  profile    UserProfile?
+  labs       LabResult[]
+  labImports LabImport[]
+  cooks      CookLog[]
+  foodLogs   FoodLog[]
+  jobs       Job[]
+  favourites Favourite[]
+  weights    WeightEntry[]
+  glucose    GlucoseReading[]
+  dislikes   Dislike[]
+  apiKeys    ApiKey[]
+}
+
+/// Personal API key for scripts and tools. Acts as its owner on scoped routes only (`withScoped`).
+/// keyHash = sha256(key); the key itself is shown once on /keys and never stored.
+model ApiKey {
+  id         String    @id @default(cuid())
+  userId     String
+  name       String
+  hint       String // "kit_AbCd…" — enough to recognise the key, never enough to use it
+  keyHash    String    @unique
+  scopes     String[]
+  expiresAt  DateTime
+  lastUsedAt DateTime?
+  createdAt  DateTime  @default(now())
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique // sha256(jwt)
+  expiresAt DateTime
+  userAgent String?
+  ipAddress String?
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+/// Health + taste profile. Every rule the planner enforces is read from here, never hard-coded per person.
+model UserProfile {
+  userId              String    @id
+  vegetarian          Boolean   @default(false)
+  /// ingredient slugs a vegetarian still eats at breakfast (e.g. pancetta)
+  vegBreakfastAllowed String[]  @default([])
+  avoidFoods          String[]  @default([])
+  /// exceptions to avoidFoods: [{allow: ingredient slug, contexts: ["curry","thai"], note}] —
+  /// e.g. coconut on the avoid list, but coconut milk allowed in curries
+  avoidExceptions     Json?
+  likedFoods          String[]  @default([])
+  healthTargets       String    @default("")
+  goals               String    @default("")
+  maxCookMinutes      Int?
+  maxLunchMinutes     Int?
+  maxNetCarbsPerMeal  Float?
+  minProteinPerMeal   Float?
+  noAddedSugar        Boolean   @default(false)
+  noRefinedStarch     Boolean   @default(false)
+  noAlcohol           Boolean   @default(false)
+  omega3MinPerWeek    Int?
+  omega3MaxPerWeek    Int?
+  /// "red meat at most N× a week"; red meat = beef/veal/pork/lamb/goat incl. cured pork,
+  /// derived from ingredients in rules.ts (`isRedMeatPortion`, ≥ 50 g per portion), null = no limit
+  redMeatMaxPerWeek   Int?
+  dailyKcal           Int?
+  dailyProtein        Int?
+  dailyNetCarbs       Int?
+  portionFactor       Float     @default(1)
+  practiceGoalPerWeek Int       @default(3)
+  /// manual edits on top of the computed taste profile: {likes:[], dislikes:[], spice:n}
+  tasteOverrides      Json?
+  /// nutrients this person watches in the weekly gap check (b12, iron, zinc, ala, magnesium, vitD, fibre)
+  trackedNutrients    String[]  @default([])
+  /// which reference-intake column the nutrient check uses: general | male | female (see health-stats.ts)
+  referenceGroup      String    @default("general")
+  weightLostKg        Float?
+  nextLabDate         DateTime?
+  updatedAt           DateTime  @updatedAt
+  user                User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model LabResult {
+  id        String    @id @default(cuid())
+  userId    String
+  date      DateTime? // null = "history", date unknown
+  marker    String
+  value     Float?
+  unit      String    @default("")
+  refLow    Float?
+  refHigh   Float?
+  flag      String?   // "high" | "low" | free note when no value
+  note      String?
+  source    String    @default("manual") // manual | pdf | seed
+  createdAt DateTime  @default(now())
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, marker])
+}
+
+/// PDF import waiting for the user to confirm every value.
+model LabImport {
+  id        String   @id @default(cuid())
+  userId    String
+  fileName  String
+  status    String   @default("queued") // queued | running | review | saved | failed
+  text      String   @default("")
+  extracted Json?
+  error     String?
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+/// USDA FoodData Central SR Legacy, per 100 g. Macros are only ever computed from this.
+model NutritionRef {
+  fdcId   Int    @id
+  name    String
+  kcal    Float
+  protein Float  @default(0)
+  carbs   Float  @default(0)
+  fat     Float  @default(0)
+  satFat  Float?
+  fibre   Float?
+  sugar   Float?
+  b12       Float? // µg
+  iron      Float? // mg
+  zinc      Float? // mg
+  ala       Float? // g, omega-3 ALA (18:3 n-3; undifferentiated 18:3 where n-3 is not reported)
+  magnesium Float? // mg
+  vitD      Float? // µg
+  epa       Float? // g, omega-3 EPA (20:5 n-3)
+  dha       Float? // g, omega-3 DHA (22:6 n-3)
+  mufa      Float? // g, total monounsaturated
+  pufa      Float? // g, total polyunsaturated
+
+  @@index([name])
+}
+
+model Ingredient {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  nameEn          String
+  section         String   @default("pantry") // supermarket section
+  /// spice | herb | pantry | fresh — spices/herbs/pantry also appear on the Pantry-starter checklist
+  kind            String   @default("fresh")
+  tastesLike      String   @default("")
+  /// food-waste card: where + how long it keeps (verified FoodKeeper/FSA figures in seed)
+  storeWhere      String   @default("") // fridge | freezer | pantry
+  keepsDays       Int?
+  keepsOpenedDays Int?
+  freezable       Boolean  @default(false)
+  freezeHow       String   @default("")
+  freezerMonths   Int?
+  /// typical supermarket pack: label + grams/ml/pieces in the same unit as recipes use
+  packLabel       String   @default("")
+  packQty         Float?
+  packUnit        String   @default("")
+  whatItIs        String   @default("")
+  buyTips       String   @default("")
+  substitutes     String   @default("")
+  storage         String   @default("")
+  fdcId           Int?
+  isMeat          Boolean  @default(false)
+  isFish          Boolean  @default(false)
+  isOmega3        Boolean  @default(false)
+  isAlcohol       Boolean  @default(false)
+  isAddedSugar    Boolean  @default(false)
+  isRefinedStarch Boolean  @default(false)
+  cardStatus      String   @default("seed") // seed | generated | pending
+  imageId         String?
+  createdAt       DateTime @default(now())
+
+  image   Image?             @relation(fields: [imageId], references: [id], onDelete: SetNull)
+  uses    RecipeIngredient[]
+  stock   StockItem?
+  dislikes Dislike[]
+}
+
+model Technique {
+  slug     String  @id
+  title    String
+  summary  String
+  body     String
+  tips     String  @default("")
+  imageId  String?
+  image    Image?  @relation(fields: [imageId], references: [id], onDelete: SetNull)
+}
+
+model Level {
+  number      Int     @id
+  title       String
+  subtitle    String
+  description String
+  refresher   Boolean @default(false)
+}
+
+model Recipe {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  description String   @default("")
+  level       Int      @default(5)
+  kind        String   @default("lesson") // lesson | plan | prep
+  mealTypes   String[] @default([])
+  servings    Int      @default(2)
+  prepMinutes Int      @default(10)
+  cookMinutes Int      @default(20)
+  fridgeDays  Int?
+  freezerDays Int?
+  reheat      String?
+  equipment   String[] @default([]) // Equipment slugs needed
+  /// Sauce School: family key (mother | pan | emulsion | tomato | blender | bbq | mediterranean | curry), null = not a sauce
+  sauceFamily String?
+  /// everyday recipe → slug of the Sauce School lesson that teaches its sauce , null = none
+  sauceLesson String?
+  troubleshoot Json?   // [{problem, fix}]
+  goesWith    String   @default("")
+  variantNote String   @default("") // e.g. air-fryer or alcohol-free variant
+  leftoverIdeas String @default("")
+  /// published = in the library; draft = "New this week" inbox; rejected = kept for the avoid list
+  status      String   @default("published")
+  rejectReason String?
+  cuisine     String   @default("")
+  protein     String   @default("")
+  flavourTags String[] @default([])
+  spiceLevel  Int      @default(0) // 0 none … 3 hot
+  favourites  Favourite[]
+  dislikes    Dislike[]
+  source      String   @default("seed") // seed | teach | import
+  sourceUrl   String?
+  heroImageId String?
+  createdAt   DateTime @default(now())
+
+  hero        Image?             @relation("hero", fields: [heroImageId], references: [id], onDelete: SetNull)
+  ingredients RecipeIngredient[]
+  steps       Step[]
+  cooks       CookLog[]
+  slots       MealSlot[]
+  batches     PrepBatch[]
+}
+
+model RecipeIngredient {
+  id           String     @id @default(cuid())
+  recipeId     String
+  ingredientId String
+  /// both = shared base (quantities for recipe.servings); alex/sam = per ONE portion of that person
+  component    String     @default("both")
+  grams        Float
+  qty          Float
+  unit         String
+  prep         String     @default("")
+  sort         Int        @default(0)
+  recipe       Recipe     @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
+
+  @@index([recipeId])
+  @@index([ingredientId])
+}
+
+model Step {
+  id            String   @id @default(cuid())
+  recipeId      String
+  n             Int
+  text          String
+  why           String   @default("")
+  cue           String   @default("")
+  mistake       String   @default("")
+  who           String   @default("either") // alex | sam | either
+  minutes       Int      @default(5)
+  timerSeconds  Int      @default(0)
+  technique     String?
+  ingredientIds String[] @default([]) // RecipeIngredient ids used in this step
+  imagePrompt   String   @default("")
+  imageId       String?
+  recipe        Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  image         Image?   @relation(fields: [imageId], references: [id], onDelete: SetNull)
+
+  @@unique([recipeId, n])
+}
+
+/// A generated picture AND its render job (queued → running → done | failed). File lives on the images volume.
+model Image {
+  id        String    @id @default(cuid())
+  kind      String    // step | hero | ingredient | technique
+  prompt    String
+  status    String    @default("queued")
+  file      String?
+  video     String?   // looping hero clip (mp4 in IMAGES_DIR)
+  error     String?
+  attempts  Int       @default(0)
+  priority  Int       @default(0)
+  createdAt DateTime  @default(now())
+  doneAt    DateTime?
+
+  steps       Step[]
+  heroes      Recipe[]     @relation("hero")
+  ingredients Ingredient[]
+  techniques  Technique[]
+
+  @@index([status, priority])
+}
+
+model CookLog {
+  id         String   @id @default(cuid())
+  userId     String
+  recipeId   String
+  cookedAt   DateTime @default(now())
+  rating     Int
+  confidence Int
+  notes      String   @default("")
+  tweak      String   @default("") // "tweak next time" — shown on top next time
+  /// the dish's Sauce School lesson (Recipe.sauceLesson slug) credited as practised by this cook, null = none
+  sauceLessonSlug String?
+  /// 1–5, how the sauce itself turned out (separate from the dish rating); null = not rated
+  sauceRating     Int?
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recipe     Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+
+  @@index([userId, cookedAt])
+  @@index([recipeId])
+  @@index([sauceLessonSlug])
+}
+
+/// Async LLM work: teach | import-url | plan | lab-pdf | feed | cards | report | photo. Never run inside a request.
+model Job {
+  id        String   @id @default(cuid())
+  userId    String
+  type      String
+  input     Json
+  status    String   @default("queued") // queued | running | done | failed
+  attempts  Int      @default(0)
+  log       String   @default("")
+  result    Json?
+  error     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([status, createdAt])
+}
+
+model MealPlan {
+  id          String      @id @default(cuid())
+  weekStart   DateTime    @unique
+  generatedBy String      @default("solver")
+  report      Json?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  slots       MealSlot[]
+  batches     PrepBatch[]
+}
+
+model MealSlot {
+  id           String     @id @default(cuid())
+  planId       String
+  day          Int        // 0 = Monday
+  meal         String     // breakfast | lunch | dinner
+  recipeId     String
+  locked       Boolean    @default(false)
+  source       String     @default("fresh") // fresh | prep | leftover | freezer (prepBatchId = the frozen sauce batch)
+  prepBatchId  String?
+  plan         MealPlan   @relation(fields: [planId], references: [id], onDelete: Cascade)
+  recipe       Recipe     @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  prepBatch    PrepBatch? @relation(fields: [prepBatchId], references: [id], onDelete: SetNull)
+
+  @@unique([planId, day, meal])
+}
+
+model PrepBatch {
+  id        String     @id @default(cuid())
+  planId    String?
+  recipeId  String
+  portions  Int
+  prepDay   Int        @default(6) // 6 = Sunday
+  cookedAt  DateTime?
+  location  String     @default("fridge") // fridge | freezer
+  eaten     Int        @default(0) // portions eaten (portions-left = portions - eaten)
+  createdAt DateTime   @default(now())
+  plan      MealPlan?  @relation(fields: [planId], references: [id], onDelete: Cascade)
+  recipe    Recipe     @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  slots     MealSlot[]
+}
+
+model ShoppingList {
+  id        String         @id @default(cuid())
+  name      String
+  source    String         @default("recipes") // recipes | plan
+  createdAt DateTime       @default(now())
+  items     ShoppingItem[]
+}
+
+model ShoppingItem {
+  id           String       @id @default(cuid())
+  listId       String
+  ingredientId String?
+  name         String
+  qty          Float
+  unit         String
+  section      String
+  forWho       String       @default("base") // base | alex | sam
+  inPantry     Boolean      @default(false)
+  /// realistic pack + what to do with the rest of the pack
+  packNote     String       @default("")
+  /// e.g. "Alex avoids" — shared item on someone's avoid list (never-list guard); "" = none
+  avoidNote    String       @default("")
+  checked      Boolean      @default(false)
+  /// what ticking "bought" did to stock, so unticking can undo exactly that:
+  /// {prev: {status, bestBefore} | null (no row before), wrote: {status, bestBefore}} — null = no stock write
+  stockUndo    Json?
+  sort         Int          @default(0)
+  list         ShoppingList @relation(fields: [listId], references: [id], onDelete: Cascade)
+
+  @@index([listId])
+}
+
+/// Household stock (Kitchen & Stock page). low/out items go onto the next shopping list.
+model StockItem {
+  ingredientId String     @id
+  location     String     @default("pantry") // spices | pantry | fridge | freezer
+  status       String     @default("in") // in | low | out
+  qty          String     @default("")
+  bestBefore   DateTime?
+  frozenAt     DateTime?
+  updatedAt    DateTime   @updatedAt
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
+}
+
+model FoodLog {
+  id       String   @id @default(cuid())
+  userId   String
+  date     DateTime // date only (UTC midnight)
+  meal     String
+  recipeId String?
+  label    String
+  portions Float    @default(1)
+  kcal     Float
+  protein  Float
+  netCarbs Float
+  fat      Float
+  /// "Ate today's plan": "<weekStart YYYY-MM-DD>:<day 0-6>:<meal>" of the plan slot this entry logged,
+  /// unique per user so a second tap never logs it twice; null = logged by hand (cleared when the entry is moved)
+  planKey  String?
+  createdAt DateTime @default(now())
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, planKey])
+  @@index([userId, date])
+}
+
+/// Household kitchen kit (editable). Recipes list the slugs they need; the recipe list filters on what you have.
+model Equipment {
+  slug      String  @id
+  name      String
+  category  String  @default("tools") // appliances | pans | tools
+  why       String  @default("")
+  priceEur  String  @default("")
+  whereToBuy   String  @default("")
+  have      Boolean @default(true)
+  sort      Int     @default(0)
+}
+
+model Favourite {
+  userId    String
+  recipeId  String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recipe    Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+
+  @@id([userId, recipeId])
+}
+
+/// Household settings (key → JSON value), e.g. feed.perWeek, feed.lastRun
+model Setting {
+  key   String @id
+  value Json
+}
+
+model WeightEntry {
+  id     String   @id @default(cuid())
+  userId String
+  date   DateTime
+  kg     Float
+  user   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date])
+}
+
+/// CGM readings imported from FreeStyle Libre / Dexcom CSV exports. Local only.
+model GlucoseReading {
+  id     String   @id @default(cuid())
+  userId String
+  at     DateTime
+  mgdl   Float
+  source String   // libre | dexcom
+  user   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, at])
+  @@index([userId, at])
+}
+
+/// Per-user "don't like" on a recipe OR an ingredient (exactly one set). Recipe dislikes hide the
+/// dish from that person's suggestions and from shared planning; ingredient dislikes act like that
+/// person's avoid list. Both feed the taste profile and the new-recipes avoid list.
+model Dislike {
+  id           String      @id @default(cuid())
+  userId       String
+  recipeId     String?
+  ingredientId String?
+  reason       String      @default("") // taste | too long | too hard | ingredient | ""
+  createdAt    DateTime    @default(now())
+  user         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recipe       Recipe?     @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  ingredient   Ingredient? @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, recipeId])
+  @@unique([userId, ingredientId])
+}

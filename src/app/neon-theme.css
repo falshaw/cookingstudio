@@ -1,0 +1,130 @@
+/* Neon night market — site-wide look for the whole app, the login and the dashboard. Colours come from the tokens in globals.css /
+   tailwind.config.ts; this file adds the atmosphere and fixes what a palette swap alone gets wrong.
+   UNLAYERED on purpose (beats Tailwind utilities where it has to). Loaded from src/app/layout.tsx after globals.css. */
+
+:root {
+  --neon-pink: #ff4fd8;
+  --neon-cyan: #3df5ff;
+  --neon-lime: #b6ff3d;
+  --neon-amber: #ffb03d;
+  --neon-red: #ff5a5a;
+  --night: #07060f;
+}
+
+body {
+  background-color: var(--night);
+  background-image:
+    radial-gradient(70rem 30rem at 50% -8rem, rgba(74, 20, 112, 0.55), transparent 60%),
+    radial-gradient(40rem 30rem at 0 70%, rgba(13, 59, 92, 0.35), transparent 60%),
+    radial-gradient(40rem 30rem at 100% 80%, rgba(92, 13, 74, 0.3), transparent 60%);
+  background-attachment: fixed;
+}
+
+/* neon-tube headings: page titles and card titles */
+h1, h2, .font-display {
+  font-family: var(--font-neon), "Segoe UI", system-ui, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+h1 { color: #fff; text-shadow: 0 0 6px rgba(255, 255, 255, 0.55), 0 0 18px rgba(255, 79, 216, 0.75), 0 0 44px rgba(255, 79, 216, 0.45); }
+h2 { color: #fff; text-shadow: 0 0 10px rgba(61, 245, 255, 0.45); }
+h3, h4 { letter-spacing: 0; }
+
+::selection { background: rgba(255, 79, 216, 0.35); color: #fff; }
+::-webkit-scrollbar-thumb { background: rgba(244, 241, 255, 0.18); }
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 79, 216, 0.5); }
+
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, [tabindex]:focus-visible {
+  outline: 2px solid var(--neon-cyan);
+  outline-offset: 2px;
+}
+
+/* cards: dark panel, hairline, glow on hover */
+.glass-card {
+  background: linear-gradient(180deg, #131027, #0e0c1a);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+}
+.glass-card:hover {
+  border-color: rgba(61, 245, 255, 0.55);
+  box-shadow: 0 0 14px rgba(61, 245, 255, 0.22), 0 22px 46px rgba(0, 0, 0, 0.55);
+}
+
+.gradient-text {
+  font-family: var(--font-sign), var(--font-neon), sans-serif;
+  font-weight: 400;
+  color: #fff;
+  text-shadow: 0 0 4px #fff, 0 0 12px var(--neon-pink), 0 0 30px var(--neon-pink);
+}
+
+/* buttons: primary = amber neon sign, secondary = cyan outline */
+.btn-primary {
+  background: transparent;
+  color: var(--neon-amber);
+  border: 2px solid var(--neon-amber);
+  border-radius: 999px;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(255, 176, 61, 0.7);
+  box-shadow: 0 0 12px rgba(255, 176, 61, 0.55), inset 0 0 12px rgba(255, 176, 61, 0.18);
+}
+.btn-primary:hover { background: var(--neon-amber); color: var(--night); text-shadow: none; transform: translateY(-1px); box-shadow: 0 0 22px rgba(255, 176, 61, 0.8); }
+.btn-primary:disabled { opacity: 0.45; box-shadow: none; text-shadow: none; }
+.btn-secondary {
+  background: rgba(61, 245, 255, 0.06);
+  color: var(--ink);
+  border: 1px solid rgba(61, 245, 255, 0.45);
+  border-radius: 999px;
+}
+.btn-secondary:hover { background: rgba(61, 245, 255, 0.14); border-color: var(--neon-cyan); box-shadow: 0 0 12px rgba(61, 245, 255, 0.35); }
+
+.input-field { background: #0b0918; border-color: #3a3458; color: var(--ink); }
+.input-field:focus { border-color: var(--neon-cyan); box-shadow: 0 0 0 3px rgba(61, 245, 255, 0.18), 0 0 14px rgba(61, 245, 255, 0.25); }
+select.input-field option { background: #110e20; color: #f4f1ff; }
+
+/* ── what a palette swap gets wrong ── */
+/* bright fills carried white text when they were dark clay/olive/sea: use night text on them */
+body :is(.bg-clay, .bg-clay-deep, .bg-clay-light, .bg-olive, .bg-olive-light, .bg-sea, .bg-sea-deep, .bg-sea-light, .bg-gold),
+body :is(.bg-clay, .bg-clay-deep, .bg-olive, .bg-sea, .bg-sea-deep, .bg-gold) :is(svg, span, strong) { color: var(--night); }
+/* gold-as-text was a dark brown literal */
+body .text-\[\#7a5f0e\] { color: var(--neon-amber); }
+/* light literals used as surfaces */
+body .bg-white\/60 { background-color: rgba(244, 241, 255, 0.06); }
+body .to-\[\#f6ece3\], body .to-\[\#efe6d6\] { --tw-gradient-to: #1a1433; }
+/* pictures sit on a dark placeholder while they load */
+body .bg-sand { background-color: #0b0918; }
+/* tables and details on dark */
+body table thead th { color: var(--ink-muted); }
+body details > summary { color: var(--sea-deep); }
+/* checkboxes / radios / range pick up the pink */
+input[type="checkbox"], input[type="radio"], input[type="range"], progress { accent-color: var(--neon-pink); }
+
+/* ── shared neon pieces (sidebar, login, dashboard) ── */
+.neon-lanterns { display: flex; justify-content: space-around; height: 46px; position: relative; pointer-events: none; }
+.neon-lanterns::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 20px; border-bottom: 2px solid #2a2440; border-radius: 0 0 50% 50% / 0 0 100% 100%; }
+.neon-lanterns i { width: 14px; height: 20px; border-radius: 7px 7px 9px 9px; margin-top: 14px; background: var(--l, var(--neon-pink)); box-shadow: 0 0 12px var(--l, var(--neon-pink)), 0 0 28px var(--l, var(--neon-pink)); animation: neon-sway 5s ease-in-out infinite; transform-origin: top center; }
+.neon-lanterns i:nth-child(odd) { margin-top: 20px; animation-delay: -2.4s; }
+.neon-lanterns i:nth-child(5n + 1) { --l: var(--neon-pink); }
+.neon-lanterns i:nth-child(5n + 2) { --l: var(--neon-amber); }
+.neon-lanterns i:nth-child(5n + 3) { --l: var(--neon-cyan); }
+.neon-lanterns i:nth-child(5n + 4) { --l: var(--neon-lime); }
+.neon-lanterns i:nth-child(5n) { --l: var(--neon-red); }
+@keyframes neon-sway { 0%, 100% { rotate: -5deg; } 50% { rotate: 5deg; } }
+@keyframes neon-flick { 0%, 6%, 8%, 58%, 60%, 62%, 100% { opacity: 1; } 7%, 59%, 61% { opacity: 0.45; } }
+
+.neon-sign { font-family: var(--font-sign), var(--font-neon), sans-serif; font-weight: 400; line-height: 1; color: #fff; text-shadow: 0 0 4px #fff, 0 0 12px var(--neon-pink), 0 0 34px var(--neon-pink), 0 0 70px var(--neon-pink); animation: neon-flick 7s linear infinite; }
+
+/* sidebar */
+.neon-nav-active { background: rgba(255, 79, 216, 0.1); color: #fff; border: 1px solid rgba(255, 79, 216, 0.55); box-shadow: 0 0 12px rgba(255, 79, 216, 0.35), inset 0 0 10px rgba(255, 79, 216, 0.12); }
+.neon-nav-active svg { color: var(--neon-pink); filter: drop-shadow(0 0 5px var(--neon-pink)); }
+
+@media print {
+  body { background: #fff; color: #000; }
+  h1, h2, .font-display, .gradient-text { color: #000; text-shadow: none; }
+  .glass-card { background: #fff; box-shadow: none; }
+}
+
+/* cook mode (CookAlong): the step text reads in neon-tube type, the dish picture gets a cyan frame */
+.cook-neon [data-testid="cook-step-text"] { font-family: var(--font-neon), sans-serif; font-weight: 400; }
+.cook-neon main > div:first-child > :first-child:is(img, video) { border: 2px solid var(--neon-cyan); box-shadow: 0 0 14px var(--neon-cyan), 0 0 40px rgba(61, 245, 255, 0.25); }
+.cook-neon header, .cook-neon > div:first-child { border-color: #2a2440; }

@@ -1,0 +1,767 @@
+[
+ {
+  "slug": "thai-red-curry",
+  "level": 4,
+  "kind": "plan",
+  "meals": [
+   "dinner"
+  ],
+  "sauce": "curry",
+  "title": "Thai red curry with tofu & veg (+ chicken, optional)",
+  "desc": "A quick blender red curry paste, cream and stock, peppers and green beans with crispy tofu for both; the chicken cooked in a ladle of the sauce. The rice, the cauliflower rice.",
+  "serv": 2,
+  "prep": 12,
+  "cook": 18,
+  "fridge": 3,
+  "freezer": 60,
+  "reheat": "Simmer gently until piping hot.",
+  "left": "Next-day lunch over cauliflower rice.",
+  "cuisine": "thai",
+  "protein": "chicken",
+  "flav": [
+   "curry",
+   "spicy",
+   "creamy",
+   "lime"
+  ],
+  "spice": 2,
+  "equip": [
+   "blender",
+   "heavy-pan"
+  ],
+  "trouble": [
+   [
+    "Too hot",
+    "More cream and a squeeze of lime."
+   ],
+   [
+    "Curry tastes flat",
+    "More lime and a splash of soy sauce."
+   ],
+   [
+    "Cream split",
+    "It boiled hard — keep it at a gentle simmer; whisk to bring it back."
+   ]
+  ],
+  "goes": "Rice, cauliflower rice, lime wedges.",
+  "ing": [
+   [
+    "chilli-flakes",
+    1,
+    "tsp",
+    2,
+    "",
+    ""
+   ],
+   [
+    "shallot",
+    1,
+    "pc",
+    40,
+    "",
+    ""
+   ],
+   [
+    "garlic",
+    3,
+    "clove",
+    15,
+    "",
+    ""
+   ],
+   [
+    "ginger",
+    3,
+    "cm",
+    15,
+    "",
+    ""
+   ],
+   [
+    "lemongrass",
+    1,
+    "pc",
+    20,
+    "pale part, sliced",
+    ""
+   ],
+   [
+    "coriander",
+    0.5,
+    "bunch",
+    15,
+    "stalks for the paste, leaves to serve",
+    ""
+   ],
+   [
+    "cumin",
+    0.5,
+    "tsp",
+    1,
+    "",
+    ""
+   ],
+   [
+    "coriander-seed",
+    1,
+    "tsp",
+    2,
+    "",
+    ""
+   ],
+   [
+    "smoked-paprika",
+    1,
+    "tsp",
+    2,
+    "for colour",
+    ""
+   ],
+   [
+    "lime",
+    1,
+    "pc",
+    40,
+    "zest + juice",
+    ""
+   ],
+   [
+    "soy-sauce",
+    1,
+    "tbsp",
+    16,
+    "",
+    ""
+   ],
+   [
+    "sunflower-oil",
+    1,
+    "tbsp",
+    13.5,
+    "",
+    ""
+   ],
+   [
+    "cream",
+    125,
+    "ml",
+    125,
+    "",
+    ""
+   ],
+   [
+    "vegetable-stock",
+    225,
+    "ml",
+    225,
+    "",
+    ""
+   ],
+   [
+    "red-pepper",
+    0.75,
+    "pc",
+    120,
+    "strips",
+    ""
+   ],
+   [
+    "green-beans",
+    150,
+    "g",
+    150,
+    "halved",
+    ""
+   ],
+   [
+    "tofu",
+    100,
+    "g",
+    100,
+    "pressed, cubed",
+    "sam"
+   ],
+   [
+    "chicken-thighs",
+    170,
+    "g",
+    170,
+    "bite-size pieces",
+    "alex"
+   ],
+   [
+    "cauliflower",
+    200,
+    "g",
+    200,
+    "riced",
+    "alex"
+   ],
+   [
+    "basmati-rice",
+    75,
+    "g",
+    75,
+    "",
+    "sam"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Paste: blend the chilli flakes, shallots, garlic, ginger, lemongrass, coriander stalks, cumin, coriander seed, smoked paprika, lime zest and soy sauce with 2 tbsp water to a paste.",
+    "w": "Fresh paste has more aroma than a jar and contains no sugar or shrimp paste, so the other portion stays vegetarian.",
+    "c": "Thick, brick-red paste, no big lemongrass bits.",
+    "m": "Blending dry — add water a spoon at a time so it turns.",
+    "who": "sam",
+    "min": 4,
+    "tech": "blender",
+    "tmr": 0,
+    "img": "red curry paste in a blender jug"
+   },
+   {
+    "t": "Start the rice. Pan-fry the tofu in the oil on high until golden on two sides; set aside.",
+    "w": "Dry, hot tofu browns and holds its shape in the sauce.",
+    "c": "Golden crust, 5–6 min.",
+    "m": "Wet tofu — press it in a towel first or it steams and sticks.",
+    "who": "alex",
+    "min": 6,
+    "tech": "sear",
+    "tmr": 0,
+    "img": "golden tofu cubes in a pan"
+   },
+   {
+    "t": "Fry the paste in the same pan 2 minutes, stirring, then add the cream and stock; bring to a gentle simmer.",
+    "w": "Frying the paste first releases its oils; cream can split if it boils hard.",
+    "c": "Fragrant, red oil on the surface, gentle bubbles.",
+    "m": "Boiling hard — the cream separates.",
+    "who": "alex",
+    "min": 4,
+    "tech": "saute",
+    "tmr": 0,
+    "img": "curry paste fried then cream added"
+   },
+   {
+    "t": "Add the pepper and green beans; simmer 5 minutes. simmer that chicken in a ladle of the sauce in a small pan 8–10 minutes.",
+    "w": "Separate pan keeps the other portion meat-free.",
+    "c": "Beans bright and just tender.",
+    "m": "Overcooking the vegetables to grey.",
+    "who": "either",
+    "min": 10,
+    "tech": "doneness",
+    "tmr": 600,
+    "img": "red curry with peppers and green beans simmering"
+   },
+   {
+    "t": "Return the tofu, squeeze in lime juice, taste and add soy if needed. Fry the cauliflower rice 4 minutes. Serve with coriander leaves.",
+    "w": "Lime at the end keeps it bright.",
+    "c": "Balanced: hot, sour, salty, creamy.",
+    "m": "Adding lime early — it dulls.",
+    "who": "sam",
+    "min": 4,
+    "tech": "seasoning",
+    "tmr": 0,
+    "img": "bowl of thai red curry with tofu and coriander"
+   }
+  ]
+ },
+ {
+  "slug": "thai-green-curry",
+  "level": 4,
+  "kind": "plan",
+  "meals": [
+   "dinner"
+  ],
+  "sauce": "curry",
+  "title": "Thai green curry with green beans & tofu (+ chicken, optional)",
+  "desc": "Green chilli, coriander and basil paste, cream and stock, green beans, broccoli and tofu; the chicken breast strips simmered in the own ladle of sauce.",
+  "serv": 2,
+  "prep": 12,
+  "cook": 17,
+  "fridge": 2,
+  "freezer": 0,
+  "reheat": "Gently, until piping hot all through.",
+  "left": "",
+  "cuisine": "thai",
+  "protein": "chicken",
+  "flav": [
+   "curry",
+   "herby",
+   "fresh",
+   "creamy"
+  ],
+  "spice": 2,
+  "equip": [
+   "blender",
+   "heavy-pan"
+  ],
+  "trouble": [
+   [
+    "Too hot",
+    "More cream and a squeeze of lime."
+   ],
+   [
+    "Curry tastes flat",
+    "More lime and a splash of soy sauce."
+   ],
+   [
+    "Cream split",
+    "It boiled hard — keep it at a gentle simmer; whisk to bring it back."
+   ]
+  ],
+  "goes": "Rice, cauliflower rice.",
+  "ing": [
+   [
+    "green-chilli",
+    2,
+    "pc",
+    20,
+    "deseeded for less heat",
+    ""
+   ],
+   [
+    "coriander",
+    1,
+    "bunch",
+    30,
+    "stalks + leaves",
+    ""
+   ],
+   [
+    "basil",
+    0.5,
+    "bunch",
+    10,
+    "",
+    ""
+   ],
+   [
+    "lemongrass",
+    1,
+    "pc",
+    20,
+    "pale part",
+    ""
+   ],
+   [
+    "ginger",
+    3,
+    "cm",
+    15,
+    "",
+    ""
+   ],
+   [
+    "garlic",
+    3,
+    "clove",
+    15,
+    "",
+    ""
+   ],
+   [
+    "shallot",
+    1,
+    "pc",
+    30,
+    "",
+    ""
+   ],
+   [
+    "cumin",
+    0.5,
+    "tsp",
+    1,
+    "",
+    ""
+   ],
+   [
+    "lime",
+    1,
+    "pc",
+    40,
+    "zest + juice",
+    ""
+   ],
+   [
+    "soy-sauce",
+    1,
+    "tbsp",
+    16,
+    "",
+    ""
+   ],
+   [
+    "sunflower-oil",
+    1,
+    "tbsp",
+    13.5,
+    "",
+    ""
+   ],
+   [
+    "cream",
+    125,
+    "ml",
+    125,
+    "",
+    ""
+   ],
+   [
+    "vegetable-stock",
+    225,
+    "ml",
+    225,
+    "",
+    ""
+   ],
+   [
+    "green-beans",
+    150,
+    "g",
+    150,
+    "trimmed, cut in 4 cm pieces",
+    ""
+   ],
+   [
+    "broccoli",
+    150,
+    "g",
+    150,
+    "small florets",
+    ""
+   ],
+   [
+    "tofu",
+    100,
+    "g",
+    100,
+    "pressed, cubed",
+    "sam"
+   ],
+   [
+    "chicken-breast",
+    170,
+    "g",
+    170,
+    "thin strips",
+    "alex"
+   ],
+   [
+    "cauliflower",
+    200,
+    "g",
+    200,
+    "riced",
+    "alex"
+   ],
+   [
+    "basmati-rice",
+    75,
+    "g",
+    75,
+    "",
+    "sam"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Paste: blend green chillies, coriander, basil, lemongrass, ginger, garlic, shallot, cumin, lime zest and soy sauce with 3 tbsp water.",
+    "w": "Fresh herbs give the green colour; blending briefly keeps it bright.",
+    "c": "Bright green, smooth.",
+    "m": "Blending for minutes — it heats and turns dull.",
+    "who": "sam",
+    "min": 4,
+    "tech": "blender",
+    "tmr": 0,
+    "img": "bright green curry paste in a blender"
+   },
+   {
+    "t": "Start the rice. Brown the tofu in the oil; set aside. Fry 3 tbsp of the paste 1 minute, add cream and stock.",
+    "w": "Fry the paste briefly — green paste burns faster than red.",
+    "c": "Fragrant, pale green sauce.",
+    "m": "Burning the paste.",
+    "who": "alex",
+    "min": 7,
+    "tech": "saute",
+    "tmr": 0,
+    "img": "green curry sauce in a pan"
+   },
+   {
+    "t": "Put the thin chicken breast strips into the own small pan with a ladle of sauce and simmer gently 6–8 minutes. Meanwhile simmer the green beans in the main pan 2 minutes, then add the broccoli for 4–5 minutes more; add the tofu back.",
+    "w": "Thin strips cook through in the sauce without drying out; the own pan keeps the curry vegetarian.",
+    "c": "Veg just tender.",
+    "m": "Boiling the chicken hard — it toughens and the cream splits.",
+    "who": "either",
+    "min": 8,
+    "tech": "doneness",
+    "tmr": 420,
+    "img": "green curry with green beans broccoli and tofu, small pan of chicken strips in green sauce"
+   },
+   {
+    "t": "Finish with lime juice and basil leaves; the cauliflower rice on the side.",
+    "w": "Acid at the end brightens.",
+    "c": "Fresh, hot, sour.",
+    "m": "",
+    "who": "sam",
+    "min": 2,
+    "tech": "seasoning",
+    "tmr": 0,
+    "img": "bowl of thai green curry with basil"
+   }
+  ]
+ },
+ {
+  "slug": "thai-massaman-curry",
+  "level": 4,
+  "kind": "plan",
+  "meals": [
+   "dinner"
+  ],
+  "sauce": "curry",
+  "title": "Massaman curry with tofu & potato (+ chicken, optional)",
+  "desc": "The mild, warm-spiced Thai curry: cinnamon, cloves, nutmeg, peanuts and cream; potatoes, cauliflower, chicken in the own pan.",
+  "serv": 2,
+  "prep": 10,
+  "cook": 20,
+  "fridge": 3,
+  "freezer": 60,
+  "reheat": "Simmer until piping hot.",
+  "left": "",
+  "cuisine": "thai",
+  "protein": "chicken",
+  "flav": [
+   "curry",
+   "warm",
+   "nutty",
+   "creamy"
+  ],
+  "spice": 1,
+  "equip": [
+   "blender",
+   "heavy-pan"
+  ],
+  "trouble": [
+   [
+    "Too hot",
+    "More cream and a squeeze of lime."
+   ],
+   [
+    "Curry tastes flat",
+    "More lime and a splash of soy sauce."
+   ],
+   [
+    "Cream split",
+    "It boiled hard — keep it at a gentle simmer; whisk to bring it back."
+   ]
+  ],
+  "goes": "A crisp green salad, lime.",
+  "ing": [
+   [
+    "shallot",
+    2,
+    "pc",
+    60,
+    "",
+    ""
+   ],
+   [
+    "garlic",
+    3,
+    "clove",
+    15,
+    "",
+    ""
+   ],
+   [
+    "ginger",
+    2,
+    "cm",
+    10,
+    "",
+    ""
+   ],
+   [
+    "lemongrass",
+    1,
+    "pc",
+    20,
+    "pale part",
+    ""
+   ],
+   [
+    "cinnamon",
+    0.5,
+    "tsp",
+    1,
+    "",
+    ""
+   ],
+   [
+    "cloves",
+    2,
+    "pc",
+    0.5,
+    "ground",
+    ""
+   ],
+   [
+    "nutmeg",
+    0.25,
+    "tsp",
+    0.5,
+    "",
+    ""
+   ],
+   [
+    "cumin",
+    1,
+    "tsp",
+    2,
+    "",
+    ""
+   ],
+   [
+    "coriander-seed",
+    1,
+    "tsp",
+    2,
+    "",
+    ""
+   ],
+   [
+    "chilli-flakes",
+    0.5,
+    "tsp",
+    1,
+    "",
+    ""
+   ],
+   [
+    "soy-sauce",
+    1,
+    "tbsp",
+    16,
+    "",
+    ""
+   ],
+   [
+    "sunflower-oil",
+    1,
+    "tbsp",
+    13.5,
+    "",
+    ""
+   ],
+   [
+    "cream",
+    125,
+    "ml",
+    125,
+    "",
+    ""
+   ],
+   [
+    "vegetable-stock",
+    275,
+    "ml",
+    275,
+    "",
+    ""
+   ],
+   [
+    "tofu",
+    100,
+    "g",
+    100,
+    "pressed, cubed",
+    "sam"
+   ],
+   [
+    "peanuts",
+    30,
+    "g",
+    30,
+    "roughly chopped",
+    ""
+   ],
+   [
+    "lime",
+    0.5,
+    "pc",
+    20,
+    "juiced",
+    ""
+   ],
+   [
+    "chicken-thighs",
+    170,
+    "g",
+    170,
+    "chunks",
+    "alex"
+   ],
+   [
+    "cauliflower",
+    200,
+    "g",
+    200,
+    "florets",
+    "alex"
+   ],
+   [
+    "potato",
+    200,
+    "g",
+    200,
+    "2 cm cubes",
+    "sam"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Paste: blend shallots, garlic, ginger, lemongrass, cinnamon, cloves, nutmeg, cumin, coriander seed, chilli and soy sauce with 2 tbsp water.",
+    "w": "Warm spices make massaman mild and fragrant rather than hot.",
+    "c": "Smooth brown paste.",
+    "m": "",
+    "who": "sam",
+    "min": 4,
+    "tech": "blender",
+    "tmr": 0,
+    "img": "massaman curry paste in a blender"
+   },
+   {
+    "t": "Boil the potato cubes 8 minutes; steam the cauliflower florets alongside. Brown the tofu in the oil; set aside.",
+    "w": "Par-cooking means everything is tender at the same time.",
+    "c": "Potato almost tender.",
+    "m": "",
+    "who": "either",
+    "min": 8,
+    "tech": "sear",
+    "tmr": 480,
+    "img": "potato cubes and cauliflower boiling, tofu browning"
+   },
+   {
+    "t": "Fry the paste 2 minutes, add cream and stock, simmer 5 minutes. chicken in a small pan with a ladle of sauce 10 minutes, with the cauliflower.",
+    "w": "Separate pans: the stays vegetarian.",
+    "c": "Sauce thick enough to coat.",
+    "m": "Boiling hard — cream splits.",
+    "who": "alex",
+    "min": 12,
+    "tech": "doneness",
+    "tmr": 600,
+    "img": "massaman curry simmering in two pans"
+   },
+   {
+    "t": "Add the potato and tofu to the main pan, finish with lime juice and the peanuts.",
+    "w": "Peanuts at the end stay crunchy.",
+    "c": "Creamy, mild, nutty.",
+    "m": "",
+    "who": "sam",
+    "min": 2,
+    "tech": "seasoning",
+    "tmr": 0,
+    "img": "massaman curry with potatoes tofu and peanuts"
+   }
+  ]
+ }
+]

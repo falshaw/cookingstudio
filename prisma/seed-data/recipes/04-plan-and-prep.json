@@ -1,0 +1,4467 @@
+[
+ {
+  "slug": "p-yogurt-bowl",
+  "level": 2,
+  "kind": "plan",
+  "meals": [
+   "breakfast"
+  ],
+  "title": "Berry, walnut & chia breakfast bowl (boiled eggs or Greek yogurt)",
+  "desc": "Five minutes, high protein, no added sugar. The same berry, walnut and chia topping on both bowls: one with 3 boiled eggs on the side, one on a base of strained Greek yogurt. Thaw the berries overnight.",
+  "serv": 2,
+  "prep": 5,
+  "cook": 0,
+  "fridge": 1,
+  "freezer": 0,
+  "reheat": "",
+  "left": "",
+  "cuisine": "mediterranean",
+  "protein": "egg",
+  "flav": [
+   "tangy",
+   "fresh"
+  ],
+  "spice": 0,
+  "equip": [
+   "saucepan"
+  ],
+  "trouble": [
+   [
+    "Tofu base grainy",
+    "Blend another 30 seconds with one more spoon of water until completely smooth."
+   ],
+   [
+    "Too sour",
+    "Riper berries, or a few more — never honey."
+   ]
+  ],
+  "goes": "Coffee.",
+  "ing": [
+   [
+    "berries",
+    160,
+    "g",
+    160,
+    "thawed overnight",
+    ""
+   ],
+   [
+    "walnuts",
+    30,
+    "g",
+    30,
+    "roughly chopped",
+    ""
+   ],
+   [
+    "chia-seeds",
+    16,
+    "g",
+    16,
+    "",
+    ""
+   ],
+   [
+    "greek-yogurt",
+    200,
+    "g",
+    200,
+    "",
+    "sam"
+   ],
+   [
+    "egg",
+    3,
+    "pc",
+    150,
+    "boiled 8 minutes, on the side",
+    "alex"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Boil 3 eggs for 8 minutes, then 2 minutes in cold water, peel and halve them for the side of that bowl.",
+    "w": "Eggs carry the protein for the yogurt-free bowl.",
+    "c": "Set white, soft yolk.",
+    "m": "More than 9 minutes: grey ring round the yolk.",
+    "who": "alex",
+    "min": 2,
+    "tech": "none",
+    "tmr": 480,
+    "img": "three halved boiled eggs next to a berry walnut chia bowl"
+   },
+   {
+    "t": "The base: spoon the Greek yogurt into that bowl.",
+    "w": "Strained yogurt is high in protein and low in sugar.",
+    "c": "Thick, holds its shape.",
+    "m": "Flavoured yogurt — it has added sugar.",
+    "who": "sam",
+    "min": 1,
+    "tech": "none",
+    "tmr": 0,
+    "img": "thick strained yogurt spooned into a bowl"
+   },
+   {
+    "t": "Top both bowls with the thawed berries and their juice, the walnuts and chia.",
+    "w": "The berry juice sweetens the base naturally; chia and walnuts add fibre and fat for fullness.",
+    "c": "Colourful top, purple juice running in.",
+    "m": "Adding honey out of habit.",
+    "who": "either",
+    "min": 2,
+    "tech": "none",
+    "tmr": 0,
+    "img": "two breakfast bowls topped with berries walnuts and chia seeds"
+   }
+  ]
+ },
+ {
+  "slug": "p-feta-omelette",
+  "level": 2,
+  "kind": "plan",
+  "meals": [
+   "breakfast"
+  ],
+  "title": "Feta, tomato & pepper omelette",
+  "desc": "One big omelette, halved. The pancetta fried crisp on the side.",
+  "serv": 2,
+  "prep": 5,
+  "cook": 10,
+  "fridge": 1,
+  "freezer": 0,
+  "reheat": "",
+  "left": "",
+  "cuisine": "mediterranean",
+  "protein": "egg",
+  "flav": [
+   "salty",
+   "fresh"
+  ],
+  "spice": 0,
+  "equip": [
+   "non-stick"
+  ],
+  "trouble": [
+   [
+    "Rubbery",
+    "Heat too high — medium-low, and fold while the top is still slightly wet."
+   ],
+   [
+    "Watery",
+    "Cook the tomatoes and pepper first so their juice evaporates."
+   ]
+  ],
+  "goes": "Herbs, chilli flakes.",
+  "ing": [
+   [
+    "egg",
+    6,
+    "pc",
+    300,
+    "",
+    ""
+   ],
+   [
+    "feta",
+    60,
+    "g",
+    60,
+    "crumbled",
+    ""
+   ],
+   [
+    "cherry-tomato",
+    150,
+    "g",
+    150,
+    "halved",
+    ""
+   ],
+   [
+    "red-pepper",
+    0.5,
+    "pc",
+    80,
+    "diced",
+    ""
+   ],
+   [
+    "olive-oil",
+    1,
+    "tbsp",
+    13.5,
+    "",
+    ""
+   ],
+   [
+    "oregano",
+    0.5,
+    "tsp",
+    0.5,
+    "",
+    ""
+   ],
+   [
+    "salt",
+    0.25,
+    "tsp",
+    1.5,
+    "",
+    ""
+   ],
+   [
+    "pancetta",
+    40,
+    "g",
+    40,
+    "cubes",
+    "sam"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "The pancetta: put the cubes in a small cold pan, heat on medium and fry 5 minutes until crisp. Keep warm.",
+    "w": "Starting cold renders the fat and crisps it evenly. Cooked separately — the omelette stays the same.",
+    "c": "Golden and crisp.",
+    "m": "Cooking it in the omelette pan.",
+    "who": "sam",
+    "min": 5,
+    "tech": "none",
+    "tmr": 300,
+    "img": "crispy pancetta cubes in a small pan"
+   },
+   {
+    "t": "Fry the pepper and tomatoes in the oil in a non-stick pan 3 minutes.",
+    "w": "Cooking the veg first drives off water.",
+    "c": "Softened, juice mostly gone.",
+    "m": "Raw watery veg in the eggs.",
+    "who": "either",
+    "min": 3,
+    "tech": "saute",
+    "tmr": 0,
+    "img": "diced pepper and cherry tomatoes softening in a pan"
+   },
+   {
+    "t": "Beat the eggs with salt, pour over the veg on medium-low, pull the set edges into the middle with a spatula for 2–3 minutes.",
+    "w": "Pulling the edges lets raw egg reach the pan — even, tender omelette.",
+    "c": "Mostly set, top still glossy.",
+    "m": "High heat — brown, rubbery bottom.",
+    "who": "alex",
+    "min": 4,
+    "tech": "none",
+    "tmr": 0,
+    "img": "omelette edges being pulled in with a spatula"
+   },
+   {
+    "t": "Scatter the feta and oregano, fold in half, slide out and cut in two. Add the pancetta to one half if you like.",
+    "w": "Residual heat warms the feta.",
+    "c": "Golden outside, soft inside.",
+    "m": "Overcooking before folding.",
+    "who": "alex",
+    "min": 1,
+    "tech": "none",
+    "tmr": 0,
+    "img": "folded omelette with feta on a plate"
+   }
+  ]
+ },
+ {
+  "slug": "p-halloumi-eggs",
+  "level": 2,
+  "kind": "plan",
+  "meals": [
+   "breakfast"
+  ],
+  "title": "Grilled halloumi, fried eggs & tomatoes",
+  "desc": "The Mediterranean fry-up. The pancetta and a slice of sourdough on the side.",
+  "serv": 2,
+  "prep": 3,
+  "cook": 10,
+  "fridge": 0,
+  "freezer": 0,
+  "reheat": "",
+  "left": "",
+  "cuisine": "mediterranean",
+  "protein": "cheese",
+  "flav": [
+   "salty",
+   "savoury"
+  ],
+  "spice": 0,
+  "equip": [
+   "non-stick"
+  ],
+  "trouble": [
+   [
+    "Halloumi rubbery",
+    "Eat it straight away — it toughens as it cools."
+   ]
+  ],
+  "goes": "Mint, lemon.",
+  "ing": [
+   [
+    "halloumi",
+    112.5,
+    "g",
+    112.5,
+    "8 slices",
+    "sam"
+   ],
+   [
+    "egg",
+    4,
+    "pc",
+    200,
+    "",
+    ""
+   ],
+   [
+    "tomato",
+    2,
+    "pc",
+    240,
+    "halved",
+    ""
+   ],
+   [
+    "olive-oil",
+    1,
+    "tbsp",
+    13.5,
+    "",
+    ""
+   ],
+   [
+    "mint",
+    0.5,
+    "tsp",
+    0.5,
+    "dried",
+    ""
+   ],
+   [
+    "pancetta",
+    40,
+    "g",
+    40,
+    "",
+    "sam"
+   ],
+   [
+    "sourdough-bread",
+    50,
+    "g",
+    50,
+    "1 slice, toasted",
+    "sam"
+   ],
+   [
+    "egg",
+    2,
+    "pc",
+    100,
+    "fried with the others",
+    "alex"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Fry the pancetta in a small pan until crisp, and toast that bread.",
+    "w": "Separate pan keeps the other plate low-carb and the pancetta on the side.",
+    "c": "Crisp pancetta, golden toast.",
+    "m": "—",
+    "who": "sam",
+    "min": 5,
+    "tech": "none",
+    "tmr": 0,
+    "img": "crispy pancetta and a slice of toasted sourdough"
+   },
+   {
+    "t": "Fry the halloumi slices and tomato halves in a dry non-stick pan on medium-high, 2 minutes per side.",
+    "w": "Halloumi doesn't melt — it browns and squeaks.",
+    "c": "Golden crust on both sides.",
+    "m": "Oil in the pan — halloumi releases its own.",
+    "who": "alex",
+    "min": 4,
+    "tech": "sear",
+    "tmr": 0,
+    "img": "golden halloumi slices and tomato halves in a pan"
+   },
+   {
+    "t": "Move them to plates, add the oil and fry the eggs 3 minutes. Sprinkle mint over the halloumi.",
+    "w": "Mint is the classic halloumi partner.",
+    "c": "Whites set, yolks runny.",
+    "m": "—",
+    "who": "alex",
+    "min": 3,
+    "tech": "none",
+    "tmr": 180,
+    "img": "breakfast plate with halloumi fried eggs and tomatoes"
+   },
+   {
+    "who": "either",
+    "min": 1,
+    "tech": "none",
+    "tmr": 0,
+    "t": "Make the sauce: lift the eggs out, put the fried tomato halves back into the pan, press each one flat with a fork into the egg oil, add 1 tbsp water and stir 1 minute until it is a loose, glossy sauce. Spoon it over the halloumi.",
+    "c": "Loose, glossy red sauce, no whole tomatoes.",
+    "m": "Serving the tomatoes whole and the oil left in the pan.",
+    "w": "Pressed tomatoes release their juice into the oil and turn into a sauce in a minute.",
+    "img": "fried tomato halves pressed flat with a fork in a pan into a glossy red sauce"
+   }
+  ],
+  "lesson": "s1-roast-tomato-feta"
+ },
+ {
+  "slug": "p-shakshuka",
+  "level": 3,
+  "kind": "plan",
+  "meals": [
+   "breakfast",
+   "dinner"
+  ],
+  "title": "Shakshuka with feta",
+  "desc": "Eggs poached in spiced pepper-tomato sauce, with an extra egg or a slice of bread to mop.",
+  "serv": 2,
+  "prep": 5,
+  "cook": 20,
+  "fridge": 1,
+  "freezer": 0,
+  "reheat": "",
+  "left": "",
+  "cuisine": "middle eastern",
+  "protein": "egg",
+  "flav": [
+   "spiced",
+   "tomato"
+  ],
+  "spice": 1,
+  "equip": [
+   "heavy-pan"
+  ],
+  "trouble": [
+   [
+    "Whites won't set",
+    "Lid on for 2–3 minutes."
+   ],
+   [
+    "Watery sauce",
+    "Simmer it thicker before adding the eggs."
+   ]
+  ],
+  "goes": "Yogurt, parsley.",
+  "ing": [
+   [
+    "olive-oil",
+    2,
+    "tbsp",
+    27,
+    "",
+    ""
+   ],
+   [
+    "onion",
+    0.5,
+    "pc",
+    75,
+    "sliced",
+    ""
+   ],
+   [
+    "red-pepper",
+    1,
+    "pc",
+    160,
+    "sliced",
+    ""
+   ],
+   [
+    "garlic",
+    2,
+    "clove",
+    10,
+    "",
+    ""
+   ],
+   [
+    "cumin",
+    1,
+    "tsp",
+    2,
+    "",
+    ""
+   ],
+   [
+    "paprika",
+    1,
+    "tsp",
+    2,
+    "",
+    ""
+   ],
+   [
+    "canned-tomatoes",
+    400,
+    "g",
+    400,
+    "",
+    ""
+   ],
+   [
+    "egg",
+    4,
+    "pc",
+    200,
+    "",
+    ""
+   ],
+   [
+    "feta",
+    60,
+    "g",
+    60,
+    "crumbled",
+    ""
+   ],
+   [
+    "parsley",
+    0.2,
+    "bunch",
+    6,
+    "",
+    ""
+   ],
+   [
+    "salt",
+    0.5,
+    "tsp",
+    3,
+    "",
+    ""
+   ],
+   [
+    "egg",
+    1,
+    "pc",
+    50,
+    "",
+    "alex"
+   ],
+   [
+    "sourdough-bread",
+    60,
+    "g",
+    60,
+    "",
+    "sam"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Soften the onion and pepper in the oil 6 minutes, add garlic, cumin and paprika for 1 minute.",
+    "w": "Blooming spices in oil releases flavour.",
+    "c": "Soft and fragrant.",
+    "m": "Burning the spices.",
+    "who": "either",
+    "min": 7,
+    "tech": "saute",
+    "tmr": 0,
+    "img": "peppers and onions softening with spices"
+   },
+   {
+    "t": "Make the sauce: add the tomatoes and salt; simmer 8 minutes, pressing any chunks with the spoon, until thick.",
+    "w": "A thick sauce holds the eggs in little wells.",
+    "c": "Spoon leaves a trail.",
+    "m": "Watery sauce.",
+    "who": "either",
+    "min": 8,
+    "tech": "reduce",
+    "tmr": 480,
+    "img": "thick pepper tomato sauce simmering"
+   },
+   {
+    "t": "Make 5 wells, crack in the eggs — one is the extra — cover and cook on low 5–7 minutes.",
+    "w": "The lid steams the tops so whites set while yolks stay soft.",
+    "c": "Whites opaque, yolks wobbly.",
+    "m": "No lid — runny whites.",
+    "who": "alex",
+    "min": 6,
+    "tech": "none",
+    "tmr": 360,
+    "img": "eggs poaching in shakshuka sauce in a pan"
+   },
+   {
+    "t": "Scatter feta and parsley. Serve with the bread to mop.",
+    "w": "Salty feta balances the sweet sauce.",
+    "c": "—",
+    "m": "—",
+    "who": "sam",
+    "min": 1,
+    "tech": "none",
+    "tmr": 0,
+    "img": "shakshuka with feta and parsley in a pan"
+   }
+  ],
+  "lesson": "tomato-sauce"
+ },
+ {
+  "slug": "p-egg-muffins",
+  "level": 2,
+  "kind": "prep",
+  "meals": [
+   "breakfast"
+  ],
+  "title": "Meal-prep egg muffins (6 portions)",
+  "desc": "12 baked egg muffins with peppers, mushrooms, feta and parmesan — 2 per breakfast for 3 days, for two people. The other portion gets crisp pancetta.",
+  "serv": 6,
+  "prep": 10,
+  "cook": 22,
+  "fridge": 4,
+  "freezer": 60,
+  "reheat": "Microwave 40–60 seconds until hot, or eat cold.",
+  "left": "",
+  "cuisine": "breakfast",
+  "protein": "egg",
+  "flav": [
+   "savoury",
+   "cheesy"
+  ],
+  "spice": 0,
+  "equip": [
+   "oven"
+  ],
+  "trouble": [
+   [
+    "Stuck to the tin",
+    "Grease well or use silicone/paper cases."
+   ],
+   [
+    "Spongy",
+    "Overbaked — take out when just set in the middle."
+   ]
+  ],
+  "goes": "Cherry tomatoes, chilli flakes.",
+  "ing": [
+   [
+    "egg",
+    12,
+    "pc",
+    600,
+    "",
+    ""
+   ],
+   [
+    "red-pepper",
+    1,
+    "pc",
+    160,
+    "finely diced",
+    ""
+   ],
+   [
+    "mushroom",
+    150,
+    "g",
+    150,
+    "finely diced",
+    ""
+   ],
+   [
+    "spring-onion",
+    3,
+    "pc",
+    45,
+    "sliced",
+    ""
+   ],
+   [
+    "feta",
+    150,
+    "g",
+    150,
+    "crumbled",
+    ""
+   ],
+   [
+    "parmesan",
+    40,
+    "g",
+    40,
+    "grated",
+    ""
+   ],
+   [
+    "cream",
+    80,
+    "ml",
+    80,
+    "",
+    ""
+   ],
+   [
+    "olive-oil",
+    1,
+    "tbsp",
+    13.5,
+    "for the tin",
+    ""
+   ],
+   [
+    "salt",
+    0.75,
+    "tsp",
+    4.5,
+    "",
+    ""
+   ],
+   [
+    "black-pepper",
+    0.5,
+    "tsp",
+    1,
+    "",
+    ""
+   ],
+   [
+    "pancetta",
+    20,
+    "g",
+    20,
+    "crisped",
+    "sam"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Heat the oven to 180 °C fan. Oil a 12-hole muffin tin well. Fry the pancetta crisp in a small pan for that portions; keep it in a separate tub.",
+    "w": "The pancetta is added when eating — the muffins stay vegetarian.",
+    "c": "Tin glossy with oil.",
+    "m": "Mixing pancetta into all the muffins.",
+    "who": "sam",
+    "min": 5,
+    "tech": "none",
+    "tmr": 0,
+    "img": "oiled muffin tin and crispy pancetta in a small pan"
+   },
+   {
+    "t": "Divide the pepper, mushrooms, spring onion and feta between the holes.",
+    "w": "Fillings in first spread evenly.",
+    "c": "Each hole a third full.",
+    "m": "Overfilling.",
+    "who": "sam",
+    "min": 4,
+    "tech": "none",
+    "tmr": 0,
+    "img": "diced vegetables and feta in a muffin tin"
+   },
+   {
+    "t": "Whisk the eggs, cream, parmesan, salt and pepper; pour into the holes to three-quarters full.",
+    "w": "A splash of cream keeps them tender.",
+    "c": "Even levels.",
+    "m": "Filling to the top — they overflow.",
+    "who": "either",
+    "min": 3,
+    "tech": "none",
+    "tmr": 0,
+    "img": "egg mixture poured into muffin tin over vegetables"
+   },
+   {
+    "t": "Bake 20–22 minutes until puffed and just set in the centre. Cool 5 minutes, then lift out.",
+    "w": "Carry-over heat finishes the centre.",
+    "c": "Golden, springy, no wet centre.",
+    "m": "Overbaking — rubbery.",
+    "who": "either",
+    "min": 22,
+    "tech": "doneness",
+    "tmr": 1260,
+    "img": "golden baked egg muffins in a tin"
+   },
+   {
+    "t": "Cool completely, pack 2 per glass container, label, fridge (4 days) or freeze (2 months).",
+    "w": "Fast cooling and portions keep them safe and easy.",
+    "c": "Six labelled boxes.",
+    "m": "Boxing them hot — condensation, soggy muffins.",
+    "who": "sam",
+    "min": 5,
+    "tech": "freezing",
+    "tmr": 0,
+    "img": "egg muffins packed in glass meal prep containers"
+   }
+  ]
+ },
+ {
+  "slug": "p-chickpea-horiatiki",
+  "level": 2,
+  "kind": "plan",
+  "meals": [
+   "dinner"
+  ],
+  "title": "Horiatiki with chickpeas (+ grilled chicken, optional)",
+  "desc": "Greek salad, a small portion of chickpeas, feta. The grilled chicken breast cooked separately.",
+  "serv": 2,
+  "prep": 10,
+  "cook": 12,
+  "fridge": 1,
+  "freezer": 0,
+  "reheat": "",
+  "left": "",
+  "cuisine": "mediterranean",
+  "protein": "chicken",
+  "flav": [
+   "fresh",
+   "salty",
+   "lemony"
+  ],
+  "spice": 0,
+  "equip": [
+   "cast-iron"
+  ],
+  "trouble": [
+   [
+    "Dry chicken",
+    "Flatten it to an even thickness so it cooks evenly."
+   ]
+  ],
+  "goes": "Lemon wedges.",
+  "ing": [
+   [
+    "tomato",
+    3,
+    "pc",
+    300,
+    "chunks",
+    ""
+   ],
+   [
+    "red-onion",
+    0.5,
+    "pc",
+    60,
+    "thin rings",
+    ""
+   ],
+   [
+    "red-pepper",
+    0.5,
+    "pc",
+    80,
+    "rings",
+    ""
+   ],
+   [
+    "kalamata-olives",
+    6,
+    "pc",
+    20,
+    "",
+    "sam"
+   ],
+   [
+    "feta",
+    150,
+    "g",
+    150,
+    "",
+    ""
+   ],
+   [
+    "chickpeas",
+    120,
+    "g",
+    120,
+    "rinsed",
+    ""
+   ],
+   [
+    "olive-oil",
+    3,
+    "tbsp",
+    40,
+    "",
+    ""
+   ],
+   [
+    "red-wine-vinegar",
+    1,
+    "tsp",
+    5,
+    "",
+    ""
+   ],
+   [
+    "oregano",
+    1,
+    "tsp",
+    1,
+    "",
+    ""
+   ],
+   [
+    "salt",
+    0.25,
+    "tsp",
+    1.5,
+    "",
+    ""
+   ],
+   [
+    "chicken-breast",
+    150,
+    "g",
+    150,
+    "flattened",
+    "alex"
+   ],
+   [
+    "lemon",
+    0.5,
+    "pc",
+    20,
+    "juiced",
+    "alex"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "The chicken: flatten to 2 cm, salt, oil and oregano. Grill in a hot pan 5–6 minutes per side. Squeeze lemon over and rest.",
+    "w": "Even thickness cooks evenly; 74 °C is safe and still juicy.",
+    "c": "Golden lines.",
+    "m": "Thick end raw, thin end dry — flatten first.",
+    "who": "alex",
+    "min": 12,
+    "tech": "doneness",
+    "tmr": 0,
+    "img": "grilled chicken breast in a cast iron pan"
+   },
+   {
+    "t": "Make the salad: tomatoes, onion, pepper, olives, chickpeas, feta on top, oregano, oil and vinegar. Salt at the table.",
+    "w": "Chickpeas add fibre and plant protein for the other portion.",
+    "c": "Glossy, fresh.",
+    "m": "Dressing it too early — the salad goes watery.",
+    "who": "sam",
+    "min": 8,
+    "tech": "none",
+    "tmr": 0,
+    "img": "horiatiki salad with chickpeas and a slab of feta"
+   },
+   {
+    "t": "Slice the chicken onto that half.",
+    "w": "—",
+    "c": "—",
+    "m": "Putting chicken on the other plate.",
+    "who": "either",
+    "min": 1,
+    "tech": "none",
+    "tmr": 0,
+    "img": "sliced grilled chicken on a greek salad"
+   },
+   {
+    "who": "either",
+    "min": 1,
+    "tech": "none",
+    "tmr": 0,
+    "t": "Make the sauce from the salad juice: after 5 minutes, tilt the bowl so the tomato juice and oil run to one side, crumble a spoon of the feta into it and mash with a fork for 20 seconds until creamy. Spoon this sauce over the chicken and the salad.",
+    "c": "Pink, cloudy and creamy.",
+    "m": "Leaving the best part, the juice, at the bottom of the bowl.",
+    "w": "Tomato juice, olive oil and feta make a creamy sauce with no cooking.",
+    "img": "feta mashed with a fork into tomato juice and olive oil at the bottom of a salad bowl"
+   }
+  ],
+  "lesson": "s1-roast-tomato-feta"
+ },
+ {
+  "slug": "p-mackerel-salad",
+  "level": 1,
+  "kind": "plan",
+  "meals": [
+   "dinner"
+  ],
+  "title": "Greek salad lunch (+ salmon, optional)",
+  "desc": "Omega-3 lunch: tomato, onion, pepper, olives, capers, feta; the salmon fillet pan-fried and flaked on top. Sourdough on the side if you like.",
+  "serv": 2,
+  "prep": 10,
+  "cook": 8,
+  "fridge": 1,
+  "freezer": 0,
+  "reheat": "",
+  "left": "",
+  "cuisine": "mediterranean",
+  "protein": "salmon",
+  "flav": [
+   "fresh",
+   "lemony",
+   "salty"
+  ],
+  "spice": 0,
+  "equip": [
+   "heavy-pan"
+  ],
+  "trouble": [
+   [
+    "Too salty",
+    "Feta, capers and olives are salty — salt only the salmon, lightly."
+   ],
+   [
+    "Dry salmon",
+    "Take it off when the centre just turns opaque; it keeps cooking for a minute."
+   ]
+  ],
+  "goes": "Lemon.",
+  "ing": [
+   [
+    "tomato",
+    3,
+    "pc",
+    300,
+    "chunks",
+    ""
+   ],
+   [
+    "red-onion",
+    0.5,
+    "pc",
+    60,
+    "thin rings",
+    ""
+   ],
+   [
+    "red-pepper",
+    0.5,
+    "pc",
+    80,
+    "rings",
+    ""
+   ],
+   [
+    "kalamata-olives",
+    6,
+    "pc",
+    20,
+    "",
+    "sam"
+   ],
+   [
+    "capers",
+    1,
+    "tsp",
+    3,
+    "",
+    ""
+   ],
+   [
+    "feta",
+    100,
+    "g",
+    100,
+    "",
+    ""
+   ],
+   [
+    "olive-oil",
+    3,
+    "tbsp",
+    40,
+    "",
+    ""
+   ],
+   [
+    "oregano",
+    1,
+    "tsp",
+    1,
+    "",
+    ""
+   ],
+   [
+    "lemon",
+    0.5,
+    "pc",
+    20,
+    "juiced",
+    ""
+   ],
+   [
+    "salmon",
+    125,
+    "g",
+    125,
+    "one fillet, skin on",
+    "alex"
+   ],
+   [
+    "sourdough-bread",
+    60,
+    "g",
+    60,
+    "",
+    "sam"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Make the salad: tomatoes, onion, pepper, olives, capers, feta, oregano, oil and lemon.",
+    "w": "No salt needed — feta, capers and olives bring it.",
+    "c": "Fresh and glossy.",
+    "m": "Salting it.",
+    "who": "sam",
+    "min": 8,
+    "tech": "none",
+    "tmr": 0,
+    "img": "greek salad in a bowl"
+   },
+   {
+    "t": "Pat the salmon fillet dry, salt it lightly and pan-fry skin side down in 1 tsp of the oil on medium-high 4 minutes, turn and cook 2–3 minutes more (or air-fry 200 °C 8–10 minutes). Lift off the skin, flake the fish over the half. The bread on the side.",
+    "w": "Oily fish = omega-3, counts towards the 2–3 a week. A dry fillet and a hot pan give a golden side instead of a stuck one.",
+    "c": "Big moist flakes.",
+    "m": "Moving the fillet before the skin releases — it tears. Leaving pin bones — feel for them.",
+    "who": "alex",
+    "min": 8,
+    "tech": "doneness",
+    "tmr": 240,
+    "img": "flaked pan-fried salmon fillet on a greek salad"
+   },
+   {
+    "who": "either",
+    "min": 1,
+    "tech": "none",
+    "tmr": 0,
+    "t": "Make the sauce from the salad juice: tilt the bowl so the tomato juice, oil and lemon run to one side, crumble a spoon of the feta into it and mash with a fork for 20 seconds until creamy. Spoon this sauce over the salmon and the salad.",
+    "c": "Pink, cloudy and creamy.",
+    "m": "Leaving the juice at the bottom of the bowl.",
+    "w": "Tomato juice, olive oil and feta make a creamy sauce with no cooking.",
+    "img": "feta mashed with a fork into tomato juice and olive oil at the bottom of a salad bowl"
+   }
+  ],
+  "lesson": "s1-roast-tomato-feta"
+ },
+ {
+  "slug": "p-salmon-traybake",
+  "level": 3,
+  "kind": "plan",
+  "meals": [
+   "dinner"
+  ],
+  "title": "Mediterranean veg & feta traybake (+ salmon, optional)",
+  "desc": "One tray of peppers, onion, broccoli, tomatoes and feta; the salmon fillet joins the tray for the last 12 minutes on its own corner, together with the broccoli.",
+  "serv": 2,
+  "prep": 8,
+  "cook": 22,
+  "fridge": 2,
+  "freezer": 0,
+  "reheat": "Oven 180 °C, 10 min.",
+  "left": "Blend leftover veg with stock into soup.",
+  "cuisine": "mediterranean",
+  "protein": "salmon",
+  "flav": [
+   "roasted",
+   "lemony",
+   "herby"
+  ],
+  "spice": 0,
+  "equip": [
+   "oven",
+   "roasting-tray"
+  ],
+  "trouble": [
+   [
+    "Soggy veg",
+    "Spread out on a big tray; 210 °C."
+   ],
+   [
+    "Burnt broccoli",
+    "It goes in for the last 10–12 minutes only, tossed in oil."
+   ],
+   [
+    "Dry salmon",
+    "Add it for the last 10–12 minutes only."
+   ]
+  ],
+  "goes": "Lemon wedges, fresh dill.",
+  "ing": [
+   [
+    "red-pepper",
+    1,
+    "pc",
+    160,
+    "chunks",
+    ""
+   ],
+   [
+    "red-onion",
+    1,
+    "pc",
+    120,
+    "wedges",
+    ""
+   ],
+   [
+    "broccoli",
+    250,
+    "g",
+    250,
+    "florets",
+    ""
+   ],
+   [
+    "cherry-tomato",
+    200,
+    "g",
+    200,
+    "",
+    ""
+   ],
+   [
+    "feta",
+    120,
+    "g",
+    120,
+    "cubed",
+    ""
+   ],
+   [
+    "olive-oil",
+    2,
+    "tbsp",
+    27,
+    "",
+    ""
+   ],
+   [
+    "oregano",
+    1,
+    "tsp",
+    1,
+    "",
+    ""
+   ],
+   [
+    "lemon",
+    0.5,
+    "pc",
+    20,
+    "",
+    ""
+   ],
+   [
+    "salt",
+    0.5,
+    "tsp",
+    3,
+    "",
+    ""
+   ],
+   [
+    "salmon",
+    150,
+    "g",
+    150,
+    "skin on",
+    "alex"
+   ],
+   [
+    "potato",
+    200,
+    "g",
+    200,
+    "small chunks",
+    "sam"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Heat the oven to 210 °C fan. Toss the pepper, onion and the potato with most of the oil, the oregano and salt on a big tray. Roast 12 minutes.",
+    "w": "Potato and onion need a head start; space on the tray means browning.",
+    "c": "Starting to colour.",
+    "m": "Crowded tray.",
+    "who": "sam",
+    "min": 14,
+    "tech": "none",
+    "tmr": 720,
+    "img": "peppers, red onion and potato chunks on a roasting tray going into the oven"
+   },
+   {
+    "t": "Add the broccoli tossed in the rest of the oil, the tomatoes and feta. Put the salmon, salted, skin down in its own corner. Roast 10–12 minutes.",
+    "w": "Broccoli and salmon both need only 10–12 minutes at this heat: the salmon stays moist and the broccoli chars at the tips without burning.",
+    "c": "Salmon flakes; broccoli tips charred.",
+    "m": "Salmon or broccoli in from the start — dry fish, burnt florets.",
+    "who": "alex",
+    "min": 12,
+    "tech": "doneness",
+    "tmr": 690,
+    "img": "salmon fillet in the corner of a broccoli, pepper and feta traybake"
+   },
+   {
+    "t": "Make the sauce on the tray: lift the veg and potato onto the plates and the salmon onto the, leaving the burst tomatoes, feta and oily juice on the tray away from the salmon corner. Press each tomato flat with a fork, mash the feta into the juice, squeeze in the lemon and add 1 to 2 tbsp water, stirring for 30 seconds until it is a rough, creamy sauce. Spoon it over both plates.",
+    "w": "Roasted tomatoes, soft feta and the oil on the tray are a full sauce once squashed together.",
+    "c": "It is pink, creamy and lumpy, and holds on the spoon.",
+    "m": "Serving the tomatoes and feta as lumps and leaving the juice on the tray.",
+    "who": "either",
+    "min": 2,
+    "tech": "deglaze",
+    "tmr": 0,
+    "img": ""
+   }
+  ],
+  "lesson": "s1-roast-tomato-feta"
+ },
+ {
+  "slug": "p-mushroom-stroganoff",
+  "level": 4,
+  "kind": "plan",
+  "meals": [
+   "dinner"
+  ],
+  "title": "Mushroom stroganoff (+ beef strips, optional)",
+  "desc": "Browned mushrooms in a paprika-mustard cream sauce. The sirloin strips seared separately; the rice, the cauliflower rice.",
+  "serv": 2,
+  "prep": 10,
+  "cook": 20,
+  "fridge": 2,
+  "freezer": 0,
+  "reheat": "Gently with a splash of stock.",
+  "left": "",
+  "cuisine": "steakhouse",
+  "protein": "beef",
+  "flav": [
+   "creamy",
+   "earthy",
+   "paprika"
+  ],
+  "spice": 0,
+  "equip": [
+   "heavy-pan"
+  ],
+  "trouble": [
+   [
+    "Grey mushrooms",
+    "Brown in two batches on high."
+   ],
+   [
+    "Sauce split",
+    "Don't boil hard after the cream."
+   ]
+  ],
+  "goes": "Parsley, gherkin-free.",
+  "ing": [
+   [
+    "butter",
+    20,
+    "g",
+    20,
+    "",
+    ""
+   ],
+   [
+    "mushroom",
+    400,
+    "g",
+    400,
+    "thick slices",
+    ""
+   ],
+   [
+    "onion",
+    1,
+    "pc",
+    150,
+    "sliced",
+    ""
+   ],
+   [
+    "garlic",
+    2,
+    "clove",
+    10,
+    "",
+    ""
+   ],
+   [
+    "paprika",
+    1,
+    "tsp",
+    2,
+    "",
+    ""
+   ],
+   [
+    "vegetable-stock",
+    150,
+    "ml",
+    150,
+    "",
+    ""
+   ],
+   [
+    "cream",
+    150,
+    "ml",
+    150,
+    "",
+    ""
+   ],
+   [
+    "dijon-mustard",
+    1,
+    "tsp",
+    5,
+    "",
+    ""
+   ],
+   [
+    "parsley",
+    0.2,
+    "bunch",
+    6,
+    "chopped",
+    ""
+   ],
+   [
+    "salt",
+    0.75,
+    "tsp",
+    4.5,
+    "",
+    ""
+   ],
+   [
+    "sirloin-steak",
+    170,
+    "g",
+    170,
+    "thin strips",
+    "alex"
+   ],
+   [
+    "sunflower-oil",
+    1,
+    "tsp",
+    4.5,
+    "",
+    "alex"
+   ],
+   [
+    "cauliflower",
+    200,
+    "g",
+    200,
+    "riced",
+    "alex"
+   ],
+   [
+    "basmati-rice",
+    75,
+    "g",
+    75,
+    "",
+    "sam"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Start the rice by the absorption method (see Perfect rice).",
+    "w": "It takes 17 minutes — start it first.",
+    "c": "Lid on, lowest heat.",
+    "m": "—",
+    "who": "sam",
+    "min": 3,
+    "tech": "none",
+    "tmr": 1020,
+    "img": "saucepan of rice with lid on low heat"
+   },
+   {
+    "t": "Brown the mushrooms in the butter on high, in two batches. Add onion for 5 minutes, then garlic and paprika.",
+    "w": "Browning concentrates the mushroom flavour — it's the 'meat' of the other plate.",
+    "c": "Deep golden mushrooms.",
+    "m": "One crowded batch.",
+    "who": "alex",
+    "min": 10,
+    "tech": "sear",
+    "tmr": 0,
+    "img": "browned mushrooms and onions with paprika in a pan"
+   },
+   {
+    "t": "Make the sauce: pour in the stock, scrape the bottom and let it bubble until reduced by half, then stir in the cream and mustard and simmer 2 minutes until it coats a spoon. Salt, parsley.",
+    "w": "Reduction plus cream makes a sauce that coats.",
+    "c": "Coats a spoon.",
+    "m": "Boiling hard — split.",
+    "who": "either",
+    "min": 5,
+    "tech": "reduce",
+    "tmr": 0,
+    "img": "creamy mushroom stroganoff sauce"
+   },
+   {
+    "t": "Sear the beef strips in a separate very hot pan with the oil, 1 minute per side; fry the cauliflower rice 4 minutes. Spoon sauce over that beef.",
+    "w": "Thin strips need only a minute or they toughen; separate pan keeps the other portion vegetarian.",
+    "c": "Browned outside, pink inside.",
+    "m": "Simmering the beef in the sauce — tough.",
+    "who": "alex",
+    "min": 6,
+    "tech": "sear",
+    "tmr": 0,
+    "img": "seared beef strips and cauliflower rice with mushroom sauce"
+   }
+  ],
+  "lesson": "s-mushroom-sauce"
+ },
+ {
+  "slug": "p-veggie-chili",
+  "level": 3,
+  "kind": "plan",
+  "meals": [
+   "dinner"
+  ],
+  "title": "Bean & pepper chili (+ beef mince, optional)",
+  "desc": "Smoky bean chili base for both; the beef mince browned and spiced in a second pan. The rice.",
+  "serv": 2,
+  "prep": 10,
+  "cook": 20,
+  "fridge": 3,
+  "freezer": 90,
+  "reheat": "Simmer until piping hot.",
+  "left": "Freeze portions.",
+  "cuisine": "american bbq",
+  "protein": "beef",
+  "flav": [
+   "smoky",
+   "spiced"
+  ],
+  "spice": 1,
+  "equip": [
+   "heavy-pan"
+  ],
+  "trouble": [
+   [
+    "Thin",
+    "Simmer uncovered; mash a few beans to thicken."
+   ]
+  ],
+  "goes": "Greek yogurt, coriander.",
+  "ing": [
+   [
+    "olive-oil",
+    1,
+    "tbsp",
+    13.5,
+    "",
+    ""
+   ],
+   [
+    "onion",
+    0.67,
+    "pc",
+    100,
+    "diced",
+    ""
+   ],
+   [
+    "red-pepper",
+    1,
+    "pc",
+    160,
+    "diced",
+    ""
+   ],
+   [
+    "garlic",
+    2,
+    "clove",
+    10,
+    "",
+    ""
+   ],
+   [
+    "cumin",
+    1,
+    "tsp",
+    2,
+    "",
+    ""
+   ],
+   [
+    "smoked-paprika",
+    1,
+    "tsp",
+    2,
+    "",
+    ""
+   ],
+   [
+    "chilli-flakes",
+    0.5,
+    "tsp",
+    1,
+    "",
+    ""
+   ],
+   [
+    "canned-tomatoes",
+    400,
+    "g",
+    400,
+    "",
+    ""
+   ],
+   [
+    "kidney-beans",
+    160,
+    "g",
+    160,
+    "rinsed",
+    ""
+   ],
+   [
+    "salt",
+    0.75,
+    "tsp",
+    4.5,
+    "",
+    ""
+   ],
+   [
+    "coriander",
+    0.2,
+    "bunch",
+    6,
+    "",
+    ""
+   ],
+   [
+    "beef-mince",
+    150,
+    "g",
+    150,
+    "",
+    "alex"
+   ],
+   [
+    "basmati-rice",
+    75,
+    "g",
+    75,
+    "",
+    "sam"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Soften onion and pepper in the oil 6 minutes; add garlic, cumin, smoked paprika, chilli 1 minute.",
+    "w": "Spices bloom in oil.",
+    "c": "Fragrant.",
+    "m": "—",
+    "who": "either",
+    "min": 7,
+    "tech": "saute",
+    "tmr": 0,
+    "img": "peppers onions and spices in a pan"
+   },
+   {
+    "t": "Make the sauce: add the tomatoes, beans and salt; simmer 12 minutes, stirring now and then, until thick and glossy. Start the rice.",
+    "w": "Simmering marries the flavours.",
+    "c": "Thick, glossy.",
+    "m": "—",
+    "who": "either",
+    "min": 12,
+    "tech": "reduce",
+    "tmr": 720,
+    "img": "bean chili simmering"
+   },
+   {
+    "t": "Brown the mince hard in a separate pan, add 3 spoons of the chili base, cook 3 minutes.",
+    "w": "Separate pan keeps the other portion meat-free.",
+    "c": "Browned, saucy.",
+    "m": "Adding mince to the main pot.",
+    "who": "alex",
+    "min": 8,
+    "tech": "sear",
+    "tmr": 0,
+    "img": "browned beef mince in a separate pan"
+   },
+   {
+    "t": "Serve: base for both, the beef on top, the rice, coriander.",
+    "w": "—",
+    "c": "—",
+    "m": "—",
+    "who": "sam",
+    "min": 1,
+    "tech": "none",
+    "tmr": 0,
+    "img": "two bowls of chili one with beef one with rice"
+   }
+  ],
+  "lesson": "tomato-sauce"
+ },
+ {
+  "slug": "p-zoodles-pesto",
+  "level": 3,
+  "kind": "plan",
+  "meals": [
+   "dinner"
+  ],
+  "title": "Pesto green beans with cherry tomatoes & mozzarella (+ chicken, optional)",
+  "desc": "Green beans boiled just tender and tossed with fresh pesto, cherry tomatoes and mozzarella, the Ligurian way. Garlic chicken strips on the side; spaghetti if you want pasta.",
+  "serv": 2,
+  "prep": 15,
+  "cook": 10,
+  "fridge": 1,
+  "freezer": 0,
+  "reheat": "",
+  "left": "",
+  "cuisine": "italian",
+  "protein": "chicken",
+  "flav": [
+   "herby",
+   "fresh",
+   "garlicky"
+  ],
+  "spice": 0,
+  "equip": [
+   "blender",
+   "heavy-pan",
+   "saucepan"
+  ],
+  "trouble": [
+   [
+    "Squeaky beans",
+    "Boil a minute longer — bite one; it should bend, not snap."
+   ],
+   [
+    "Watery pesto",
+    "Drain the beans well and shake them dry before tossing."
+   ],
+   [
+    "Dry chicken",
+    "Slice it thin and take it off after 6–8 minutes."
+   ]
+  ],
+  "goes": "Parmesan.",
+  "ing": [
+   [
+    "green-beans",
+    400,
+    "g",
+    400,
+    "trimmed",
+    ""
+   ],
+   [
+    "cherry-tomato",
+    200,
+    "g",
+    200,
+    "halved",
+    ""
+   ],
+   [
+    "mozzarella",
+    1,
+    "pc",
+    125,
+    "torn",
+    ""
+   ],
+   [
+    "basil",
+    1,
+    "bunch",
+    30,
+    "",
+    ""
+   ],
+   [
+    "pine-nuts",
+    20,
+    "g",
+    20,
+    "",
+    ""
+   ],
+   [
+    "parmesan",
+    30,
+    "g",
+    30,
+    "",
+    ""
+   ],
+   [
+    "garlic",
+    2,
+    "clove",
+    10,
+    "",
+    ""
+   ],
+   [
+    "olive-oil",
+    4,
+    "tbsp",
+    54,
+    "",
+    ""
+   ],
+   [
+    "salt",
+    0.5,
+    "tsp",
+    3,
+    "",
+    ""
+   ],
+   [
+    "chicken-breast",
+    170,
+    "g",
+    170,
+    "thin strips",
+    "alex"
+   ],
+   [
+    "chilli-flakes",
+    0.25,
+    "tsp",
+    0.5,
+    "",
+    "alex"
+   ],
+   [
+    "spaghetti",
+    80,
+    "g",
+    80,
+    "",
+    "sam"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Pulse basil, pine nuts, 1 garlic clove, parmesan and 3 tbsp oil into a quick pesto.",
+    "w": "Short pulses keep it green.",
+    "c": "Bright green paste.",
+    "m": "Over-blending.",
+    "who": "either",
+    "min": 3,
+    "tech": "blender",
+    "tmr": 0,
+    "img": "quick pesto in a blender"
+   },
+   {
+    "t": "If you want pasta, cook the spaghetti now.",
+    "w": "—",
+    "c": "—",
+    "m": "—",
+    "who": "sam",
+    "min": 10,
+    "tech": "none",
+    "tmr": 540,
+    "img": "spaghetti cooking"
+   },
+   {
+    "t": "Fry the thin chicken breast strips in 1 tbsp oil on medium-high 6–8 minutes, turning, adding the other garlic clove and the chilli for the last minute.",
+    "w": "Thin strips cook through fast and stay juicy; garlic goes in late so it doesn't burn.",
+    "c": "Golden outside.",
+    "m": "Thick pieces — cut them thin.",
+    "who": "alex",
+    "min": 8,
+    "tech": "doneness",
+    "tmr": 420,
+    "img": "garlic chicken strips frying in a pan"
+   },
+   {
+    "t": "Boil the green beans in salted water 4–5 minutes and keep 3 tbsp of the cooking water. Make the sauce: stir the pesto with 2 tbsp of the bean water until loose and glossy. Drain the beans well, then toss them off the heat with the pesto sauce, tomatoes, mozzarella and salt until every bean is coated.",
+    "w": "Drained well and still warm, the beans take up the pesto without making it watery.",
+    "c": "Glossy green, tender with a slight bite.",
+    "m": "Wet beans — the pesto slides off. Shake them dry in the colander.",
+    "who": "either",
+    "min": 6,
+    "tech": "none",
+    "tmr": 270,
+    "img": "green beans tossed with pesto, cherry tomatoes and mozzarella"
+   }
+  ],
+  "lesson": "pesto-chimichurri"
+ },
+ {
+  "slug": "p-halloumi-skewers",
+  "level": 3,
+  "kind": "plan",
+  "meals": [
+   "dinner"
+  ],
+  "title": "BBQ-rub halloumi & veg skewers (+ chicken thighs, optional)",
+  "desc": "American-BBQ dry rub (smoked paprika, garlic, onion, cumin — no sugar) on halloumi, peppers, red onion, mushrooms and cherry tomatoes; the chicken thighs with the same rub.",
+  "serv": 2,
+  "prep": 15,
+  "cook": 15,
+  "fridge": 2,
+  "freezer": 0,
+  "reheat": "Air fryer 5 min.",
+  "left": "Chop into a salad.",
+  "cuisine": "american bbq",
+  "protein": "chicken",
+  "flav": [
+   "smoky",
+   "savoury"
+  ],
+  "spice": 1,
+  "equip": [
+   "oven",
+   "roasting-tray"
+  ],
+  "trouble": [
+   [
+    "Burnt rub",
+    "Oil the pieces, not the tray; 220 °C max."
+   ],
+   [
+    "Tomatoes falling off",
+    "Thread them through the stalk end, between two firmer pieces."
+   ]
+  ],
+  "goes": "Sugar-free BBQ sauce, tahini-lemon sauce.",
+  "ing": [
+   [
+    "halloumi",
+    112.5,
+    "g",
+    112.5,
+    "cubes",
+    "sam"
+   ],
+   [
+    "cherry-tomato",
+    150,
+    "g",
+    150,
+    "whole",
+    ""
+   ],
+   [
+    "red-pepper",
+    1,
+    "pc",
+    160,
+    "chunks",
+    ""
+   ],
+   [
+    "red-onion",
+    1,
+    "pc",
+    120,
+    "wedges",
+    ""
+   ],
+   [
+    "mushroom",
+    150,
+    "g",
+    150,
+    "",
+    ""
+   ],
+   [
+    "olive-oil",
+    2,
+    "tbsp",
+    27,
+    "",
+    ""
+   ],
+   [
+    "smoked-paprika",
+    2,
+    "tsp",
+    4,
+    "",
+    ""
+   ],
+   [
+    "garlic-powder",
+    1,
+    "tsp",
+    3,
+    "",
+    ""
+   ],
+   [
+    "onion-powder",
+    1,
+    "tsp",
+    2.5,
+    "",
+    ""
+   ],
+   [
+    "cumin",
+    0.5,
+    "tsp",
+    1,
+    "",
+    ""
+   ],
+   [
+    "salt",
+    0.5,
+    "tsp",
+    3,
+    "",
+    ""
+   ],
+   [
+    "chicken-thighs",
+    180,
+    "g",
+    180,
+    "chunks",
+    "alex"
+   ],
+   [
+    "sourdough-bread",
+    60,
+    "g",
+    60,
+    "",
+    "sam"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Heat the oven (or grill) to 220 °C fan. Mix the rub: smoked paprika, garlic and onion powder, cumin, salt.",
+    "w": "Powders don't burn like fresh garlic at high heat.",
+    "c": "Red, fragrant rub.",
+    "m": "Adding sugar — not needed.",
+    "who": "sam",
+    "min": 2,
+    "tech": "seasoning",
+    "tmr": 0,
+    "img": "bowl of smoky BBQ dry rub spices"
+   },
+   {
+    "t": "Toss halloumi, peppers, onion, mushrooms and cherry tomatoes with oil and two-thirds of the rub; the chicken with oil and the rest in a separate bowl. Thread onto separate skewers.",
+    "w": "Separate skewers and bowls keep the other portion meat-free.",
+    "c": "Everything coated.",
+    "m": "Sharing a bowl with raw chicken.",
+    "who": "either",
+    "min": 8,
+    "tech": "none",
+    "tmr": 0,
+    "img": "halloumi, pepper, mushroom and cherry tomato skewers next to chicken skewers"
+   },
+   {
+    "t": "Roast 14–16 minutes, turning once, until the halloumi is golden.",
+    "w": "High heat chars the rub.",
+    "c": "Charred edges, tomatoes just bursting.",
+    "m": "Chicken on the same tray touching veg — use opposite ends.",
+    "who": "alex",
+    "min": 15,
+    "tech": "doneness",
+    "tmr": 900,
+    "img": "charred BBQ skewers on a tray"
+   },
+   {
+    "t": "Slide the roasted cherry tomatoes off the veg skewers onto the veg tray and press each one flat with a fork into the oily paprika juice. Add 2 tbsp water and scrape the tray with a wooden spoon until it is a rough red sauce. Spoon it over the skewers.",
+    "w": "Roasted tomatoes and the spiced oil on the tray are a ready sauce once squashed.",
+    "c": "It is thick, orange-red and shiny.",
+    "m": "Washing the tray with the juice still on it.",
+    "who": "either",
+    "min": 2,
+    "tech": "deglaze",
+    "tmr": 0,
+    "img": ""
+   }
+  ],
+  "lesson": "s1-roast-tomato-feta"
+ },
+ {
+  "slug": "p-steakhouse-plate",
+  "level": 4,
+  "kind": "plan",
+  "meals": [
+   "dinner"
+  ],
+  "title": "Steakhouse plate: mushrooms, garlic beans, peppercorn sauce (+ sirloin or halloumi steak)",
+  "desc": "Portobello and garlic green beans for both, peppercorn cream sauce; the sirloin, the grilled halloumi steak.",
+  "serv": 2,
+  "prep": 10,
+  "cook": 20,
+  "fridge": 1,
+  "freezer": 0,
+  "reheat": "",
+  "left": "",
+  "cuisine": "steakhouse",
+  "protein": "beef",
+  "flav": [
+   "peppery",
+   "beefy",
+   "creamy"
+  ],
+  "spice": 1,
+  "equip": [
+   "cast-iron",
+   "heavy-pan"
+  ],
+  "trouble": [
+   [
+    "Sauce too thin",
+    "Reduce another minute."
+   ],
+   [
+    "Overcooked steak",
+    "2–3 minutes a side, then rest 5 minutes."
+   ]
+  ],
+  "goes": "—",
+  "ing": [
+   [
+    "portobello",
+    250,
+    "g",
+    250,
+    "",
+    ""
+   ],
+   [
+    "green-beans",
+    300,
+    "g",
+    300,
+    "trimmed",
+    ""
+   ],
+   [
+    "garlic",
+    2,
+    "clove",
+    10,
+    "sliced",
+    ""
+   ],
+   [
+    "butter",
+    15,
+    "g",
+    15,
+    "",
+    ""
+   ],
+   [
+    "olive-oil",
+    1,
+    "tbsp",
+    13.5,
+    "",
+    ""
+   ],
+   [
+    "black-pepper",
+    1.5,
+    "tsp",
+    4,
+    "crushed",
+    ""
+   ],
+   [
+    "vegetable-stock",
+    100,
+    "ml",
+    100,
+    "",
+    ""
+   ],
+   [
+    "cream",
+    100,
+    "ml",
+    100,
+    "",
+    ""
+   ],
+   [
+    "salt",
+    0.75,
+    "tsp",
+    4.5,
+    "",
+    ""
+   ],
+   [
+    "sirloin-steak",
+    200,
+    "g",
+    200,
+    "",
+    "alex"
+   ],
+   [
+    "halloumi",
+    112,
+    "g",
+    112,
+    "thick slices",
+    "sam"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Boil the green beans 4 minutes, drain. Roast or pan-fry the portobellos in the oil 8 minutes, salted.",
+    "w": "Beans blanched first stay bright green.",
+    "c": "Beans bright, mushrooms juicy.",
+    "m": "Overboiling beans — olive drab.",
+    "who": "sam",
+    "min": 10,
+    "tech": "none",
+    "tmr": 240,
+    "img": "green beans and portobello mushrooms cooking"
+   },
+   {
+    "t": "The steak: salt, sear in a very hot pan 2–3 minutes a side to 52 °C, rest. The halloumi in a second dry pan 2 minutes a side.",
+    "w": "Separate pans; rest the steak while you make the sauce.",
+    "c": "Steak crusted, 52 °C; halloumi golden.",
+    "m": "Halloumi in the steak fat — keep it vegetarian.",
+    "who": "alex",
+    "min": 8,
+    "tech": "sear",
+    "tmr": 0,
+    "img": "sirloin steak searing and halloumi slices in a second pan"
+   },
+   {
+    "t": "Make the sauce in a clean pan (so the vegetarian portion stays vegetarian): crushed pepper in the butter 30 seconds, vegetable stock to reduce by half, cream 2 minutes. Pour the steak resting juices over the steak portion.",
+    "w": "Pepper toasted in fat, reduced stock and cream make the classic sauce without the steak pan.",
+    "c": "Coats a spoon.",
+    "m": "—",
+    "who": "alex",
+    "min": 4,
+    "tech": "deglaze",
+    "tmr": 0,
+    "img": "peppercorn cream sauce in a steak pan"
+   },
+   {
+    "t": "Toss the beans with butter and garlic for 1 minute. Plate everything.",
+    "w": "—",
+    "c": "Glossy beans.",
+    "m": "—",
+    "who": "either",
+    "min": 2,
+    "tech": "saute",
+    "tmr": 0,
+    "img": "steakhouse plate with steak mushrooms beans and peppercorn sauce"
+   }
+  ],
+  "lesson": "peppercorn-sauce"
+ },
+ {
+  "slug": "p-cauliflower-curry",
+  "level": 4,
+  "kind": "plan",
+  "meals": [
+   "dinner"
+  ],
+  "title": "Cauliflower & chickpea curry (+ chicken, optional)",
+  "desc": "Quick curry on the base spices, finished with a splash of cream; the chicken pieces simmered in a ladle of sauce in a small pan. The rice.",
+  "serv": 2,
+  "prep": 10,
+  "cook": 20,
+  "fridge": 3,
+  "freezer": 90,
+  "reheat": "Simmer until piping hot.",
+  "left": "",
+  "cuisine": "indian",
+  "protein": "chicken",
+  "flav": [
+   "spiced",
+   "warm"
+  ],
+  "spice": 1,
+  "equip": [
+   "heavy-pan"
+  ],
+  "trouble": [
+   [
+    "Cream splits",
+    "Stir it in off the heat and don't boil hard afterwards."
+   ]
+  ],
+  "goes": "Coriander, lemon wedges.",
+  "ing": [
+   [
+    "sunflower-oil",
+    1,
+    "tbsp",
+    13.5,
+    "",
+    ""
+   ],
+   [
+    "onion",
+    0.67,
+    "pc",
+    100,
+    "diced",
+    ""
+   ],
+   [
+    "garlic",
+    3,
+    "clove",
+    15,
+    "",
+    ""
+   ],
+   [
+    "ginger",
+    2,
+    "cm",
+    10,
+    "grated from frozen",
+    ""
+   ],
+   [
+    "curry-powder",
+    2,
+    "tsp",
+    4,
+    "",
+    ""
+   ],
+   [
+    "turmeric",
+    0.5,
+    "tsp",
+    1,
+    "",
+    ""
+   ],
+   [
+    "canned-tomatoes",
+    400,
+    "g",
+    400,
+    "",
+    ""
+   ],
+   [
+    "cauliflower",
+    0.6,
+    "pc",
+    500,
+    "florets",
+    ""
+   ],
+   [
+    "chickpeas",
+    80,
+    "g",
+    80,
+    "rinsed",
+    ""
+   ],
+   [
+    "cream",
+    80,
+    "ml",
+    80,
+    "",
+    ""
+   ],
+   [
+    "salt",
+    0.75,
+    "tsp",
+    4.5,
+    "",
+    ""
+   ],
+   [
+    "coriander",
+    0.2,
+    "bunch",
+    6,
+    "",
+    ""
+   ],
+   [
+    "chicken-breast",
+    160,
+    "g",
+    160,
+    "chunks",
+    "alex"
+   ],
+   [
+    "basmati-rice",
+    75,
+    "g",
+    75,
+    "",
+    "sam"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Start the rice. Soften onion in the oil 5 minutes, add garlic, ginger, curry powder and turmeric 1 minute.",
+    "w": "Blooming spices.",
+    "c": "Fragrant.",
+    "m": "—",
+    "who": "either",
+    "min": 7,
+    "tech": "saute",
+    "tmr": 0,
+    "img": "onions with curry spices in a pan"
+   },
+   {
+    "t": "Add tomatoes, cauliflower, chickpeas, salt and 100 ml water; cover and simmer 12 minutes until the cauliflower is tender.",
+    "w": "Lid traps steam to cook the cauliflower.",
+    "c": "Knife slides into florets.",
+    "m": "—",
+    "who": "either",
+    "min": 12,
+    "tech": "none",
+    "tmr": 720,
+    "img": "cauliflower chickpea curry simmering"
+   },
+   {
+    "t": "Sear the chicken in a small pan 3 minutes, add two ladles of curry and simmer 6 minutes.",
+    "w": "Separate pan keeps the other portion vegetarian.",
+    "c": "Chicken simmered in the curry.",
+    "m": "—",
+    "who": "alex",
+    "min": 9,
+    "tech": "doneness",
+    "tmr": 360,
+    "img": "chicken pieces simmering in curry sauce in a small pan"
+   },
+   {
+    "t": "Make the sauce creamy: off the heat stir the cream into both pans for 30 seconds until the sauce turns pale orange and coats the back of a spoon; top with coriander.",
+    "w": "Cream added off the heat stays smooth and rounds off the spices.",
+    "c": "Creamy, pale orange.",
+    "m": "Boiling it after the cream — it can split.",
+    "who": "sam",
+    "min": 1,
+    "tech": "none",
+    "tmr": 0,
+    "img": "creamy cauliflower curry with coriander"
+   }
+  ],
+  "lesson": "curry-base"
+ },
+ {
+  "slug": "p-aubergine-parmigiana",
+  "level": 4,
+  "kind": "plan",
+  "meals": [
+   "dinner"
+  ],
+  "title": "Skillet portobello parmigiana (+ meatballs, optional)",
+  "desc": "Pan-browned portobello mushrooms in quick tomato sauce with mozzarella and parmesan. The beef meatballs simmer in the same sauce in a separate pan.",
+  "serv": 2,
+  "prep": 10,
+  "cook": 20,
+  "fridge": 2,
+  "freezer": 0,
+  "reheat": "Oven 180 °C, 15 min.",
+  "left": "",
+  "cuisine": "italian",
+  "protein": "beef",
+  "flav": [
+   "tomato",
+   "cheesy"
+  ],
+  "spice": 0,
+  "equip": [
+   "heavy-pan",
+   "non-stick"
+  ],
+  "trouble": [
+   [
+    "Watery mushrooms",
+    "Brown them gill side down first on medium-high and don't crowd the pan."
+   ],
+   [
+    "Oily mushrooms",
+    "Brush oil on the caps, don't pour it in the pan."
+   ]
+  ],
+  "goes": "Basil.",
+  "ing": [
+   [
+    "portobello",
+    4,
+    "pc",
+    400,
+    "stalks out, left whole",
+    ""
+   ],
+   [
+    "olive-oil",
+    3,
+    "tbsp",
+    40,
+    "",
+    ""
+   ],
+   [
+    "garlic",
+    2,
+    "clove",
+    10,
+    "",
+    ""
+   ],
+   [
+    "canned-tomatoes",
+    400,
+    "g",
+    400,
+    "",
+    ""
+   ],
+   [
+    "basil",
+    0.3,
+    "bunch",
+    8,
+    "",
+    ""
+   ],
+   [
+    "mozzarella",
+    1,
+    "pc",
+    125,
+    "sliced",
+    ""
+   ],
+   [
+    "parmesan",
+    30,
+    "g",
+    30,
+    "grated",
+    ""
+   ],
+   [
+    "salt",
+    0.75,
+    "tsp",
+    4.5,
+    "",
+    ""
+   ],
+   [
+    "beef-mince",
+    150,
+    "g",
+    150,
+    "",
+    "alex"
+   ],
+   [
+    "parmesan",
+    10,
+    "g",
+    10,
+    "",
+    "alex"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Brush the portobellos with oil, salt, and brown in a non-stick pan 4 minutes gill side down, then 3 minutes cap side down (in two batches).",
+    "w": "Gills first lets the juice run out and cook off; brushing uses less oil than frying.",
+    "c": "Golden, juicy, shrunk by about a third.",
+    "m": "Crowding the pan — they stew in their own water.",
+    "who": "either",
+    "min": 10,
+    "tech": "sear",
+    "tmr": 0,
+    "img": "portobello mushrooms browning in a pan"
+   },
+   {
+    "t": "Quick sauce: garlic in 1 tbsp oil 1 minute, tomatoes, salt, basil, simmer 8 minutes.",
+    "w": "—",
+    "c": "Thickened.",
+    "m": "—",
+    "who": "either",
+    "min": 9,
+    "tech": "reduce",
+    "tmr": 480,
+    "img": "quick tomato sauce in a skillet"
+   },
+   {
+    "t": "Roll the mince with 10 g parmesan and a pinch of salt into 6 balls; brown in a small pan, add 4 spoons of sauce, cover, simmer 8 minutes.",
+    "w": "Mince must reach 71 °C.",
+    "c": "Cooked through.",
+    "m": "—",
+    "who": "alex",
+    "min": 10,
+    "tech": "doneness",
+    "tmr": 480,
+    "img": "small beef meatballs simmering in tomato sauce"
+   },
+   {
+    "t": "Sit the portobellos cap side down in the main skillet of sauce, top with mozzarella and parmesan, cover until melted (3–4 minutes).",
+    "w": "Lid melts the cheese without an oven.",
+    "c": "Bubbling, melted.",
+    "m": "—",
+    "who": "sam",
+    "min": 4,
+    "tech": "none",
+    "tmr": 240,
+    "img": "portobello parmigiana with melted mozzarella in a skillet"
+   }
+  ],
+  "lesson": "tomato-sauce"
+ },
+ {
+  "slug": "p-sea-bream-greens",
+  "level": 3,
+  "kind": "plan",
+  "meals": [
+   "dinner"
+  ],
+  "title": "Lemon-oregano peppers, beans & white beans (+ sea bream, optional)",
+  "desc": "Roasted peppers and green beans with white beans and ladolemono; the sea bream fillets pan-fried.",
+  "serv": 2,
+  "prep": 10,
+  "cook": 20,
+  "fridge": 1,
+  "freezer": 0,
+  "reheat": "",
+  "left": "",
+  "cuisine": "mediterranean",
+  "protein": "fish",
+  "flav": [
+   "lemony",
+   "herby"
+  ],
+  "spice": 0,
+  "equip": [
+   "oven",
+   "non-stick"
+  ],
+  "trouble": [
+   [
+    "Fish sticks",
+    "Hot pan, skin dry, don't move it for 3 minutes."
+   ]
+  ],
+  "goes": "Ladolemono.",
+  "ing": [
+   [
+    "red-pepper",
+    1.5,
+    "pc",
+    240,
+    "strips",
+    ""
+   ],
+   [
+    "green-beans",
+    300,
+    "g",
+    300,
+    "",
+    ""
+   ],
+   [
+    "white-beans",
+    160,
+    "g",
+    160,
+    "rinsed",
+    ""
+   ],
+   [
+    "garlic",
+    2,
+    "clove",
+    10,
+    "",
+    ""
+   ],
+   [
+    "olive-oil",
+    3,
+    "tbsp",
+    40,
+    "",
+    ""
+   ],
+   [
+    "lemon",
+    1,
+    "pc",
+    40,
+    "juiced",
+    ""
+   ],
+   [
+    "oregano",
+    1,
+    "tsp",
+    1,
+    "",
+    ""
+   ],
+   [
+    "salt",
+    0.75,
+    "tsp",
+    4.5,
+    "",
+    ""
+   ],
+   [
+    "sea-bream",
+    180,
+    "g",
+    180,
+    "fillets",
+    "alex"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Roast peppers and green beans with 2 tbsp oil and salt at 210 °C fan for 15 minutes; add the white beans and garlic for the last 5.",
+    "w": "Roasting concentrates sweetness.",
+    "c": "Blistered peppers.",
+    "m": "—",
+    "who": "sam",
+    "min": 17,
+    "tech": "none",
+    "tmr": 900,
+    "img": "roasted peppers green beans and white beans on a tray"
+   },
+   {
+    "t": "Salt the sea bream skin, fry skin down in 1 tbsp oil 3 minutes, flip 1 minute.",
+    "w": "Thin fillets cook mostly on the skin side.",
+    "c": "Crisp skin, flesh opaque.",
+    "m": "—",
+    "who": "alex",
+    "min": 4,
+    "tech": "sear",
+    "tmr": 180,
+    "img": "sea bream fillets frying skin side down"
+   },
+   {
+    "t": "Make the sauce on the tray: whisk the lemon juice, oregano and the remaining oil with a fork until cloudy, pour it onto the hot tray and scrape up the roasted pepper juices for 30 seconds. Spoon the sauce over everything.",
+    "w": "Ladolemono — the Greek fish dressing.",
+    "c": "Cloudy, golden, a little thick.",
+    "m": "Leaving the roasting juices on the tray.",
+    "who": "sam",
+    "min": 1,
+    "tech": "emulsify",
+    "tmr": 0,
+    "img": "lemon oregano dressing poured over fish and vegetables"
+   }
+  ],
+  "lesson": "s-ladolemono"
+ },
+ {
+  "slug": "b-soup",
+  "level": 3,
+  "kind": "plan",
+  "meals": [
+   "dinner"
+  ],
+  "title": "Blender roasted-pepper & tomato soup with feta (+ chicken, optional)",
+  "desc": "Jarred roasted peppers, tomatoes and stock blended smooth; feta on top, sliced grilled chicken optional.",
+  "serv": 2,
+  "prep": 5,
+  "cook": 20,
+  "fridge": 3,
+  "freezer": 90,
+  "reheat": "Simmer until piping hot.",
+  "left": "Freeze portions.",
+  "cuisine": "mediterranean",
+  "protein": "chicken",
+  "flav": [
+   "smoky",
+   "sweet"
+  ],
+  "spice": 0,
+  "equip": [
+   "blender",
+   "saucepan"
+  ],
+  "trouble": [
+   [
+    "Blender lid blows off",
+    "Fill only half and vent with a towel."
+   ]
+  ],
+  "goes": "—",
+  "ing": [
+   [
+    "olive-oil",
+    1,
+    "tbsp",
+    13.5,
+    "",
+    ""
+   ],
+   [
+    "onion",
+    0.67,
+    "pc",
+    100,
+    "",
+    ""
+   ],
+   [
+    "garlic",
+    2,
+    "clove",
+    10,
+    "",
+    ""
+   ],
+   [
+    "roasted-red-pepper",
+    300,
+    "g",
+    300,
+    "drained",
+    ""
+   ],
+   [
+    "canned-tomatoes",
+    400,
+    "g",
+    400,
+    "",
+    ""
+   ],
+   [
+    "vegetable-stock",
+    400,
+    "ml",
+    400,
+    "",
+    ""
+   ],
+   [
+    "smoked-paprika",
+    1,
+    "tsp",
+    2,
+    "",
+    ""
+   ],
+   [
+    "feta",
+    100,
+    "g",
+    100,
+    "crumbled",
+    ""
+   ],
+   [
+    "salt",
+    0.5,
+    "tsp",
+    3,
+    "",
+    ""
+   ],
+   [
+    "chicken-breast",
+    150,
+    "g",
+    150,
+    "",
+    "alex"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Soften onion and garlic in the oil 5 minutes; add peppers, tomatoes, stock, paprika; simmer 12 minutes.",
+    "w": "—",
+    "c": "—",
+    "m": "—",
+    "who": "either",
+    "min": 17,
+    "tech": "saute",
+    "tmr": 720,
+    "img": "pepper tomato soup simmering"
+   },
+   {
+    "t": "Pan-grill the chicken 5–6 minutes per side, rest, slice.",
+    "w": "—",
+    "c": "Golden lines.",
+    "m": "—",
+    "who": "alex",
+    "min": 12,
+    "tech": "doneness",
+    "tmr": 0,
+    "img": "sliced grilled chicken breast"
+   },
+   {
+    "t": "Blend the soup smooth (half-full jug, vented). Salt to taste. Top with feta; the with chicken.",
+    "w": "Venting lets steam escape safely.",
+    "c": "Velvety, bright orange.",
+    "m": "Sealed full jug of hot soup.",
+    "who": "either",
+    "min": 3,
+    "tech": "blender",
+    "tmr": 0,
+    "img": "bowls of red pepper soup topped with feta"
+   }
+  ]
+ },
+ {
+  "slug": "b-smoothie",
+  "level": 1,
+  "kind": "plan",
+  "meals": [
+   "breakfast"
+  ],
+  "title": "Low-sugar berry, tofu & chia protein smoothie",
+  "desc": "Thick, high-protein smoothie: firm tofu, frozen berries, chia and a few almonds blended with cold water. No banana, no juice, no dairy.",
+  "serv": 2,
+  "prep": 5,
+  "cook": 0,
+  "fridge": 1,
+  "freezer": 0,
+  "reheat": "",
+  "left": "",
+  "cuisine": "breakfast",
+  "protein": "tofu",
+  "flav": [
+   "fresh",
+   "creamy"
+  ],
+  "spice": 0,
+  "equip": [
+   "blender"
+  ],
+  "trouble": [
+   [
+    "Too thick",
+    "More water."
+   ],
+   [
+    "Grainy",
+    "Blend another 30 seconds on high — firm tofu needs a full minute."
+   ]
+  ],
+  "goes": "—",
+  "ing": [
+   [
+    "tofu",
+    200,
+    "g",
+    200,
+    "drained, broken up",
+    "sam"
+   ],
+   [
+    "berries",
+    160,
+    "g",
+    160,
+    "frozen",
+    ""
+   ],
+   [
+    "chia-seeds",
+    20,
+    "g",
+    20,
+    "",
+    ""
+   ],
+   [
+    "almonds",
+    30,
+    "g",
+    30,
+    "",
+    ""
+   ],
+   [
+    "water",
+    250,
+    "ml",
+    250,
+    "cold",
+    ""
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Put water, tofu, berries, almonds and chia in the blender — liquids first.",
+    "w": "Liquids at the bottom help the blades catch.",
+    "c": "—",
+    "m": "Frozen fruit first — the blender stalls.",
+    "who": "either",
+    "min": 2,
+    "tech": "blender",
+    "tmr": 0,
+    "img": "blender jug with water, cubes of firm tofu, frozen berries and almonds"
+   },
+   {
+    "t": "Blend on low, then high, about 60 seconds until completely smooth.",
+    "w": "Firm tofu and almonds need a full minute to lose their grain.",
+    "c": "Thick, purple, smooth.",
+    "m": "Stopping after 20 seconds — gritty.",
+    "who": "either",
+    "min": 1,
+    "tech": "blender",
+    "tmr": 60,
+    "img": "thick purple smoothie in two glasses"
+   }
+  ]
+ },
+ {
+  "slug": "af-salmon",
+  "level": 3,
+  "kind": "plan",
+  "meals": [
+   "dinner"
+  ],
+  "title": "Air-fryer salmon, broccoli & peppers with feta",
+  "desc": "Air-fried broccoli and peppers with feta for both; the salmon skin-up in the second round.",
+  "serv": 2,
+  "prep": 8,
+  "cook": 20,
+  "fridge": 1,
+  "freezer": 0,
+  "reheat": "",
+  "left": "",
+  "cuisine": "mediterranean",
+  "protein": "salmon",
+  "flav": [
+   "crispy",
+   "lemony"
+  ],
+  "spice": 0,
+  "equip": [
+   "air-fryer"
+  ],
+  "trouble": [
+   [
+    "Soggy veg",
+    "Don't overcrowd; cook in two rounds."
+   ],
+   [
+    "Burnt broccoli tips",
+    "Small florets, well oiled, 190 °C — not hotter."
+   ]
+  ],
+  "goes": "Lemon wedges.",
+  "ing": [
+   [
+    "broccoli",
+    300,
+    "g",
+    300,
+    "small florets",
+    ""
+   ],
+   [
+    "red-pepper",
+    1,
+    "pc",
+    160,
+    "chunks",
+    ""
+   ],
+   [
+    "feta",
+    100,
+    "g",
+    100,
+    "cubed",
+    ""
+   ],
+   [
+    "olive-oil",
+    1.5,
+    "tbsp",
+    20,
+    "",
+    ""
+   ],
+   [
+    "oregano",
+    1,
+    "tsp",
+    1,
+    "",
+    ""
+   ],
+   [
+    "lemon",
+    0.5,
+    "pc",
+    20,
+    "",
+    ""
+   ],
+   [
+    "salt",
+    0.5,
+    "tsp",
+    3,
+    "",
+    ""
+   ],
+   [
+    "salmon",
+    150,
+    "g",
+    150,
+    "skin on",
+    "alex"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Toss broccoli and pepper with oil, oregano, salt. Air-fry 190 °C for 9 minutes, shake, add the feta, 3 more minutes.",
+    "w": "Hot circulating air chars the broccoli tips fast if the florets have space.",
+    "c": "Charred tips, tender stalks, feta soft.",
+    "m": "Overcrowding the basket.",
+    "who": "sam",
+    "min": 12,
+    "tech": "air-fryer",
+    "tmr": 540,
+    "img": "air fryer basket with charred broccoli, pepper and feta"
+   },
+   {
+    "t": "Salmon skin up, oiled and salted, 200 °C 8–9 minutes.",
+    "w": "Skin up crisps in the air flow.",
+    "c": "Skin crisp, flakes.",
+    "m": "—",
+    "who": "alex",
+    "min": 9,
+    "tech": "air-fryer",
+    "tmr": 510,
+    "img": "salmon fillet skin up in an air fryer basket"
+   },
+   {
+    "t": "Lift the broccoli and peppers onto the plates and tip the soft feta and the oil from the drawer into a small bowl. Mash the feta into the oil with a fork, squeeze in the lemon and add 1 to 2 tbsp water, stirring until it is a rough, creamy sauce. Spoon it over the salmon and veg.",
+    "w": "Roasted feta goes soft, and with the oil and lemon it becomes a sauce instead of dry crumbs.",
+    "c": "It is spoonable and creamy with small soft lumps, like thick yogurt.",
+    "m": "Adding too much water at once so it turns thin and watery.",
+    "who": "either",
+    "min": 2,
+    "tech": "air-fryer",
+    "tmr": 0,
+    "img": ""
+   }
+  ],
+  "lesson": "s1-roast-tomato-feta"
+ },
+ {
+  "slug": "af-chicken-thighs",
+  "level": 3,
+  "kind": "plan",
+  "meals": [
+   "dinner"
+  ],
+  "title": "Air-fryer smoky chicken thighs & halloumi-broccoli (both)",
+  "desc": "Smoked-paprika chicken thighs; broccoli, onion and halloumi for both — two rounds in the air fryer.",
+  "serv": 2,
+  "prep": 8,
+  "cook": 22,
+  "fridge": 2,
+  "freezer": 0,
+  "reheat": "Air fryer 4 min.",
+  "left": "",
+  "cuisine": "american bbq",
+  "protein": "chicken",
+  "flav": [
+   "smoky",
+   "crispy"
+  ],
+  "spice": 1,
+  "equip": [
+   "air-fryer",
+   "thermometer"
+  ],
+  "trouble": [
+   [
+    "Chicken not done yet",
+    "Back in for 3 minutes."
+   ]
+  ],
+  "goes": "Sugar-free BBQ sauce.",
+  "ing": [
+   [
+    "halloumi",
+    112.5,
+    "g",
+    112.5,
+    "cubes",
+    "sam"
+   ],
+   [
+    "broccoli",
+    300,
+    "g",
+    300,
+    "florets",
+    ""
+   ],
+   [
+    "red-onion",
+    0.8,
+    "pc",
+    100,
+    "wedges",
+    ""
+   ],
+   [
+    "olive-oil",
+    1.5,
+    "tbsp",
+    20,
+    "",
+    ""
+   ],
+   [
+    "smoked-paprika",
+    1.5,
+    "tsp",
+    3,
+    "",
+    ""
+   ],
+   [
+    "salt",
+    0.5,
+    "tsp",
+    3,
+    "",
+    ""
+   ],
+   [
+    "chicken-thighs",
+    180,
+    "g",
+    180,
+    "",
+    "alex"
+   ],
+   [
+    "garlic-powder",
+    1,
+    "tsp",
+    3,
+    "",
+    "alex"
+   ],
+   [
+    "smoked-paprika",
+    1,
+    "tsp",
+    2,
+    "",
+    "alex"
+   ],
+   [
+    "salt",
+    0.5,
+    "tsp",
+    3,
+    "",
+    "alex"
+   ],
+   [
+    "black-pepper",
+    0.25,
+    "tsp",
+    0.5,
+    "",
+    "alex"
+   ],
+   [
+    "oregano",
+    0.5,
+    "tsp",
+    0.5,
+    "dried",
+    "alex"
+   ],
+   [
+    "chilli-flakes",
+    0.25,
+    "tsp",
+    0.5,
+    "",
+    "alex"
+   ],
+   [
+    "lemon",
+    0.25,
+    "pc",
+    25,
+    "wedge",
+    "alex"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Mix 1 tsp oil with the smoked paprika, garlic powder, oregano, chilli flakes, salt and pepper; rub it all over the thighs, 15 minutes if there is time. Air-fry 200 °C 18–20 minutes, turning once. Rest 3 minutes, then squeeze the lemon over.",
+    "w": "Thighs stay juicy at high heat.",
+    "c": "Crisp, dark-red skin.",
+    "m": "Crowding the basket — the skin stays soft.",
+    "who": "alex",
+    "min": 20,
+    "tech": "air-fryer",
+    "tmr": 1140,
+    "img": "crispy smoky chicken thighs in an air fryer"
+   },
+   {
+    "t": "Toss broccoli, onion and halloumi with oil and paprika; air-fry 190 °C 10 minutes, shaking halfway.",
+    "w": "Second round — never share the basket with raw chicken.",
+    "c": "Charred broccoli tips, golden halloumi.",
+    "m": "Overcrowding.",
+    "who": "sam",
+    "min": 10,
+    "tech": "air-fryer",
+    "tmr": 600,
+    "img": "air fried broccoli and halloumi"
+   },
+   {
+    "t": "Make the sauce: put the thighs on that plate and pour the juice and fat from the air-fryer drawer into a small bowl. Add 1 tsp olive oil, the rest of the lemon juice, a pinch of oregano and 1 tbsp water and whisk with a fork for 20 seconds until it turns cloudy. Spoon the sauce over the chicken.",
+    "w": "The drawer juice is full of paprika and chicken flavour, and lemon plus oil turns it into a quick dressing.",
+    "c": "It looks orange and slightly cloudy, not split into a clear layer of fat.",
+    "m": "Leaving the juice in the drawer and serving dry chicken.",
+    "who": "either",
+    "min": 2,
+    "tech": "air-fryer",
+    "tmr": 0,
+    "img": ""
+   }
+  ],
+  "lesson": "s-ladolemono"
+ },
+ {
+  "slug": "af-halloumi-veg",
+  "level": 2,
+  "kind": "plan",
+  "meals": [
+   "dinner"
+  ],
+  "title": "Air-fryer halloumi, cauliflower & broccoli with tahini-lemon dip (+ chicken, optional)",
+  "desc": "Crispy cumin cauliflower, broccoli and halloumi with a garlicky tahini-lemon dip; the thin-sliced chicken breast pan-fried while the air fryer works.",
+  "serv": 2,
+  "prep": 8,
+  "cook": 20,
+  "fridge": 1,
+  "freezer": 0,
+  "reheat": "",
+  "left": "",
+  "cuisine": "mediterranean",
+  "protein": "chicken",
+  "flav": [
+   "crispy",
+   "lemony"
+  ],
+  "spice": 0,
+  "equip": [
+   "air-fryer",
+   "heavy-pan"
+  ],
+  "trouble": [
+   [
+    "Dip thick and lumpy",
+    "Normal when lemon hits tahini — keep whisking and add cold water a spoon at a time."
+   ],
+   [
+    "Dry chicken",
+    "Slice it 1 cm thin and take it off after 6–8 minutes — no longer."
+   ],
+   [
+    "Chicken pink inside",
+    "Back in the pan 1–2 minutes; cut the thickest slice to check."
+   ]
+  ],
+  "goes": "—",
+  "ing": [
+   [
+    "halloumi",
+    112.5,
+    "g",
+    112.5,
+    "cubes",
+    "sam"
+   ],
+   [
+    "cauliflower",
+    0.4,
+    "pc",
+    300,
+    "small florets",
+    ""
+   ],
+   [
+    "broccoli",
+    200,
+    "g",
+    200,
+    "florets",
+    ""
+   ],
+   [
+    "olive-oil",
+    1.5,
+    "tbsp",
+    20,
+    "",
+    ""
+   ],
+   [
+    "cumin",
+    1,
+    "tsp",
+    2,
+    "",
+    ""
+   ],
+   [
+    "tahini",
+    40,
+    "g",
+    40,
+    "stirred",
+    ""
+   ],
+   [
+    "lemon",
+    0.5,
+    "pc",
+    20,
+    "juiced",
+    ""
+   ],
+   [
+    "garlic",
+    1,
+    "clove",
+    5,
+    "grated",
+    ""
+   ],
+   [
+    "water",
+    40,
+    "ml",
+    40,
+    "cold",
+    ""
+   ],
+   [
+    "salt",
+    0.5,
+    "tsp",
+    3,
+    "",
+    ""
+   ],
+   [
+    "chicken-breast",
+    160,
+    "g",
+    160,
+    "sliced 1 cm thin",
+    "alex"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Toss cauliflower and broccoli with oil, cumin, salt; air-fry 190 °C 12 minutes, shaking. Add halloumi for the last 6.",
+    "w": "Small florets crisp evenly.",
+    "c": "Browned tips, golden halloumi.",
+    "m": "—",
+    "who": "sam",
+    "min": 12,
+    "tech": "air-fryer",
+    "tmr": 720,
+    "img": "air fryer basket with crispy cauliflower broccoli and halloumi"
+   },
+   {
+    "t": "Make the tahini sauce: whisk the tahini with the lemon juice, garlic and a pinch of salt with a fork — it goes thick and grainy — then whisk in the cold water a spoon at a time until it is smooth and pours like thick cream. Spoon it over the veg and halloumi.",
+    "w": "Tahini tightens when the lemon goes in, then loosens with water.",
+    "c": "Pale, smooth, pours like thick cream.",
+    "m": "All the water at once — lumps.",
+    "who": "sam",
+    "min": 2,
+    "tech": "none",
+    "tmr": 0,
+    "img": "tahini lemon dip in a small bowl"
+   },
+   {
+    "t": "While the veg air-fry, rub the thin chicken breast slices with a little of the oil, salt and a pinch of cumin; pan-fry on medium-high 3–4 minutes per side (6–8 minutes in all). Rest 2 minutes, then slice.",
+    "w": "Thin slices cook through in the time the veg needs; a separate pan keeps the other plate vegetarian.",
+    "c": "Golden outside.",
+    "m": "A thick breast left whole — slice it thin first.",
+    "who": "alex",
+    "min": 8,
+    "tech": "doneness",
+    "tmr": 420,
+    "img": "golden pan-fried chicken breast slices next to an air fryer"
+   }
+  ],
+  "lesson": "s-tahini"
+ },
+ {
+  "slug": "p-prep-tomato-beans",
+  "level": 3,
+  "kind": "prep",
+  "meals": [
+   "lunch",
+   "dinner"
+  ],
+  "title": "Meal prep: tomato, white bean & green bean stew (+ meatballs, optional) — 6 portions",
+  "desc": "Big batch of tomato stew with white beans, green beans and feta for both; the baked beef meatballs packed separately. Cook Sunday, eat 3 days.",
+  "serv": 6,
+  "prep": 15,
+  "cook": 45,
+  "fridge": 4,
+  "freezer": 90,
+  "reheat": "Microwave or pan until piping hot (75 °C), stirring halfway.",
+  "left": "Blend leftovers into soup.",
+  "cuisine": "mediterranean",
+  "protein": "beef",
+  "flav": [
+   "tomato",
+   "herby"
+  ],
+  "spice": 0,
+  "equip": [
+   "stock-pot",
+   "oven",
+   "containers"
+  ],
+  "trouble": [
+   [
+    "Watery",
+    "Simmer uncovered longer."
+   ],
+   [
+    "Green beans still squeaky",
+    "Another 10 minutes — in this stew they should be soft, not crisp."
+   ],
+   [
+    "Meatballs dry",
+    "Bake only 15 minutes."
+   ]
+  ],
+  "goes": "Parsley, lemon.",
+  "ing": [
+   [
+    "olive-oil",
+    3,
+    "tbsp",
+    40,
+    "",
+    ""
+   ],
+   [
+    "onion",
+    1.3,
+    "pc",
+    200,
+    "diced",
+    ""
+   ],
+   [
+    "garlic",
+    4,
+    "clove",
+    20,
+    "",
+    ""
+   ],
+   [
+    "green-beans",
+    400,
+    "g",
+    400,
+    "trimmed, halved",
+    ""
+   ],
+   [
+    "canned-tomatoes",
+    800,
+    "g",
+    800,
+    "",
+    ""
+   ],
+   [
+    "white-beans",
+    480,
+    "g",
+    480,
+    "2 tins, rinsed",
+    ""
+   ],
+   [
+    "oregano",
+    2,
+    "tsp",
+    2,
+    "",
+    ""
+   ],
+   [
+    "vegetable-stock",
+    300,
+    "ml",
+    300,
+    "",
+    ""
+   ],
+   [
+    "feta",
+    150,
+    "g",
+    150,
+    "crumbled to serve",
+    ""
+   ],
+   [
+    "salt",
+    1.5,
+    "tsp",
+    9,
+    "",
+    ""
+   ],
+   [
+    "beef-mince",
+    150,
+    "g",
+    150,
+    "per portion",
+    "alex"
+   ],
+   [
+    "garlic",
+    1,
+    "clove",
+    5,
+    "per portion",
+    "alex"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Soften the onion in the oil 8 minutes, add the garlic for 1 minute.",
+    "w": "—",
+    "c": "Soft and sweet.",
+    "m": "Browning the garlic — it turns bitter.",
+    "who": "either",
+    "min": 9,
+    "tech": "saute",
+    "tmr": 0,
+    "img": "onion and garlic softening in a big pot"
+   },
+   {
+    "t": "Make the sauce: add the green beans, tomatoes, white beans, stock, oregano and salt; simmer uncovered 30 minutes, stirring and pressing the tomato chunks flat, until thick and the green beans are soft.",
+    "w": "Green beans go soft and silky in tomato, the Greek way; the long simmer thickens the stew.",
+    "c": "Thick stew, green beans tender all the way through.",
+    "m": "—",
+    "who": "sam",
+    "min": 30,
+    "tech": "reduce",
+    "tmr": 1800,
+    "img": "tomato stew with white beans and green beans simmering in a large pot"
+   },
+   {
+    "t": "Meanwhile the meatballs: mix the mince with grated garlic and salt, roll walnut-size balls, bake on a tray at 200 °C fan 15 minutes.",
+    "w": "Baking a big batch is hands-off; mince must reach 71 °C.",
+    "c": "Browned.",
+    "m": "Mixing them into the stew pot — the base stays vegetarian.",
+    "who": "alex",
+    "min": 20,
+    "tech": "doneness",
+    "tmr": 900,
+    "img": "tray of baked beef meatballs"
+   },
+   {
+    "t": "Cool both fast (spread out), portion stew into 6 containers, add the meatballs to the 3, label with date. Feta goes on when serving.",
+    "w": "Cool within 2 hours; labels avoid mix-ups.",
+    "c": "6 labelled boxes, 3 marked N.",
+    "m": "Packing hot — condensation and slow cooling.",
+    "who": "sam",
+    "min": 10,
+    "tech": "freezing",
+    "tmr": 0,
+    "img": "labelled glass containers of bean stew some with meatballs"
+   }
+  ],
+  "lesson": "tomato-sauce"
+ },
+ {
+  "slug": "p-prep-roast-veg-bowls",
+  "level": 3,
+  "kind": "prep",
+  "meals": [
+   "lunch"
+  ],
+  "title": "Meal prep: roasted veg bowls with chickpeas & feta-tahini dressing (+ chicken, optional) — 6 portions",
+  "desc": "Two trays of roasted broccoli, green beans, peppers and red onion with chickpeas, a feta-lemon tahini dressing; the chicken thighs and cauliflower rice, the quinoa.",
+  "serv": 6,
+  "prep": 20,
+  "cook": 30,
+  "fridge": 4,
+  "freezer": 0,
+  "reheat": "Eat cold or microwave 2 minutes (dressing on after).",
+  "left": "",
+  "cuisine": "mediterranean",
+  "protein": "chicken",
+  "flav": [
+   "roasted",
+   "lemony"
+  ],
+  "spice": 0,
+  "equip": [
+   "oven",
+   "roasting-tray",
+   "containers",
+   "blender"
+  ],
+  "trouble": [
+   [
+    "Soggy",
+    "Cool before closing the lids."
+   ],
+   [
+    "Dressing too thick",
+    "Loosen with cold water a spoon at a time."
+   ]
+  ],
+  "goes": "—",
+  "ing": [
+   [
+    "broccoli",
+    500,
+    "g",
+    500,
+    "florets",
+    ""
+   ],
+   [
+    "green-beans",
+    400,
+    "g",
+    400,
+    "trimmed, halved",
+    ""
+   ],
+   [
+    "red-pepper",
+    2,
+    "pc",
+    320,
+    "chunks",
+    ""
+   ],
+   [
+    "red-onion",
+    1.7,
+    "pc",
+    200,
+    "wedges",
+    ""
+   ],
+   [
+    "chickpeas",
+    240,
+    "g",
+    240,
+    "rinsed",
+    ""
+   ],
+   [
+    "olive-oil",
+    4,
+    "tbsp",
+    54,
+    "",
+    ""
+   ],
+   [
+    "cumin",
+    2,
+    "tsp",
+    4,
+    "",
+    ""
+   ],
+   [
+    "salt",
+    1.5,
+    "tsp",
+    9,
+    "",
+    ""
+   ],
+   [
+    "tahini",
+    60,
+    "g",
+    60,
+    "stirred",
+    ""
+   ],
+   [
+    "feta",
+    100,
+    "g",
+    100,
+    "",
+    ""
+   ],
+   [
+    "lemon",
+    1,
+    "pc",
+    40,
+    "juiced",
+    ""
+   ],
+   [
+    "water",
+    80,
+    "ml",
+    80,
+    "cold",
+    ""
+   ],
+   [
+    "chicken-thighs",
+    150,
+    "g",
+    150,
+    "per portion",
+    "alex"
+   ],
+   [
+    "cauliflower",
+    150,
+    "g",
+    150,
+    "riced, per portion",
+    "alex"
+   ],
+   [
+    "quinoa",
+    50,
+    "g",
+    50,
+    "per portion",
+    "sam"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Heat the oven to 210 °C fan. Toss the broccoli, green beans, peppers, onion and chickpeas with oil, cumin and salt on two trays; roast 20–25 minutes, swapping trays halfway.",
+    "w": "Two trays = roasted, not steamed.",
+    "c": "Charred broccoli tips, blistered beans.",
+    "m": "One crowded tray.",
+    "who": "sam",
+    "min": 25,
+    "tech": "none",
+    "tmr": 1380,
+    "img": "two trays of roasting broccoli, green beans, peppers and chickpeas"
+   },
+   {
+    "t": "The chicken thighs: salt, cumin, on a third tray for 22–25 minutes. The quinoa: rinse, simmer in 2× water 15 minutes, drain.",
+    "w": "Separate tray keeps the veg vegetarian.",
+    "c": "Chicken golden; quinoa tails visible.",
+    "m": "—",
+    "who": "alex",
+    "min": 25,
+    "tech": "doneness",
+    "tmr": 1380,
+    "img": "roasted chicken thighs on a tray and a pot of quinoa"
+   },
+   {
+    "t": "Fry the cauliflower rice 5 minutes. Make the feta-tahini sauce: blend the tahini, feta, lemon juice and cold water for 30 seconds until smooth and pourable like thick cream; pack it separately and spoon it over at lunch.",
+    "w": "Dressing apart stops soggy bowls.",
+    "c": "Smooth, pourable.",
+    "m": "—",
+    "who": "either",
+    "min": 8,
+    "tech": "none",
+    "tmr": 0,
+    "img": "feta lemon tahini dressing in small jars"
+   },
+   {
+    "t": "Cool, pack 6 bowls: veg for all, chicken + cauliflower rice in the 3, quinoa in the 3; label.",
+    "w": "—",
+    "c": "6 labelled bowls.",
+    "m": "—",
+    "who": "sam",
+    "min": 10,
+    "tech": "freezing",
+    "tmr": 0,
+    "img": "six meal prep bowls with roasted vegetables"
+   }
+  ],
+  "lesson": "s-tahini"
+ },
+ {
+  "slug": "p-prep-ratatouille",
+  "level": 3,
+  "kind": "prep",
+  "meals": [
+   "dinner"
+  ],
+  "title": "Meal prep: peperonata with mushrooms & halloumi (+ chicken, optional) — 6 portions",
+  "desc": "A big pot of slow-stewed peppers, mushrooms, onion and tomato, grilled halloumi on top when serving; the roast chicken thighs packed alongside. Freezes well (without halloumi).",
+  "serv": 6,
+  "prep": 20,
+  "cook": 50,
+  "fridge": 4,
+  "freezer": 90,
+  "reheat": "Pan or microwave until piping hot; fry the halloumi fresh.",
+  "left": "Base for shakshuka.",
+  "cuisine": "italian",
+  "protein": "chicken",
+  "flav": [
+   "herby",
+   "tomato"
+  ],
+  "spice": 0,
+  "equip": [
+   "stock-pot",
+   "oven",
+   "containers"
+  ],
+  "trouble": [
+   [
+    "Watery",
+    "Brown the mushrooms hard first and simmer with the lid ajar."
+   ],
+   [
+    "Peppers still crunchy",
+    "Another 10 minutes — peperonata should be soft and sweet."
+   ]
+  ],
+  "goes": "Basil.",
+  "ing": [
+   [
+    "olive-oil",
+    4,
+    "tbsp",
+    54,
+    "",
+    ""
+   ],
+   [
+    "onion",
+    2,
+    "pc",
+    300,
+    "sliced",
+    ""
+   ],
+   [
+    "garlic",
+    4,
+    "clove",
+    20,
+    "",
+    ""
+   ],
+   [
+    "mushroom",
+    500,
+    "g",
+    500,
+    "quartered",
+    ""
+   ],
+   [
+    "red-pepper",
+    5,
+    "pc",
+    800,
+    "strips",
+    ""
+   ],
+   [
+    "canned-tomatoes",
+    800,
+    "g",
+    800,
+    "",
+    ""
+   ],
+   [
+    "thyme",
+    4,
+    "sprig",
+    2,
+    "",
+    ""
+   ],
+   [
+    "salt",
+    2,
+    "tsp",
+    12,
+    "",
+    ""
+   ],
+   [
+    "halloumi",
+    75,
+    "g",
+    75,
+    "sliced, fried when serving",
+    "sam"
+   ],
+   [
+    "chicken-thighs",
+    150,
+    "g",
+    150,
+    "per portion",
+    "alex"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Brown the mushrooms in 2 tbsp oil on high 6–8 minutes; set aside. Soften onion and peppers in the rest 10 minutes; add garlic.",
+    "w": "Browning the mushrooms first drives off their water and adds a meaty flavour.",
+    "c": "Golden mushrooms, peppers starting to slump.",
+    "m": "Everything in at once — grey, watery stew.",
+    "who": "alex",
+    "min": 18,
+    "tech": "sear",
+    "tmr": 0,
+    "img": "mushrooms browning in a large pot"
+   },
+   {
+    "t": "Make the sauce: return the mushrooms, add the tomatoes, thyme and salt, press the tomato chunks flat with the spoon and simmer gently 30 minutes, lid ajar, until thick and glossy.",
+    "w": "Slow simmering makes the peppers soft and sweet.",
+    "c": "Thick, glossy, peppers silky.",
+    "m": "—",
+    "who": "either",
+    "min": 30,
+    "tech": "reduce",
+    "tmr": 1800,
+    "img": "peperonata with peppers and mushrooms simmering in a pot"
+   },
+   {
+    "t": "The chicken thighs: roast at 210 °C fan 22–25 minutes.",
+    "w": "—",
+    "c": "Golden skin.",
+    "m": "—",
+    "who": "alex",
+    "min": 25,
+    "tech": "doneness",
+    "tmr": 1380,
+    "img": "roast chicken thighs on a tray"
+   },
+   {
+    "t": "Cool fast, portion into 6, the chicken in the 3, label. Fry halloumi fresh each evening.",
+    "w": "Halloumi is best freshly fried.",
+    "c": "Labelled.",
+    "m": "—",
+    "who": "sam",
+    "min": 10,
+    "tech": "freezing",
+    "tmr": 0,
+    "img": "peperonata portions in containers"
+   }
+  ],
+  "lesson": "tomato-sauce"
+ },
+ {
+  "slug": "sc-chili",
+  "level": 3,
+  "kind": "prep",
+  "meals": [
+   "lunch",
+   "dinner"
+  ],
+  "title": "Slow-cooker bean chili base (+ slow-cooked beef, optional) — 6 portions",
+  "desc": "Two slow cookers or one cooker + one oven dish: a vegetarian bean chili for both, and the beef chuck slow-cooked separately until it shreds.",
+  "serv": 6,
+  "prep": 20,
+  "cook": 420,
+  "fridge": 4,
+  "freezer": 90,
+  "reheat": "Simmer until piping hot.",
+  "left": "Freeze in portions.",
+  "cuisine": "american bbq",
+  "protein": "beef",
+  "flav": [
+   "smoky",
+   "spiced"
+  ],
+  "spice": 1,
+  "equip": [
+   "slow-cooker",
+   "oven",
+   "containers"
+  ],
+  "trouble": [
+   [
+    "Watery",
+    "Lid off for the last hour, or a corn-flour slurry."
+   ],
+   [
+    "Beef tough",
+    "Needs longer — LOW another hour."
+   ]
+  ],
+  "goes": "Yogurt, coriander, the rice.",
+  "ing": [
+   [
+    "onion",
+    2,
+    "pc",
+    300,
+    "diced",
+    ""
+   ],
+   [
+    "red-pepper",
+    2,
+    "pc",
+    320,
+    "diced",
+    ""
+   ],
+   [
+    "garlic",
+    4,
+    "clove",
+    20,
+    "",
+    ""
+   ],
+   [
+    "cumin",
+    2,
+    "tsp",
+    4,
+    "",
+    ""
+   ],
+   [
+    "smoked-paprika",
+    2,
+    "tsp",
+    4,
+    "",
+    ""
+   ],
+   [
+    "chilli-flakes",
+    1,
+    "tsp",
+    2,
+    "",
+    ""
+   ],
+   [
+    "canned-tomatoes",
+    800,
+    "g",
+    800,
+    "",
+    ""
+   ],
+   [
+    "kidney-beans",
+    480,
+    "g",
+    480,
+    "2 tins, rinsed",
+    ""
+   ],
+   [
+    "vegetable-stock",
+    200,
+    "ml",
+    200,
+    "",
+    ""
+   ],
+   [
+    "salt",
+    1.5,
+    "tsp",
+    9,
+    "",
+    ""
+   ],
+   [
+    "beef-chunks",
+    150,
+    "g",
+    150,
+    "per portion, 4 cm",
+    "alex"
+   ],
+   [
+    "beef-stock",
+    50,
+    "ml",
+    50,
+    "per portion",
+    "alex"
+   ],
+   [
+    "basmati-rice",
+    60,
+    "g",
+    60,
+    "per portion",
+    "sam"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Bean base: put onion, pepper, garlic, spices, tomatoes, beans, stock and salt in the slow cooker. LOW 6–7 hours. Make the sauce thick at the end: press a few beans against the side with a spoon and stir for 1 minute until the liquid turns creamy.",
+    "w": "Slow heat melds the spices without stirring.",
+    "c": "Thick, fragrant.",
+    "m": "Lifting the lid often.",
+    "who": "sam",
+    "min": 10,
+    "tech": "slow-cooker",
+    "tmr": 0,
+    "img": "slow cooker filled with bean chili ingredients"
+   },
+   {
+    "t": "The beef: brown the chunks in a hot pan, then into an oven dish (or second slow cooker) with the beef stock, a spoon of the spices and a lid/foil; 150 °C fan for 3–3½ hours until it shreds.",
+    "w": "Chuck needs long, slow, moist heat; kept separate so the base stays vegetarian.",
+    "c": "Falls apart with a fork.",
+    "m": "Raw beef into the bean pot.",
+    "who": "alex",
+    "min": 15,
+    "tech": "slow-cooker",
+    "tmr": 0,
+    "img": "browned beef chunks in a covered oven dish"
+   },
+   {
+    "t": "Shred the beef with two forks. Cook the rice fresh each time or within 24 h.",
+    "w": "Cooked rice: max 24 h in the fridge.",
+    "c": "—",
+    "m": "Batch-cooking rice for 4 days.",
+    "who": "either",
+    "min": 5,
+    "tech": "none",
+    "tmr": 0,
+    "img": "shredded beef with two forks"
+   },
+   {
+    "t": "Cool fast, portion 6 bean bases; add beef to the 3; label; fridge 4 days or freeze.",
+    "w": "—",
+    "c": "Labelled.",
+    "m": "—",
+    "who": "sam",
+    "min": 10,
+    "tech": "freezing",
+    "tmr": 0,
+    "img": "chili portions in labelled containers"
+   }
+  ],
+  "lesson": "tomato-sauce"
+ },
+ {
+  "slug": "sc-pulled-pork",
+  "level": 4,
+  "kind": "prep",
+  "meals": [
+   "lunch",
+   "dinner"
+  ],
+  "title": "Slow-cooker sugar-free pulled pork + smoky bean & pepper base (both) — 6 portions",
+  "desc": "Pork shoulder with a BBQ dry rub, slow-cooked until it pulls apart; a smoky bean and pepper base for both made on the hob.",
+  "serv": 6,
+  "prep": 20,
+  "cook": 480,
+  "fridge": 4,
+  "freezer": 90,
+  "reheat": "Covered, until piping hot.",
+  "left": "Lettuce wraps, eggs.",
+  "cuisine": "american bbq",
+  "protein": "pork",
+  "flav": [
+   "smoky",
+   "tangy"
+  ],
+  "spice": 1,
+  "equip": [
+   "slow-cooker",
+   "heavy-pan",
+   "containers"
+  ],
+  "trouble": [
+   [
+    "Won't shred",
+    "Not done — 90–95 °C internal is pulling temperature."
+   ],
+   [
+    "Too fatty",
+    "Chill the juices and lift off the fat."
+   ]
+  ],
+  "goes": "Sugar-free BBQ sauce, yogurt-dill sauce.",
+  "ing": [
+   [
+    "olive-oil",
+    2,
+    "tbsp",
+    27,
+    "",
+    ""
+   ],
+   [
+    "onion",
+    1.3,
+    "pc",
+    200,
+    "sliced",
+    ""
+   ],
+   [
+    "red-pepper",
+    2,
+    "pc",
+    320,
+    "sliced",
+    ""
+   ],
+   [
+    "garlic",
+    3,
+    "clove",
+    15,
+    "",
+    ""
+   ],
+   [
+    "smoked-paprika",
+    3,
+    "tsp",
+    6,
+    "",
+    ""
+   ],
+   [
+    "cumin",
+    1,
+    "tsp",
+    2,
+    "",
+    ""
+   ],
+   [
+    "passata",
+    400,
+    "g",
+    400,
+    "",
+    ""
+   ],
+   [
+    "white-beans",
+    480,
+    "g",
+    480,
+    "2 tins",
+    ""
+   ],
+   [
+    "cider-vinegar",
+    2,
+    "tbsp",
+    30,
+    "",
+    ""
+   ],
+   [
+    "salt",
+    1.5,
+    "tsp",
+    9,
+    "",
+    ""
+   ],
+   [
+    "pork-shoulder",
+    180,
+    "g",
+    180,
+    "per portion",
+    "alex"
+   ],
+   [
+    "garlic-powder",
+    0.5,
+    "tsp",
+    1.5,
+    "per portion",
+    "alex"
+   ],
+   [
+    "onion-powder",
+    0.5,
+    "tsp",
+    1.2,
+    "per portion",
+    "alex"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "The pork: rub with smoked paprika, garlic and onion powder, cumin and salt. Into the slow cooker with 100 ml water and 1 tbsp cider vinegar. LOW 8 hours.",
+    "w": "Collagen melts into gelatine at low heat over hours — that's what makes it pull.",
+    "c": "Shreds easily.",
+    "m": "HIGH for a short time — tough.",
+    "who": "alex",
+    "min": 10,
+    "tech": "slow-cooker",
+    "tmr": 0,
+    "img": "rubbed pork shoulder in a slow cooker"
+   },
+   {
+    "t": "Bean base (vegetarian): soften onion and peppers in the oil 10 minutes, garlic, paprika, passata, beans, vinegar, salt; simmer 25 minutes.",
+    "w": "Made on the hob, separate from the pork.",
+    "c": "Thick, smoky.",
+    "m": "—",
+    "who": "sam",
+    "min": 35,
+    "tech": "reduce",
+    "tmr": 1500,
+    "img": "smoky bean and pepper base in a pan"
+   },
+   {
+    "t": "Make the sauce: lift the pork out, skim the fat off the juices with a spoon, then let the juices bubble in a small pan 5 minutes until reduced by half. Shred the pork with two forks and stir the sauce through.",
+    "w": "—",
+    "c": "Juicy strands, glossy with sauce.",
+    "m": "—",
+    "who": "alex",
+    "min": 5,
+    "tech": "none",
+    "tmr": 0,
+    "img": "pulled pork being shredded with forks"
+   },
+   {
+    "t": "Cool fast; 6 portions of base, pork added to the 3; label.",
+    "w": "—",
+    "c": "—",
+    "m": "—",
+    "who": "sam",
+    "min": 10,
+    "tech": "freezing",
+    "tmr": 0,
+    "img": "meal prep containers with beans and pulled pork"
+   }
+  ],
+  "lesson": "s-bbq-sugarfree"
+ }
+]

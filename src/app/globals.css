@@ -1,0 +1,200 @@
+@import "tailwindcss";
+@config "../../tailwind.config.ts";
+
+/*
+ * Neon night market (token NAMES are still the original palette's: cream/sand/paper = night surfaces,
+ * ink = light text, clay = pink, olive = lime, sea = cyan, gold = amber). The look itself is in neon-theme.css.
+ * Display = Onest behind a Segoe UI stack; body = Hanken Grotesk (wired in layout.tsx).
+ */
+:root {
+  color-scheme: dark;
+  --cream: #07060f;
+  --sand: #0b0918;
+  --paper: #110e20;
+  --ink: #f4f1ff;
+  --ink-soft: #cfc9e6;
+  --ink-muted: #a39dbd;
+  --clay: #ff4fd8;
+  --clay-deep: #ff6fe0;
+  --clay-light: #ff9be9;
+  /* clay as TEXT (labels, eyebrows) — darker than the accent so it clears 4.5:1 on cream */
+  --clay-text: #ff8be6;
+  --olive: #b6ff3d;
+  --olive-light: #d2ff8a;
+  --sea: #3df5ff;
+  --sea-deep: #6ff8ff;
+  --gold: #ffb03d;
+  --line: #2a2440;
+  /* money semantics */
+  --accent-green: #b6ff3d;
+  --accent-green-light: #d2ff8a;
+  --accent-orange: #ffb03d;
+  --accent-red: #ff5a5a;
+  --text-primary: #f4f1ff;
+  --text-secondary: #cfc9e6;
+  --text-muted: #a39dbd;
+}
+
+/* Text-safe colour utilities (text-clay-text) — the accent hues stay for fills. */
+@theme inline {
+  --color-clay-text: var(--clay-text);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body), system-ui, sans-serif;
+  background-color: var(--cream);
+  /* subtle warm atmosphere — two soft sun orbs, not flat */
+  background-image:
+    radial-gradient(60rem 40rem at 85% -10%, rgba(191, 90, 54, 0.08), transparent 60%),
+    radial-gradient(50rem 40rem at -10% 10%, rgba(94, 107, 79, 0.07), transparent 55%);
+  background-attachment: fixed;
+  color: var(--ink);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: "Segoe UI Variable Display", "Segoe UI", var(--font-display), system-ui, sans-serif;
+  letter-spacing: -0.01em;
+}
+
+::selection {
+  background: rgba(191, 90, 54, 0.18);
+}
+
+/* Component classes live in the components layer so a Tailwind utility on the same
+   element wins (an un-layered `.input-field` padding beat `pl-9`, so the search icon
+   overlapped the placeholder and the month select was clipped). */
+@layer components {
+/* ---- cards ---- */
+.glass-card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: 0 1px 2px rgba(33, 28, 21, 0.04), 0 8px 24px rgba(33, 28, 21, 0.05);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.glass-card:hover {
+  border-color: var(--clay-light);
+  box-shadow: 0 2px 4px rgba(33, 28, 21, 0.06), 0 18px 40px rgba(33, 28, 21, 0.1);
+}
+
+/* Brand wordmark — solid, not gradient (gradient text reads decorative) */
+.gradient-text {
+  color: var(--clay-deep);
+}
+
+/* ---- buttons ---- */
+.btn-primary {
+  background: var(--clay-deep);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-weight: 600;
+  border: 1px solid var(--clay-deep);
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.btn-primary:hover {
+  background: #8a3a21;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(191, 90, 54, 0.3);
+}
+
+.btn-primary:disabled {
+  opacity: 0.55;
+  transform: none;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: var(--paper);
+  color: var(--ink);
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-weight: 600;
+  border: 1px solid var(--line);
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.btn-secondary:hover {
+  background: rgba(33, 28, 21, 0.04);
+  border-color: var(--ink-muted);
+}
+
+/* ---- inputs ---- */
+.input-field {
+  width: 100%;
+  padding: 0.65rem 0.9rem;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  color: var(--ink);
+  font-size: 0.95rem;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: var(--clay);
+  box-shadow: 0 0 0 3px rgba(191, 90, 54, 0.14);
+}
+
+.input-field::placeholder {
+  color: var(--ink-muted);
+}
+
+select.input-field option {
+  background: var(--paper);
+  color: var(--ink);
+}
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(33, 28, 21, 0.18);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(33, 28, 21, 0.3);
+}
+
+/* Keyboard focus — visible clay ring on every interactive element (a11y) */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--clay-deep);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

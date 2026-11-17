@@ -1,0 +1,1228 @@
+[
+ {
+  "level": 1,
+  "kind": "plan",
+  "meals": [
+   "lunch"
+  ],
+  "serv": 2,
+  "fridge": 0,
+  "freezer": 0,
+  "spice": 0,
+  "cuisine": "italian",
+  "slug": "tomato-mozzarella-salad",
+  "title": "Tomato & mozzarella salad with red onion (+ avocado, optional)",
+  "desc": "Cherry tomatoes, mozzarella and red onion in a sharp oregano-vinegar dressing, avocado optional.",
+  "prep": 10,
+  "cook": 0,
+  "reheat": "Eat fresh.",
+  "left": "Dress just before eating.",
+  "protein": "mozzarella",
+  "flav": [
+   "tangy",
+   "fresh"
+  ],
+  "equip": [
+   "chefs-knife",
+   "bowls"
+  ],
+  "trouble": [
+   [
+    "Watery bowl",
+    "Dress it only right before eating; salt pulls the tomato juice out."
+   ],
+   [
+    "Onion too sharp",
+    "Let it sit in the dressing 5 minutes first."
+   ]
+  ],
+  "goes": "A slice of rye bread.",
+  "ing": [
+   [
+    "cherry-tomato",
+    300,
+    "g",
+    300,
+    "halved",
+    ""
+   ],
+   [
+    "mozzarella",
+    2,
+    "pc",
+    250,
+    "torn into bites (or mini balls)",
+    ""
+   ],
+   [
+    "red-onion",
+    0.5,
+    "pc",
+    60,
+    "thinly sliced",
+    ""
+   ],
+   [
+    "olive-oil",
+    2,
+    "tbsp",
+    27,
+    "",
+    ""
+   ],
+   [
+    "red-wine-vinegar",
+    1,
+    "tbsp",
+    15,
+    "",
+    ""
+   ],
+   [
+    "oregano",
+    1,
+    "tsp",
+    1,
+    "dried",
+    ""
+   ],
+   [
+    "salt",
+    0.5,
+    "tsp",
+    3,
+    "",
+    ""
+   ],
+   [
+    "black-pepper",
+    0.25,
+    "tsp",
+    1,
+    "",
+    ""
+   ],
+   [
+    "avocado",
+    1,
+    "pc",
+    150,
+    "cubed",
+    "sam"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Put the halved cherry tomatoes, the mozzarella bites and the sliced red onion in a bowl.",
+    "w": "Everything bite-sized so each forkful gets all three.",
+    "c": "Bowl full, onion spread through.",
+    "m": "Thick onion rings — slice it thin.",
+    "who": "either",
+    "min": 6,
+    "tech": "knife-cuts",
+    "tmr": 0,
+    "img": "bowl of halved cherry tomatoes mozzarella balls and thin red onion slices"
+   },
+   {
+    "t": "Make the sauce for this salad: whisk the oil, vinegar, oregano, salt and pepper with a fork for 30 seconds until cloudy, pour it over and toss. Let it sit 5 minutes.",
+    "w": "The vinegar softens the onion and pulls the tomato juice into the dressing.",
+    "c": "Glossy, every piece coated.",
+    "m": "Pouring oil and vinegar on separately — they never mix.",
+    "who": "either",
+    "min": 2,
+    "tech": "emulsify",
+    "tmr": 0,
+    "img": "oregano vinegar dressing whisked with a fork in a small bowl"
+   },
+   {
+    "t": "Add the avocado cubes on top of that bowl.",
+    "w": "Avocado last so it stays green and whole.",
+    "c": "Green cubes on top.",
+    "m": "Tossing it in — it turns to mush.",
+    "who": "sam",
+    "min": 1,
+    "tech": "none",
+    "tmr": 0,
+    "img": "avocado cubes on a tomato mozzarella salad"
+   }
+  ],
+  "lesson": "s-ladolemono"
+ },
+ {
+  "level": 1,
+  "kind": "plan",
+  "meals": [
+   "lunch"
+  ],
+  "serv": 2,
+  "fridge": 0,
+  "freezer": 0,
+  "spice": 0,
+  "cuisine": "italian",
+  "slug": "caprese-toast",
+  "title": "Caprese toast (rye or sourdough)",
+  "desc": "Toasted bread with sliced tomato, mozzarella and basil, finished with a balsamic-oil drizzle.",
+  "prep": 5,
+  "cook": 3,
+  "reheat": "Eat fresh.",
+  "left": "Best eaten straight away.",
+  "protein": "mozzarella",
+  "flav": [
+   "fresh",
+   "tangy"
+  ],
+  "equip": [
+   "chefs-knife"
+  ],
+  "trouble": [
+   [
+    "Soggy toast",
+    "Toast it well and drizzle just before eating."
+   ],
+   [
+    "Tasteless tomato",
+    "Salt the tomato slices first."
+   ]
+  ],
+  "goes": "Rocket on the side.",
+  "ing": [
+   [
+    "tomato",
+    2,
+    "pc",
+    360,
+    "large, sliced",
+    ""
+   ],
+   [
+    "mozzarella",
+    2,
+    "pc",
+    250,
+    "sliced",
+    ""
+   ],
+   [
+    "basil",
+    0.25,
+    "bunch",
+    8,
+    "leaves",
+    ""
+   ],
+   [
+    "olive-oil",
+    1.5,
+    "tbsp",
+    20,
+    "",
+    ""
+   ],
+   [
+    "balsamic-vinegar",
+    1,
+    "tsp",
+    5,
+    "",
+    ""
+   ],
+   [
+    "salt",
+    0.5,
+    "tsp",
+    3,
+    "",
+    ""
+   ],
+   [
+    "black-pepper",
+    0.25,
+    "tsp",
+    1,
+    "",
+    ""
+   ],
+   [
+    "sourdough-bread",
+    2,
+    "slice",
+    100,
+    "",
+    "sam"
+   ],
+   [
+    "rye-bread",
+    1,
+    "slice",
+    50,
+    "",
+    "alex"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Toast the bread: the rye, the sourdough, about 3 minutes until crisp.",
+    "w": "Crisp toast holds the wet tomato.",
+    "c": "Golden, stiff.",
+    "m": "Pale toast — goes soggy.",
+    "who": "either",
+    "min": 3,
+    "tech": "none",
+    "tmr": 180,
+    "img": "toasted rye and sourdough slices on a plate"
+   },
+   {
+    "t": "Lay tomato and mozzarella slices on the toast, overlapping, and salt the tomatoes. Add the basil leaves.",
+    "w": "Salt brings out the tomato flavour.",
+    "c": "Alternating red and white rows.",
+    "m": "—",
+    "who": "either",
+    "min": 3,
+    "tech": "none",
+    "tmr": 0,
+    "img": "tomato and mozzarella slices layered on toast with basil leaves"
+   },
+   {
+    "t": "Make the sauce: whisk the oil and balsamic with a fork for 20 seconds until glossy and drizzle it over the tomatoes; finish with pepper.",
+    "w": "Oil + a little vinegar turns the tomato juice into a dressing.",
+    "c": "Shiny drops on every slice.",
+    "m": "Too much balsamic — 1 tsp is enough.",
+    "who": "either",
+    "min": 1,
+    "tech": "emulsify",
+    "tmr": 0,
+    "img": "balsamic oil drizzled over caprese toast"
+   }
+  ],
+  "lesson": "s-ladolemono"
+ },
+ {
+  "level": 1,
+  "kind": "plan",
+  "meals": [
+   "breakfast",
+   "lunch"
+  ],
+  "serv": 2,
+  "fridge": 0,
+  "freezer": 0,
+  "spice": 0,
+  "cuisine": "breakfast",
+  "slug": "chopped-egg-toast",
+  "title": "Chopped-egg toast (avocado or egg-mayo)",
+  "desc": "Boiled eggs chopped warm onto toast. The goes on smashed avocado; the is stirred with mayo and mustard (egg salad on bread).",
+  "prep": 5,
+  "cook": 10,
+  "reheat": "Eat fresh.",
+  "left": "The egg-mayo keeps 1 day in the fridge.",
+  "protein": "egg",
+  "flav": [
+   "creamy",
+   "peppery"
+  ],
+  "equip": [
+   "saucepan"
+  ],
+  "trouble": [
+   [
+    "Grey ring round the yolk",
+    "8 minutes, then straight into cold water."
+   ],
+   [
+    "Eggs hard to peel",
+    "Peel under running water."
+   ]
+  ],
+  "goes": "Black coffee.",
+  "ing": [
+   [
+    "egg",
+    6,
+    "pc",
+    300,
+    "",
+    ""
+   ],
+   [
+    "salt",
+    0.5,
+    "tsp",
+    3,
+    "",
+    ""
+   ],
+   [
+    "black-pepper",
+    0.25,
+    "tsp",
+    1,
+    "",
+    ""
+   ],
+   [
+    "chilli-flakes",
+    0.25,
+    "tsp",
+    0.5,
+    "",
+    ""
+   ],
+   [
+    "rye-bread",
+    2,
+    "slice",
+    100,
+    "",
+    "sam"
+   ],
+   [
+    "avocado",
+    1,
+    "pc",
+    150,
+    "",
+    "sam"
+   ],
+   [
+    "lemon",
+    0.25,
+    "pc",
+    10,
+    "juiced",
+    "sam"
+   ],
+   [
+    "rye-bread",
+    1,
+    "slice",
+    50,
+    "",
+    "alex"
+   ],
+   [
+    "mayonnaise",
+    1,
+    "tbsp",
+    15,
+    "",
+    "alex"
+   ],
+   [
+    "dijon-mustard",
+    1,
+    "tsp",
+    5,
+    "",
+    "alex"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Boil the eggs 8 minutes, then 2 minutes in cold water. Peel and chop them roughly with a fork. Toast the bread.",
+    "w": "8 minutes = set yolk that is still soft in the middle.",
+    "c": "Chunky, yellow, still warm.",
+    "m": "—",
+    "who": "either",
+    "min": 10,
+    "tech": "none",
+    "tmr": 480,
+    "img": "chopped boiled eggs in a bowl next to toasted rye bread"
+   },
+   {
+    "t": "Mash the avocado with the lemon juice and a pinch of salt, spread it on the toast and pile half the egg on top.",
+    "w": "Lemon keeps the avocado green.",
+    "c": "Green layer, yellow egg on top.",
+    "m": "—",
+    "who": "sam",
+    "min": 2,
+    "tech": "none",
+    "tmr": 0,
+    "img": "a slice of rye toast spread thickly with green smashed avocado, topped with a heap of roughly chopped hard-boiled egg pieces (white and yellow chunks, no fried egg, no whole egg)"
+   },
+   {
+    "t": "Stir that half of the egg with the mayonnaise, mustard, salt and pepper and spread it on the rye toast.",
+    "w": "Egg salad — creamy without avocado.",
+    "c": "Creamy, holds together.",
+    "m": "—",
+    "who": "alex",
+    "min": 2,
+    "tech": "none",
+    "tmr": 0,
+    "img": "a slice of rye toast topped with creamy pale-yellow egg salad: chopped hard-boiled egg mixed with mayonnaise and mustard (no avocado, no fried egg)"
+   },
+   {
+    "t": "Finish both with black pepper and the chilli flakes.",
+    "w": "",
+    "c": "",
+    "m": "",
+    "who": "either",
+    "min": 0,
+    "tech": "seasoning",
+    "tmr": 0,
+    "img": "two open toasts side by side topped with chopped hard-boiled egg pieces, one on green avocado, one as creamy egg salad, sprinkled with black pepper and red chilli flakes (no fried eggs)"
+   }
+  ]
+ },
+ {
+  "level": 1,
+  "kind": "plan",
+  "meals": [
+   "breakfast"
+  ],
+  "serv": 2,
+  "fridge": 3,
+  "freezer": 0,
+  "spice": 0,
+  "cuisine": "breakfast",
+  "slug": "chia-pudding-strawberry",
+  "title": "Chia pudding with strawberries",
+  "desc": "Chia seeds soaked overnight in milk, topped with chopped strawberries (2 boiled eggs on the side). Five minutes the night before.",
+  "prep": 5,
+  "cook": 0,
+  "reheat": "Eat cold.",
+  "left": "Keeps 3 days in the fridge, add the fruit on the day.",
+  "protein": "chia",
+  "flav": [
+   "fresh",
+   "sweet-tart"
+  ],
+  "equip": [
+   "bowls"
+  ],
+  "trouble": [
+   [
+    "Lumps of dry seeds",
+    "Stir again after 5 minutes, before it goes in the fridge."
+   ],
+   [
+    "Too runny",
+    "Add 1 tbsp more chia and wait 15 minutes."
+   ]
+  ],
+  "goes": "Coffee.",
+  "ing": [
+   [
+    "chia-seeds",
+    60,
+    "g",
+    60,
+    "",
+    ""
+   ],
+   [
+    "milk",
+    400,
+    "ml",
+    412,
+    "",
+    ""
+   ],
+   [
+    "strawberries",
+    250,
+    "g",
+    250,
+    "chopped",
+    ""
+   ],
+   [
+    "egg",
+    2,
+    "pc",
+    100,
+    "boiled, on the side",
+    "alex"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Stir the chia into the milk in a bowl. Wait 5 minutes, stir again to break the lumps, cover and put it in the fridge overnight (at least 2 hours).",
+    "w": "Chia swells and turns the milk into a pudding; the second stir stops clumps.",
+    "c": "Thick, spoonable, seeds evenly spread.",
+    "m": "Skipping the second stir — you get a dry lump at the bottom.",
+    "who": "either",
+    "min": 5,
+    "tech": "none",
+    "tmr": 300,
+    "img": "chia seeds stirred into milk in a bowl"
+   },
+   {
+    "t": "Boil 2 eggs for 8 minutes, cool 2 minutes in cold water, peel and halve them for the side of that bowl.",
+    "w": "Chia alone is too little protein for the breakfast.",
+    "c": "Set white, soft yolk.",
+    "m": "—",
+    "who": "alex",
+    "min": 10,
+    "tech": "none",
+    "tmr": 480,
+    "img": "two halved boiled eggs next to a chia pudding bowl"
+   },
+   {
+    "t": "Spoon into two bowls and top with the chopped strawberries.",
+    "w": "The fruit brings the sweetness — no sugar needed.",
+    "c": "Red half, grey-white half.",
+    "m": "Adding honey out of habit.",
+    "who": "either",
+    "min": 2,
+    "tech": "none",
+    "tmr": 0,
+    "img": "chia pudding bowl topped with chopped strawberries"
+   }
+  ]
+ },
+ {
+  "level": 1,
+  "kind": "plan",
+  "meals": [
+   "breakfast"
+  ],
+  "serv": 2,
+  "fridge": 3,
+  "freezer": 0,
+  "spice": 0,
+  "cuisine": "breakfast",
+  "slug": "chia-pudding-kiwi",
+  "title": "Chia pudding with kiwi (Greek yogurt or eggs)",
+  "desc": "Overnight chia pudding with fresh kiwi; a spoon of Greek yogurt or 2 boiled eggs on the side.",
+  "prep": 5,
+  "cook": 0,
+  "reheat": "Eat cold.",
+  "left": "Keeps 3 days in the fridge, add the fruit on the day.",
+  "protein": "chia",
+  "flav": [
+   "fresh",
+   "tangy"
+  ],
+  "equip": [
+   "bowls"
+  ],
+  "trouble": [
+   [
+    "Lumps of dry seeds",
+    "Stir again after 5 minutes."
+   ],
+   [
+    "Kiwi too sour",
+    "Use soft, ripe kiwis."
+   ]
+  ],
+  "goes": "Coffee.",
+  "ing": [
+   [
+    "chia-seeds",
+    60,
+    "g",
+    60,
+    "",
+    ""
+   ],
+   [
+    "milk",
+    400,
+    "ml",
+    412,
+    "",
+    ""
+   ],
+   [
+    "kiwi",
+    2,
+    "pc",
+    150,
+    "peeled, cubed",
+    ""
+   ],
+   [
+    "greek-yogurt",
+    100,
+    "g",
+    100,
+    "",
+    "sam"
+   ],
+   [
+    "egg",
+    2,
+    "pc",
+    100,
+    "boiled, on the side",
+    "alex"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Stir the chia into the milk. Wait 5 minutes, stir again, cover and leave in the fridge overnight (at least 2 hours).",
+    "w": "The second stir stops clumps.",
+    "c": "Thick and spoonable.",
+    "m": "—",
+    "who": "either",
+    "min": 5,
+    "tech": "none",
+    "tmr": 300,
+    "img": "chia seeds soaking in milk in a bowl"
+   },
+   {
+    "t": "Boil 2 eggs for 8 minutes, cool 2 minutes in cold water, peel and halve them for the side of that bowl.",
+    "w": "Chia alone is too little protein for the breakfast.",
+    "c": "Set white, soft yolk.",
+    "m": "—",
+    "who": "alex",
+    "min": 10,
+    "tech": "none",
+    "tmr": 480,
+    "img": "two halved boiled eggs next to a chia pudding bowl"
+   },
+   {
+    "t": "Spoon into two bowls and top with the kiwi cubes.",
+    "w": "",
+    "c": "Green fruit on grey pudding.",
+    "m": "—",
+    "who": "either",
+    "min": 2,
+    "tech": "none",
+    "tmr": 0,
+    "img": "chia pudding with kiwi cubes"
+   },
+   {
+    "t": "Add the Greek yogurt to the side of that bowl.",
+    "w": "Extra protein for the.",
+    "c": "",
+    "m": "",
+    "who": "sam",
+    "min": 1,
+    "tech": "none",
+    "tmr": 0,
+    "img": "chia pudding with kiwi and a spoon of thick yogurt"
+   }
+  ]
+ },
+ {
+  "level": 1,
+  "kind": "plan",
+  "meals": [
+   "dinner"
+  ],
+  "serv": 2,
+  "fridge": 2,
+  "freezer": 0,
+  "spice": 1,
+  "cuisine": "american bbq",
+  "slug": "paprika-chicken-rice-carrots",
+  "title": "Smoky paprika chicken with roast carrots & rice (or brown rice)",
+  "desc": "Spice-rubbed chicken breast from the pan, air-fried carrots, rice, and a lemon-butter pan sauce.",
+  "prep": 5,
+  "cook": 25,
+  "reheat": "Microwave 2 minutes, sauce on top.",
+  "left": "Next day's lunch.",
+  "protein": "chicken",
+  "flav": [
+   "smoky",
+   "lemony"
+  ],
+  "equip": [
+   "air-fryer",
+   "non-stick",
+   "saucepan"
+  ],
+  "trouble": [
+   [
+    "Spices burn black",
+    "Medium heat, not high — paprika scorches fast."
+   ],
+   [
+    "Carrots still hard",
+    "Cut them thinner or give them 4 more minutes."
+   ]
+  ],
+  "goes": "Lettuce with vinegar dressing.",
+  "ing": [
+   [
+    "chicken-breast",
+    400,
+    "g",
+    400,
+    "2 breasts",
+    ""
+   ],
+   [
+    "smoked-paprika",
+    2,
+    "tsp",
+    4,
+    "",
+    ""
+   ],
+   [
+    "paprika",
+    1,
+    "tsp",
+    2,
+    "",
+    ""
+   ],
+   [
+    "garlic-powder",
+    1,
+    "tsp",
+    3,
+    "",
+    ""
+   ],
+   [
+    "cumin",
+    0.5,
+    "tsp",
+    1,
+    "",
+    ""
+   ],
+   [
+    "salt",
+    1,
+    "tsp",
+    6,
+    "",
+    ""
+   ],
+   [
+    "black-pepper",
+    0.5,
+    "tsp",
+    1,
+    "",
+    ""
+   ],
+   [
+    "olive-oil",
+    2,
+    "tbsp",
+    27,
+    "",
+    ""
+   ],
+   [
+    "carrot",
+    4,
+    "pc",
+    300,
+    "sticks and rounds",
+    ""
+   ],
+   [
+    "butter",
+    15,
+    "g",
+    15,
+    "",
+    ""
+   ],
+   [
+    "lemon",
+    0.5,
+    "pc",
+    20,
+    "juiced",
+    ""
+   ],
+   [
+    "basmati-rice",
+    75,
+    "g",
+    75,
+    "dry",
+    "sam"
+   ],
+   [
+    "brown-rice",
+    22,
+    "g",
+    22,
+    "dry",
+    "alex"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Rice: the brown rice in plenty of salted boiling water for 25 minutes, then drain. The basmati in 150 ml water, lid on, low heat 12 minutes.",
+    "w": "Brown rice needs twice as long — start it first.",
+    "c": "Tender grains, no water left in the pot.",
+    "m": "—",
+    "who": "either",
+    "min": 25,
+    "tech": "none",
+    "tmr": 1500,
+    "img": "two small pots of white and brown rice"
+   },
+   {
+    "t": "Mix the paprikas, garlic powder, cumin, salt and pepper. Toss the carrots with 1 tbsp oil and a third of the spice; air-fry 190 °C for 18 minutes.",
+    "w": "",
+    "c": "Edges brown and soft.",
+    "m": "—",
+    "who": "either",
+    "min": 18,
+    "tech": "air-fryer",
+    "tmr": 1080,
+    "img": "spiced carrot sticks in an air fryer basket"
+   },
+   {
+    "t": "Rub the chicken with the rest of the spice and 1 tbsp oil; fry on medium heat 6 minutes a side. Put it on a plate to rest.",
+    "w": "Medium heat keeps the paprika red, not black.",
+    "c": "Dark red crust.",
+    "m": "High heat — the spices burn.",
+    "who": "either",
+    "min": 12,
+    "tech": "sear",
+    "tmr": 360,
+    "img": "paprika rubbed chicken breasts frying in a pan"
+   },
+   {
+    "t": "Make the sauce in the chicken pan: add the butter, the lemon juice and 3 tbsp water, scrape up the brown spice bits and bubble 1 minute until it coats a spoon. Pour it over the sliced chicken and carrots.",
+    "w": "The spice crust in the pan is the flavour of the sauce.",
+    "c": "Glossy red-orange, coats the back of a spoon.",
+    "m": "Washing the pan first.",
+    "who": "either",
+    "min": 2,
+    "tech": "deglaze",
+    "tmr": 60,
+    "img": "a frying pan with a thin glossy red-orange pan sauce of melted butter, lemon juice and paprika spice bits, a wooden spatula scraping the brown bits; thin and shiny, not a cheese sauce"
+   }
+  ],
+  "lesson": "s1-lemon-butter"
+ },
+ {
+  "level": 2,
+  "kind": "plan",
+  "meals": [
+   "dinner"
+  ],
+  "serv": 2,
+  "fridge": 2,
+  "freezer": 0,
+  "spice": 1,
+  "cuisine": "middle eastern",
+  "slug": "beef-kofta-charred-carrots",
+  "title": "Beef kofta with charred carrots & sour onion sauce (+ hummus, optional)",
+  "desc": "Spiced beef mince kofta and air-fried carrots with a sharp red-onion vinegar pan sauce; the other plate goes on hummus.",
+  "prep": 10,
+  "cook": 18,
+  "reheat": "Pan or microwave 2 minutes.",
+  "left": "Next day's lunch.",
+  "protein": "beef",
+  "flav": [
+   "smoky",
+   "sour",
+   "herby"
+  ],
+  "equip": [
+   "air-fryer",
+   "non-stick"
+  ],
+  "trouble": [
+   [
+    "Kofta fall apart",
+    "Squeeze the grated onion dry and knead the mince 1 minute."
+   ],
+   [
+    "Sauce too sharp",
+    "One more spoon of water and 30 seconds more."
+   ]
+  ],
+  "goes": "Lettuce with vinegar dressing.",
+  "ing": [
+   [
+    "beef-mince",
+    400,
+    "g",
+    400,
+    "",
+    ""
+   ],
+   [
+    "onion",
+    0.5,
+    "pc",
+    60,
+    "grated, squeezed dry",
+    ""
+   ],
+   [
+    "garlic",
+    2,
+    "clove",
+    10,
+    "minced",
+    ""
+   ],
+   [
+    "cumin",
+    1,
+    "tsp",
+    2,
+    "",
+    ""
+   ],
+   [
+    "paprika",
+    1,
+    "tsp",
+    2,
+    "",
+    ""
+   ],
+   [
+    "parsley",
+    0.5,
+    "bunch",
+    15,
+    "chopped",
+    ""
+   ],
+   [
+    "salt",
+    1,
+    "tsp",
+    6,
+    "",
+    ""
+   ],
+   [
+    "black-pepper",
+    0.5,
+    "tsp",
+    1,
+    "",
+    ""
+   ],
+   [
+    "carrot",
+    4,
+    "pc",
+    300,
+    "halved lengthwise",
+    ""
+   ],
+   [
+    "olive-oil",
+    2,
+    "tbsp",
+    27,
+    "",
+    ""
+   ],
+   [
+    "red-onion",
+    0.5,
+    "pc",
+    60,
+    "thinly sliced",
+    ""
+   ],
+   [
+    "red-wine-vinegar",
+    2,
+    "tbsp",
+    30,
+    "",
+    ""
+   ],
+   [
+    "hummus",
+    100,
+    "g",
+    100,
+    "",
+    "sam"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Toss the carrots with 1 tbsp oil and a pinch of salt; air-fry 200 °C for 18 minutes until charred at the edges.",
+    "w": "",
+    "c": "Dark edges, soft middle.",
+    "m": "—",
+    "who": "either",
+    "min": 18,
+    "tech": "air-fryer",
+    "tmr": 1080,
+    "img": "halved carrots charred in an air fryer basket"
+   },
+   {
+    "t": "Knead the mince with the grated onion, garlic, cumin, paprika, half the parsley, salt and pepper for 1 minute. Shape 6 long kofta (on skewers if you have them).",
+    "w": "Kneading makes the mince stick together.",
+    "c": "Smooth, holds its shape.",
+    "m": "Wet onion — they fall apart.",
+    "who": "either",
+    "min": 6,
+    "tech": "none",
+    "tmr": 0,
+    "img": "six long spiced mince kofta shaped on a board"
+   },
+   {
+    "t": "Fry the kofta in 1 tbsp oil on medium-high heat for 8 minutes, turning every 2 minutes. Take them out.",
+    "w": "",
+    "c": "Brown all round.",
+    "m": "Turning too early — wait for the crust.",
+    "who": "either",
+    "min": 8,
+    "tech": "sear",
+    "tmr": 480,
+    "img": "beef kofta browning in a pan"
+   },
+   {
+    "t": "Make the sauce in the kofta pan: add the red onion, the vinegar and 3 tbsp water, scrape up the brown bits and bubble 2 minutes until the onion is soft and the sauce is glossy. Spoon it over the kofta and carrots, scatter the rest of the parsley.",
+    "w": "Sour onion-vinegar cuts the rich beef.",
+    "c": "Pink glossy onions, sauce coats a spoon.",
+    "m": "Leaving the brown bits in the pan.",
+    "who": "either",
+    "min": 3,
+    "tech": "deglaze",
+    "tmr": 120,
+    "img": "red onion vinegar sauce bubbling in a pan with brown bits"
+   },
+   {
+    "t": "Spread the hummus on that plate and put the kofta and carrots on top.",
+    "w": "",
+    "c": "",
+    "m": "",
+    "who": "sam",
+    "min": 1,
+    "tech": "none",
+    "tmr": 0,
+    "img": "kofta and charred carrots on a plate of hummus"
+   }
+  ],
+  "lesson": "red-wine-pan-sauce"
+ },
+ {
+  "level": 1,
+  "kind": "plan",
+  "meals": [
+   "breakfast",
+   "lunch"
+  ],
+  "serv": 2,
+  "fridge": 0,
+  "freezer": 0,
+  "spice": 0,
+  "cuisine": "breakfast",
+  "slug": "smoked-salmon-rocket-toast",
+  "title": "Smoked salmon & rocket toast (butter-mustard or cream cheese)",
+  "desc": "Toast with smoked salmon, rocket, lemon and pepper. Counts as a fish meal.",
+  "prep": 5,
+  "cook": 3,
+  "reheat": "Eat fresh.",
+  "left": "Best eaten straight away.",
+  "protein": "salmon",
+  "flav": [
+   "smoky",
+   "peppery",
+   "lemony"
+  ],
+  "equip": [],
+  "trouble": [
+   [
+    "Rocket wilts",
+    "Add it right before eating."
+   ]
+  ],
+  "goes": "Black coffee.",
+  "ing": [
+   [
+    "smoked-salmon",
+    200,
+    "g",
+    200,
+    "",
+    ""
+   ],
+   [
+    "rocket",
+    40,
+    "g",
+    40,
+    "",
+    ""
+   ],
+   [
+    "lemon",
+    0.25,
+    "pc",
+    10,
+    "juiced",
+    ""
+   ],
+   [
+    "black-pepper",
+    0.25,
+    "tsp",
+    1,
+    "",
+    ""
+   ],
+   [
+    "sourdough-bread",
+    2,
+    "slice",
+    100,
+    "",
+    "sam"
+   ],
+   [
+    "cream-cheese",
+    40,
+    "g",
+    40,
+    "",
+    "sam"
+   ],
+   [
+    "rye-bread",
+    1,
+    "slice",
+    50,
+    "",
+    "alex"
+   ],
+   [
+    "butter",
+    10,
+    "g",
+    10,
+    "",
+    "alex"
+   ],
+   [
+    "dijon-mustard",
+    1,
+    "tsp",
+    5,
+    "",
+    "alex"
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Toast the bread: the rye, the sourdough, about 3 minutes. Spread the with butter and mustard, the with the cream cheese.",
+    "w": "",
+    "c": "Crisp toast, even spread.",
+    "m": "—",
+    "who": "either",
+    "min": 4,
+    "tech": "none",
+    "tmr": 180,
+    "img": "toast spread with butter and mustard and toast with cream cheese"
+   },
+   {
+    "t": "Top with the rocket and the smoked salmon in loose folds, then a squeeze of lemon and black pepper.",
+    "w": "Lemon cuts the smoky fat.",
+    "c": "Pink folds over green.",
+    "m": "—",
+    "who": "either",
+    "min": 2,
+    "tech": "none",
+    "tmr": 0,
+    "img": "smoked salmon and rocket on toast with black pepper"
+   }
+  ]
+ }
+]

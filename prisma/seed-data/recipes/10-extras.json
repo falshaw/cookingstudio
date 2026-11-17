@@ -1,0 +1,162 @@
+[
+ {
+  "slug": "af-wet-lemon-pepper-wings",
+  "level": 2,
+  "kind": "plan",
+  "meals": [
+   "dinner"
+  ],
+  "title": "Wet lemon pepper air-fryer wings",
+  "desc": "Wings rubbed with white pepper, onion, garlic, paprika and lemon, air-fried crisp, then tossed in hot lemon-pepper butter.",
+  "serv": 2,
+  "prep": 5,
+  "cook": 24,
+  "fridge": 2,
+  "freezer": 0,
+  "reheat": "Air fryer 180 °C 4 min, then fresh butter sauce.",
+  "left": "",
+  "cuisine": "american",
+  "protein": "chicken",
+  "flav": [
+   "lemony",
+   "peppery",
+   "crispy"
+  ],
+  "spice": 1,
+  "equip": [
+   "air-fryer"
+  ],
+  "trouble": [
+   [
+    "Skin still soft",
+    "Back in at 200 °C for 3–4 minutes."
+   ],
+   [
+    "Butter sauce too sharp",
+    "Stir in a little more melted butter."
+   ]
+  ],
+  "goes": "Crunchy salad or roasted broccoli.",
+  "ing": [
+   [
+    "chicken-wings",
+    600,
+    "g",
+    600,
+    "",
+    ""
+   ],
+   [
+    "white-pepper",
+    1,
+    "tsp",
+    2,
+    "",
+    ""
+   ],
+   [
+    "onion-powder",
+    1,
+    "tsp",
+    2.5,
+    "",
+    ""
+   ],
+   [
+    "paprika",
+    1,
+    "tsp",
+    2.5,
+    "",
+    ""
+   ],
+   [
+    "garlic-powder",
+    1,
+    "tsp",
+    3,
+    "",
+    ""
+   ],
+   [
+    "lemon",
+    1,
+    "pc",
+    100,
+    "juice of 1, split in two",
+    ""
+   ],
+   [
+    "butter",
+    40,
+    "g",
+    40,
+    "melted",
+    ""
+   ],
+   [
+    "black-pepper",
+    1.25,
+    "tsp",
+    3,
+    "freshly cracked",
+    ""
+   ],
+   [
+    "salt",
+    0.5,
+    "tsp",
+    3,
+    "",
+    ""
+   ]
+  ],
+  "steps": [
+   {
+    "t": "Pat the wings dry with kitchen paper. Toss them in a bowl with the white pepper, onion powder, paprika, garlic powder and the juice of half the lemon until every piece is coated.",
+    "w": "Dry skin crisps; wet skin steams.",
+    "c": "Every wing evenly orange, no white patches.",
+    "m": "Skipping the paper towel.",
+    "who": "either",
+    "min": 3,
+    "tech": "air-fryer",
+    "tmr": 0,
+    "img": "raw pink uncooked chicken wings in a large glass mixing bowl, dusted with orange paprika spice rub, half a squeezed lemon beside the bowl. Raw meat, not cooked. No pan, no hands"
+   },
+   {
+    "t": "Lay the wings in one layer in the air-fryer basket. Air-fry at 195 °C for 22–24 minutes, turning them halfway.",
+    "w": "One layer lets the hot air reach every side.",
+    "c": "Deep golden, crackly skin.",
+    "m": "Piling them up — the bottom ones stay pale.",
+    "who": "either",
+    "min": 24,
+    "tech": "air-fryer",
+    "tmr": 1380,
+    "img": "golden crispy chicken wings in an air fryer basket"
+   },
+   {
+    "t": "Make the sauce while the wings cook: melt the butter in a large bowl in the microwave (30–40 seconds). Stir in the juice of the other lemon half, the cracked black pepper and the salt, and whisk with a fork for 20 seconds until it turns cloudy and pale yellow.",
+    "w": "Whisking the lemon into the warm butter makes a smooth sauce instead of a layer of juice under the fat.",
+    "c": "Cloudy, pale yellow, flecked with pepper; no clear lemon layer at the bottom.",
+    "m": "Letting the butter go cold — it sets and won't coat.",
+    "who": "either",
+    "min": 2,
+    "tech": "emulsify",
+    "tmr": 0,
+    "img": "a small glass bowl of melted butter sauce only, pale yellow and cloudy, flecked with cracked black pepper, a fork in it, half a lemon beside it. No chicken in the bowl, no hands"
+   },
+   {
+    "t": "Tip the hot wings straight into the sauce bowl and toss until every piece is glossy. Scrape the last of the sauce over them and serve at once.",
+    "w": "Hot skin soaks up the butter; serving straight away keeps it crisp.",
+    "c": "Shiny wings, black pepper clinging to the skin.",
+    "m": "Leaving them to sit in the sauce — the skin goes soft.",
+    "who": "either",
+    "min": 1,
+    "tech": "none",
+    "tmr": 0,
+    "img": "crispy golden chicken wings glossy with lemon pepper butter in a large glass mixing bowl, black pepper on the skin, a lemon wedge beside it. No pan, no hands"
+   }
+  ],
+  "lesson": "s1-lemon-butter"
+ }
+]
