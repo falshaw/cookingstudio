@@ -194,6 +194,29 @@ async function pictures() {
   return linked;
 }
 
+/** Two demo receipts (approximate German discounter prices) so /spending and meal costs have data.
+ *  Only on an empty Purchase table — a household's own receipts are never touched. */
+async function demoReceipts(): Promise<number> {
+  if ((await prisma.purchase.count()) > 0) return 0;
+  type Line = { name: string; kind: string; price: number; grams?: number; ingredient?: string };
+  const receipts = read<{ store: string; boughtOn: string; total: number; note: string; items: Line[] }[]>("demo-receipts.json");
+  for (const r of receipts) {
+    const sum = Math.round(r.items.reduce((a, i) => a + i.price, 0) * 100) / 100;
+    if (sum !== r.total) throw new Error(`demo receipt ${r.store}: lines ${sum} != total ${r.total}`);
+    const ids = new Map((await prisma.ingredient.findMany({ where: { slug: { in: r.items.flatMap((i) => (i.ingredient ? [i.ingredient] : [])) } }, select: { id: true, slug: true } })).map((x) => [x.slug, x.id]));
+    await prisma.purchase.create({
+      data: {
+        store: r.store,
+        boughtOn: new Date(`${r.boughtOn}T00:00:00Z`),
+        total: r.total,
+        note: r.note,
+        items: { create: r.items.map((i, n) => ({ name: i.name, kind: i.kind, price: i.price, grams: i.grams ?? null, ingredientId: i.ingredient ? ids.get(i.ingredient) ?? null : null, sort: n })) },
+      },
+    });
+  }
+  return receipts.length;
+}
+
 async function main() {
   await users();
   const rows = await nutrition();
@@ -206,6 +229,7 @@ async function main() {
   console.log(`recipes: ${r.made} created, ${r.kept} kept`);
   console.log(`pictures linked from prisma/seed-images: ${await pictures()}`);
   console.log(`images queued: ${await prisma.image.count({ where: { status: "queued" } })}`);
+  console.log(`demo receipts: ${await demoReceipts()} added`);
 }
 
 main()

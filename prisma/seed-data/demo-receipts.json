@@ -1,0 +1,37 @@
+[
+  {
+    "store": "Aldi (demo)",
+    "boughtOn": "2026-11-07",
+    "total": 21.46,
+    "note": "Demo data, not a real receipt: approximate German discounter prices, November 2026.",
+    "items": [
+      { "name": "Deutsche Markenbutter 250 g", "kind": "food", "price": 1.15, "grams": 250, "ingredient": "butter" },
+      { "name": "Eier Bodenhaltung 10 Stück", "kind": "food", "price": 2.49, "grams": 600, "ingredient": "egg" },
+      { "name": "Parmigiano Reggiano 200 g", "kind": "food", "price": 3.99, "grams": 200, "ingredient": "parmesan" },
+      { "name": "Brokkoli 500 g", "kind": "food", "price": 1.49, "grams": 500, "ingredient": "broccoli" },
+      { "name": "Karotten 1 kg", "kind": "food", "price": 0.99, "grams": 1000, "ingredient": "carrot" },
+      { "name": "Knoblauch 150 g", "kind": "food", "price": 0.99, "grams": 150, "ingredient": "garlic" },
+      { "name": "Thunfisch naturale 185 g (140 g abgetropft)", "kind": "food", "price": 1.59, "grams": 140, "ingredient": "tuna-tin" },
+      { "name": "Zitronen 500 g", "kind": "food", "price": 1.49, "grams": 500, "ingredient": "lemon" },
+      { "name": "Feta 200 g", "kind": "food", "price": 1.79, "grams": 200, "ingredient": "feta" },
+      { "name": "Kaffee gemahlen 500 g", "kind": "drink", "price": 5.49 }
+    ]
+  },
+  {
+    "store": "Lidl (demo)",
+    "boughtOn": "2026-11-14",
+    "total": 25.16,
+    "note": "Demo data, not a real receipt: approximate German discounter prices, November 2026.",
+    "items": [
+      { "name": "Rinderhackfleisch 500 g", "kind": "food", "price": 6.19, "grams": 500, "ingredient": "beef-mince" },
+      { "name": "Hähnchenbrustfilet 1 kg", "kind": "food", "price": 9.99, "grams": 1000, "ingredient": "chicken-breast" },
+      { "name": "Paprika rot 500 g", "kind": "food", "price": 1.99, "grams": 500, "ingredient": "red-pepper" },
+      { "name": "Zwiebeln 1 kg", "kind": "food", "price": 1.19, "grams": 1000, "ingredient": "onion" },
+      { "name": "Cherrytomaten 250 g", "kind": "food", "price": 1.29, "grams": 250, "ingredient": "cherry-tomato" },
+      { "name": "Schlagsahne 30 % 200 g", "kind": "food", "price": 0.89, "grams": 200, "ingredient": "cream" },
+      { "name": "Mozzarella 125 g", "kind": "food", "price": 0.89, "grams": 125, "ingredient": "mozzarella" },
+      { "name": "Mineralwasser 6 x 1,5 L", "kind": "drink", "price": 1.74 },
+      { "name": "Spülmittel 500 ml", "kind": "household", "price": 0.99 }
+    ]
+  }
+]

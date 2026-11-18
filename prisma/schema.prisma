@@ -199,6 +199,44 @@ model Ingredient {
   uses    RecipeIngredient[]
   stock   StockItem?
   dislikes Dislike[]
+  purchases PurchaseItem[]
+}
+
+/// A shop receipt (household money, not health data).
+model Purchase {
+  id          String         @id @default(cuid())
+  store       String
+  /// date only (UTC midnight)
+  boughtOn    DateTime
+  /// as printed on the receipt
+  total       Float
+  note        String         @default("")
+  createdById String?
+  createdAt   DateTime       @default(now())
+  items       PurchaseItem[]
+
+  @@index([boughtOn])
+}
+
+model PurchaseItem {
+  id           String      @id @default(cuid())
+  purchaseId   String
+  /// line as printed
+  name         String
+  /// set when the line is a known ingredient -> its price feeds the meal cost
+  ingredientId String?
+  /// food | drink | household
+  kind         String      @default("food")
+  /// line total
+  price        Float
+  /// amount bought in grams (ml for liquids); null = unknown -> no unit price
+  grams        Float?
+  sort         Int         @default(0)
+  purchase     Purchase    @relation(fields: [purchaseId], references: [id], onDelete: Cascade)
+  ingredient   Ingredient? @relation(fields: [ingredientId], references: [id], onDelete: SetNull)
+
+  @@index([purchaseId])
+  @@index([ingredientId])
 }
 
 model Technique {

@@ -11,6 +11,8 @@ import { prisma } from "@/lib/prisma";
 import { FavButton } from "@/components/FavButton";
 import { DislikeButton } from "@/components/DislikeButton";
 import { viewerSauceLesson } from "@/lib/sauce-lesson";
+import { recipeCost } from "@/lib/spending";
+import { eur } from "@/lib/costs";
 
 export default async function RecipePage({ params, searchParams }: { params: Promise<{ slug: string }>; searchParams: Promise<{ servings?: string }> }) {
   const { slug } = await params;
@@ -22,6 +24,8 @@ export default async function RecipePage({ params, searchParams }: { params: Pro
   const hasSplit = r.lines.some((l) => l.component !== "both");
   const mine = hasSplit ? r.macros[user.slug === "sam" ? "sam" : "alex"] : r.macros.generic;
   const ingredientCount = new Set(r.lines.map((l) => l.ingredient.slug)).size;
+  // Meal cost from receipt prices; null = nothing in it bought yet
+  const cost = await recipeCost(r.id);
   const favs = await prisma.favourite.findMany({ where: { recipeId: r.id }, include: { user: { select: { id: true, name: true } } } });
   const partner = await prisma.user.findFirst({ where: { id: { not: user.id } }, select: { name: true, id: true } });
   const myDislike = await prisma.dislike.findUnique({ where: { userId_recipeId: { userId: user.id, recipeId: r.id } } });
@@ -54,6 +58,12 @@ export default async function RecipePage({ params, searchParams }: { params: Pro
             ))}
           </dl>
           <p className="mt-1 text-[11px] text-ink-muted">{hasSplit ? `Your portion (${user.name})` : "Per portion"} · USDA data</p>
+          {cost && (
+            <p className="mt-1 text-sm" data-testid="meal-cost">
+              <Link href="/spending" className="underline decoration-dotted">Cost per portion: {cost.complete ? eur(cost.perPortion) : `at least ${eur(cost.perPortion)}`}</Link>
+              <span className="ml-1 text-xs text-ink-muted">({cost.priced} of {cost.lines} ingredients priced from our receipts)</span>
+            </p>
+          )}
           <div className="mt-3 flex flex-wrap gap-2 text-sm">
             <Chip><Clock size={13} /> {fmtMinutes(r.prepMinutes)} prep · {fmtMinutes(r.cookMinutes)} cook</Chip>
             {total > 30 && r.kind === "lesson" && <Chip tone="gold">Learning recipe · longer than 30 min</Chip>}
