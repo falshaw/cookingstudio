@@ -1,4 +1,5 @@
 // Grocery spending + meal cost. Pure — no Prisma here, unit-tested in tests/costs.test.ts.
+import { extraFactor, type Eater } from "./scale";
 //
 // Meal cost = for every recipe line, grams × the price per gram last paid for that ingredient.
 // A line whose ingredient was never bought with a known weight has no price: the result says how
@@ -29,8 +30,8 @@ export function latestUnitPrices(buys: PricedBuy[]): Map<string, { perGram: numb
 
 export interface CostLine {
   ingredientId: string;
-  /** "both" = shared base for `servings`; "alex" / "sam" = one portion for that person */
-  component: string;
+  /** null = shared base for `servings`; a user id = one portion of that person's own extra */
+  forUserId: string | null;
   grams: number;
 }
 
@@ -45,20 +46,26 @@ export interface MealCost {
 }
 
 /**
- * Cost of a recipe as cooked for `servings` people. Personal lines are one portion each, so they
- * are added once; per portion = total / servings (same split the shopping list uses).
+ * Cost of a recipe as cooked for `servings` portions, with the same amounts the shopping list buys:
+ * the shared base once, each person's extra × their share of those servings (scale.ts extraFactor).
+ * Without `people` an extra counts as one portion. Extras of someone not in `people` are not cooked,
+ * so they are not counted. Per portion = total / servings.
  */
-export function mealCost(lines: CostLine[], servings: number, prices: Map<string, { perGram: number }>): MealCost {
+export function mealCost(lines: CostLine[], servings: number, prices: Map<string, { perGram: number }>, people: Eater[] = []): MealCost {
   let total = 0;
   let priced = 0;
+  let counted = 0;
+  const s = Math.max(1, servings);
   for (const l of lines) {
+    const f = l.forUserId == null ? 1 : people.length ? extraFactor(s, people, l.forUserId) : 1;
+    if (f === 0) continue;
+    counted++;
     const p = prices.get(l.ingredientId);
     if (!p) continue;
-    total += l.grams * p.perGram;
+    total += l.grams * f * p.perGram;
     priced++;
   }
-  const s = Math.max(1, servings);
-  return { total: round2(total), perPortion: round2(total / s), priced, lines: lines.length, complete: lines.length > 0 && priced === lines.length };
+  return { total: round2(total), perPortion: round2(total / s), priced, lines: counted, complete: counted > 0 && priced === counted };
 }
 
 export interface SpendRow {

@@ -14,7 +14,7 @@ export async function GET(_req: Request, ctx: { params: Promise<{ id: string }> 
   const { id } = await ctx.params;
   if (!isCuid(id)) return NextResponse.json({ error: "invalid id" }, { status: 400 });
   const row = await prisma.job.findUnique({ where: { id }, select: { id: true, type: true, status: true, log: true, result: true, error: true, createdAt: true, updatedAt: true, userId: true, input: true } });
-  // A report is about input.userId; an older report may have been started by the partner.
+  // A report is about input.userId; an older report may have been started by someone else.
   const subject = row?.type === "report" ? (row.input as { userId?: string } | null)?.userId : row?.userId;
   if (!row || (!SHARED_JOBS.has(row.type) && (row.userId !== me.id || subject !== me.id))) return NextResponse.json({ error: "not found" }, { status: 404 });
   // userId and input (the photo, the import id) never go back to the browser.

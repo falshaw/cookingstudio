@@ -9,7 +9,7 @@ import { isRealDay, weekStart } from "@/lib/utils";
 const MEAL_TIME: Record<string, number> = { breakfast: 8, lunch: 13, snack: 16, dinner: 19.5 };
 
 // CGM curve per day with meal markers (food log + plan). Private: only the signed-in user's own
-// readings and food log — no partner view.
+// readings and food log — no view of anyone else.
 export default async function GlucosePage({ searchParams }: { searchParams: Promise<{ date?: string }> }) {
   const me = (await currentUser())!;
   const sp = await searchParams;

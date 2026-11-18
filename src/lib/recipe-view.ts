@@ -2,7 +2,8 @@
 // cook-together screens: lines, steps, macros per person, rule checks, stock check, practice.
 import { prisma } from "./prisma";
 import { pickSides, SIDE_SLUGS, type SidePick } from "./sides";
-import { compLines, loadProfiles, loadRecipe, nutritionMap, recipeMacros, ruleLines, toRuleProfile, type PersonMacros } from "./recipe-data";
+import { compLines, eatersOf, loadProfiles, loadRecipe, macrosFor, nutritionMap, recipeMacros, ruleLines, toRuleProfile, type PersonMacros } from "./recipe-data";
+import { pfOf, toMember, type Member } from "./household";
 import { checkPortion, type Issue } from "./rules";
 import { detectTimers, type DetectedTimer } from "./cooking";
 import { mealScore, type MealScore } from "./meal-score";
@@ -12,7 +13,8 @@ import { sauceStepIndex } from "./sauce-rule";
 
 export interface LineVM {
   id: string;
-  component: string;
+  /** null = shared base, else the user id whose own extra this line is */
+  forUserId: string | null;
   qty: number;
   grams: number;
   unit: string;
@@ -26,7 +28,8 @@ export interface StepVM {
   why: string;
   cue: string;
   mistake: string;
-  who: string;
+  /** skilled | beginner | either (cook-along split) */
+  skill: string;
   minutes: number;
   technique: string | null;
   techniqueTitle: string | null;
@@ -63,11 +66,13 @@ export interface RecipeVM {
   lines: LineVM[];
   steps: StepVM[];
   macros: PersonMacros;
-  issues: { alex: Issue[]; sam: Issue[] };
+  /** every household member with their rule check and meal score for this recipe, in household order */
+  people: (Member & { issues: Issue[]; score: MealScore & { gl: number | null } })[];
+  /** score of one shared portion (base only) — for recipes without per-person extras */
+  genericScore: MealScore & { gl: number | null };
   missing: string[];
   practice: { userName: string; count: number; confidence: number | null }[];
   lastTweak: string;
-  scores: { alex: MealScore & { gl: number | null }; sam: MealScore & { gl: number | null }; generic: MealScore & { gl: number | null } };
   swaps: (SwapSuggestion & { toName: string | null })[];
   /** healthy sides for the signed-in person (empty for pure sauce lessons and breakfasts) */
   sides: SidePick[];
@@ -80,39 +85,36 @@ export async function recipeVM(slug: string, userId: string): Promise<RecipeVM |
   if (!r) return null;
   const nut = await nutritionMap(r.ingredients.map((i) => i.ingredient.fdcId));
   const users = await loadProfiles();
-  const pf = { alex: users.find((u) => u.slug === "alex")?.profile?.portionFactor ?? 1, sam: users.find((u) => u.slug === "sam")?.profile?.portionFactor ?? 1 };
-  const macros = recipeMacros(r.servings, compLines(r.ingredients, nut), pf);
+  const macros = recipeMacros(r.servings, compLines(r.ingredients, nut), eatersOf(users));
   const rl = ruleLines(r.ingredients);
-  const glLines = r.ingredients.map((i) => ({ component: i.component, grams: i.grams, slug: i.ingredient.slug, ref: i.ingredient.fdcId != null ? nut.get(i.ingredient.fdcId) ?? null : null }));
-  const scoreFor = (who: "alex" | "sam" | null) => {
-    const gl = portionGl(glLines, r.servings, who, who === "alex" ? pf.alex : who === "sam" ? pf.sam : 1).gl;
-    return { ...mealScore(who === "alex" ? macros.alex : who === "sam" ? macros.sam : macros.generic, gl), gl };
+  const glLines = r.ingredients.map((i) => ({ forUserId: i.forUserId, grams: i.grams, slug: i.ingredient.slug, ref: i.ingredient.fdcId != null ? nut.get(i.ingredient.fdcId) ?? null : null }));
+  const scoreFor = (personId: string | null, pf: number) => {
+    const gl = portionGl(glLines, r.servings, personId, pf).gl;
+    return { ...mealScore(macrosFor(macros, personId), gl), gl };
   };
-  const scores = { alex: scoreFor("alex"), sam: scoreFor("sam"), generic: scoreFor(null) };
   const swapLines = r.ingredients.map((i, k) => ({ ...rl[k], id: i.id }));
-  const rawSwaps = users.filter((u) => u.slug === "alex" || u.slug === "sam").flatMap((u) => suggestSwaps(toRuleProfile(u), swapLines, { title: r.title, cuisine: r.cuisine, tags: r.flavourTags, sauceFamily: r.sauceFamily }));
+  const rawSwaps = users.flatMap((u) => suggestSwaps(toRuleProfile(u), swapLines, { title: r.title, cuisine: r.cuisine, tags: r.flavourTags, sauceFamily: r.sauceFamily }));
   const swapTargets = new Map((await prisma.ingredient.findMany({ where: { slug: { in: rawSwaps.map((s) => s.swap.to).filter((x): x is string => !!x) } }, select: { slug: true, nameEn: true } })).map((i) => [i.slug, i.nameEn]));
   const swaps = rawSwaps.map((s) => ({ ...s, toName: s.swap.to ? swapTargets.get(s.swap.to) ?? null : null }));
-  const issues = { alex: [] as Issue[], sam: [] as Issue[] };
-  for (const u of users) {
-    if (u.slug !== "alex" && u.slug !== "sam") continue;
+  const people = users.map((u) => {
     const p = toRuleProfile(u);
-    issues[u.slug] = checkPortion(p, {
+    const issues = checkPortion(p, {
       title: r.title,
       meal: r.mealTypes.includes("dinner") ? "dinner" : (r.mealTypes[0] ?? "dinner"),
       totalMinutes: r.prepMinutes + r.cookMinutes,
       precooked: r.kind !== "plan",
       lines: rl,
       context: { title: r.title, cuisine: r.cuisine, tags: r.flavourTags, sauceFamily: r.sauceFamily },
-      macros: u.slug === "alex" ? macros.alex : macros.sam,
+      macros: macrosFor(macros, u.id),
     });
-  }
+    return { ...toMember(u), issues, score: scoreFor(u.id, pfOf(toMember(u))) };
+  });
   const viewer = users.find((u) => u.id === userId);
-  const viewerPortion = viewer?.slug === "sam" ? macros.sam : macros.alex;
+  const viewerPortion = macrosFor(macros, viewer?.id);
   // a lesson gets sides only when it is a whole meal (meat stock alone does not make gravy a dinner)
   const mainMeal = r.mealTypes.some((m) => m === "lunch" || m === "dinner") && (r.kind !== "lesson" || viewerPortion.protein >= 15);
   let sides: SidePick[] = [];
-  if (viewer && (viewer.slug === "alex" || viewer.slug === "sam") && mainMeal) {
+  if (viewer && mainMeal) {
     const sideIngs = await prisma.ingredient.findMany({ where: { slug: { in: SIDE_SLUGS } }, select: { slug: true, nameEn: true, fdcId: true } });
     const sideNut = await nutritionMap(sideIngs.map((i) => i.fdcId));
     sides = pickSides({
@@ -172,7 +174,7 @@ export async function recipeVM(slug: string, userId: string): Promise<RecipeVM |
     hero: r.hero,
     lines: r.ingredients.map((i) => ({
       id: i.id,
-      component: i.component,
+      forUserId: i.forUserId,
       qty: i.qty,
       grams: i.grams,
       unit: i.unit,
@@ -188,7 +190,7 @@ export async function recipeVM(slug: string, userId: string): Promise<RecipeVM |
         why: s.why,
         cue: s.cue,
         mistake: s.mistake,
-        who: s.who,
+        skill: s.skill,
         minutes: s.minutes,
         technique: s.technique,
         techniqueTitle: s.technique ? tmap.get(s.technique) ?? null : null,
@@ -198,11 +200,11 @@ export async function recipeVM(slug: string, userId: string): Promise<RecipeVM |
       };
     }),
     macros,
-    issues,
+    people,
+    genericScore: scoreFor(null, 1),
     missing,
     practice: [...byUser.values()],
     lastTweak,
-    scores,
     swaps,
     sides,
     sidesLimit: viewer?.profile?.maxNetCarbsPerMeal ?? null,

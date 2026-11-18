@@ -3,9 +3,9 @@ import { checkPortion, checkWeekOmega3, hasFail, isAvoidExcepted, isOmega3Portio
 import { inferFlags } from "@/lib/flags";
 import { ZERO } from "@/lib/nutrition";
 
-const line = (slug: string, nameEn: string, component = "both", grams = 100): RuleLine => ({ slug, nameEn, component, grams, ...inferFlags(nameEn) });
-const alex: RuleProfile = { slug: "alex", name: "Alex", vegetarian: false, vegBreakfastAllowed: [], avoidFoods: ["olives", "celery", "kiwi", "coconut", "milk"], noAlcohol: true, noAddedSugar: true, noRefinedStarch: true, maxNetCarbsPerMeal: 60, minProteinPerMeal: 20, maxCookMinutes: 35, omega3MinPerWeek: 1, omega3MaxPerWeek: 2 };
-const sam: RuleProfile = { slug: "sam", name: "Sam", vegetarian: true, vegBreakfastAllowed: ["bacon"], avoidFoods: [], noAlcohol: false, noAddedSugar: false, noRefinedStarch: false, maxNetCarbsPerMeal: null, minProteinPerMeal: null, maxCookMinutes: null, omega3MinPerWeek: null, omega3MaxPerWeek: null };
+const line = (slug: string, nameEn: string, forUserId: string | null = null, grams = 100): RuleLine => ({ slug, nameEn, forUserId, grams, ...inferFlags(nameEn) });
+const alex: RuleProfile = { id: "alex", slug: "alex", name: "Alex", vegetarian: false, vegBreakfastAllowed: [], avoidFoods: ["olives", "celery", "kiwi", "coconut", "milk"], noAlcohol: true, noAddedSugar: true, noRefinedStarch: true, maxNetCarbsPerMeal: 60, minProteinPerMeal: 20, maxCookMinutes: 35, omega3MinPerWeek: 1, omega3MaxPerWeek: 2 };
+const sam: RuleProfile = { id: "sam", slug: "sam", name: "Sam", vegetarian: true, vegBreakfastAllowed: ["bacon"], avoidFoods: [], noAlcohol: false, noAddedSugar: false, noRefinedStarch: false, maxNetCarbsPerMeal: null, minProteinPerMeal: null, maxCookMinutes: null, omega3MinPerWeek: null, omega3MaxPerWeek: null };
 const macros = (netCarbs: number, protein: number) => ({ ...ZERO, netCarbs, protein });
 const fails = (i: ReturnType<typeof checkPortion>) => i.filter((x) => x.level === "fail").map((x) => x.code).sort();
 
@@ -47,7 +47,7 @@ describe("diet rules", () => {
     expect(hasFail(checkPortion(alex, { title: "t", meal: "dinner", totalMinutes: 45, precooked: true, lines: [], macros: macros(5, 30) }))).toBe(false);
   });
   it("white rice is a warning, not a fail", () => {
-    const i = checkPortion(alex, { title: "t", meal: "dinner", totalMinutes: 20, lines: [line("basmati-rice", "Basmati rice", "both", 30)], macros: macros(25, 25) });
+    const i = checkPortion(alex, { title: "t", meal: "dinner", totalMinutes: 20, lines: [line("basmati-rice", "Basmati rice", null, 30)], macros: macros(25, 25) });
     expect(i.some((x) => x.code === "starch" && x.level === "warn")).toBe(true);
     expect(hasFail(i)).toBe(false);
   });

@@ -5,7 +5,8 @@ import { useMemo, useState } from "react";
 import { AlertTriangle, CheckCircle2, ChefHat, ClipboardList, Lightbulb, MessageCircle, Minus, Plus, Snowflake, Users, Wrench, XCircle } from "lucide-react";
 import type { LineVM, RecipeVM } from "@/lib/recipe-view";
 import { whatsappText, type ShareItem } from "@/lib/shopping";
-import { clampServings, scaleLines } from "@/lib/scale";
+import { clampServings, defaultServings, extraFactor, scaleLines } from "@/lib/scale";
+import { possessive } from "@/lib/household";
 import { fmtQty } from "@/lib/utils";
 import { Chip, Pic } from "./ui";
 import { StartTimerButton } from "./Timers";
@@ -18,7 +19,16 @@ import { StepText } from "./StepText";
 import { amountsForSteps } from "@/lib/inline-amounts";
 import { useTicks } from "@/lib/use-stored";
 
-const WHO_LABEL: Record<string, string> = { alex: "Alex", sam: "Sam", either: "Either" };
+/** Cook-along split label per step skill. */
+export const SKILL_LABEL: Record<string, string> = { skilled: "Skilled cook", beginner: "Beginner-safe", either: "Anyone" };
+export const SKILL_TONE: Record<string, "clay" | "sea" | "neutral"> = { skilled: "clay", beginner: "sea", either: "neutral" };
+/** Box colours for each person's extra, by household position. */
+const EXTRA_TONES = [
+  { box: "border-clay/25 bg-clay/5", text: "text-clay-deep" },
+  { box: "border-sea/25 bg-sea/5", text: "text-sea-deep" },
+  { box: "border-olive/25 bg-olive/5", text: "text-olive" },
+  { box: "border-gold/30 bg-gold/10", text: "text-[#7a5f0e]" },
+];
 
 export function Qty({ l }: { l: LineVM }) {
   return (
@@ -67,14 +77,17 @@ function LineRow({ l, ticked, onTick }: { l: LineVM; ticked: boolean; onTick: (i
 
 export function RecipeBody({ r, initialServings }: { r: RecipeVM; initialServings?: number }) {
   // ?servings= comes from a freezer-sauce batch on /prep (e.g. 4 dinners = 8 servings)
-  const [servings, setServings] = useState(initialServings ?? r.servings);
-  const lines = useMemo(() => scaleLines(r.lines, r.servings, servings), [r.lines, r.servings, servings]);
+  const eaters = useMemo(() => r.people.map((p) => ({ id: p.id, portionFactor: p.portionFactor })), [r.people]);
+  // opens at one meal for the whole household when that is more than the recipe's own servings
+  const [servings, setServings] = useState(() => initialServings ?? defaultServings(r.servings, eaters));
+  const lines = useMemo(() => scaleLines(r.lines, r.servings, servings, eaters), [r.lines, r.servings, servings, eaters]);
   const byId = useMemo(() => new Map(lines.map((l) => [l.id, l])), [lines]);
   const stepSegs = useMemo(() => amountsForSteps(r.steps, lines.map((l) => ({ id: l.id, qty: l.qty, unit: l.unit, name: l.ingredient.nameEn })), fmtQty), [r.steps, lines]);
-  const base = lines.filter((l) => l.component === "both");
-  const alex = lines.filter((l) => l.component === "alex");
-  const sam = lines.filter((l) => l.component === "sam");
-  const portions = Math.max(0.5, servings / 2);
+  const base = lines.filter((l) => l.forUserId == null);
+  // each person's own extra, cooked separately, in household order
+  const extras = r.people.map((p, i) => ({ p, tone: EXTRA_TONES[i % EXTRA_TONES.length], lines: lines.filter((l) => l.forUserId === p.id), portions: extraFactor(servings, eaters, p.id) })).filter((x) => x.lines.length > 0);
+  const hasSplit = r.lines.some((l) => l.forUserId != null);
+  const plate = (id: string) => r.macros.byUser[id] ?? r.macros.generic;
   const [sending, setSending] = useState(false);
   const [shareErr, setShareErr] = useState("");
   const { ticks, toggle, clear } = useTicks(r.slug);
@@ -125,23 +138,17 @@ export function RecipeBody({ r, initialServings }: { r: RecipeVM; initialServing
                 <button aria-label="More servings" onClick={() => setServings((s) => clampServings(s + 1))} className="h-9 w-9 rounded-full border border-line grid place-items-center"><Plus size={16} /></button>
               </div>
             </div>
-            {(alex.length > 0 || sam.length > 0) && <p className="text-xs font-semibold uppercase tracking-wide text-olive mt-3">Base — cooked once, for both</p>}
+            {extras.length > 0 && <p className="text-xs font-semibold uppercase tracking-wide text-olive mt-3">Base — cooked once, for everyone</p>}
             <p className="text-xs text-ink-muted mt-1">
               Tick what is out on the counter{ticks.size > 0 && <> · {ticks.size} of {lines.length} ready · <button onClick={clear} className="underline">clear</button></>}
             </p>
             <ul data-testid="ingredients">{base.map(row)}</ul>
-            {alex.length > 0 && (
-              <div className="mt-4 rounded-xl border border-clay/25 bg-clay/5 p-3">
-                <p className="text-xs font-semibold uppercase tracking-wide text-clay-deep">Alex&apos;s extra — cooked separately ({fmtQty(portions)} portion{portions === 1 ? "" : "s"})</p>
-                <ul>{alex.map(row)}</ul>
+            {extras.map((x) => (
+              <div key={x.p.id} className={`mt-4 rounded-xl border p-3 ${x.tone.box}`} data-testid="extra">
+                <p className={`text-xs font-semibold uppercase tracking-wide ${x.tone.text}`}>{possessive(x.p.name)} extra — cooked separately ({fmtQty(x.portions)} portion{x.portions === 1 ? "" : "s"})</p>
+                <ul>{x.lines.map(row)}</ul>
               </div>
-            )}
-            {sam.length > 0 && (
-              <div className="mt-4 rounded-xl border border-sea/25 bg-sea/5 p-3">
-                <p className="text-xs font-semibold uppercase tracking-wide text-sea-deep">Sam&apos;s extra ({fmtQty(portions)} portion{portions === 1 ? "" : "s"})</p>
-                <ul>{sam.map(row)}</ul>
-              </div>
-            )}
+            ))}
             <div className={`mt-4 rounded-xl p-3 text-sm ${r.missing.length ? "bg-clay/5 border border-clay/20" : "bg-olive/10 border border-olive/25"}`}>
               {r.missing.length ? (
                 <>
@@ -173,11 +180,10 @@ export function RecipeBody({ r, initialServings }: { r: RecipeVM; initialServing
                   </tr>
                 </thead>
                 <tbody>
-                  {(alex.length || sam.length ? (["alex", "sam"] as const) : (["generic"] as const)).map((k) => {
-                    const m = r.macros[k];
+                  {(hasSplit ? r.people.map((p) => ({ k: p.id, label: p.name, m: plate(p.id) })) : [{ k: "generic", label: "1 portion", m: r.macros.generic }]).map(({ k, label, m }) => {
                     return (
                       <tr key={k} className="border-t border-line">
-                        <td className="py-1.5 pr-2 font-medium">{k === "generic" ? "1 portion" : k === "alex" ? "Alex" : "Sam"}</td>
+                        <td className="py-1.5 pr-2 font-medium">{label}</td>
                         <td className="px-2">{Math.round(m.kcal)}</td>
                         <td className="px-2">{m.protein} g</td>
                         <td className="px-2 font-semibold">{m.netCarbs} g</td>
@@ -193,12 +199,12 @@ export function RecipeBody({ r, initialServings }: { r: RecipeVM; initialServing
               </table>
             </div>
             <div className="mt-3 space-y-1.5" data-testid="rule-check">
-              {(["alex", "sam"] as const).map((who) => {
-                const fails = r.issues[who].filter((i) => i.level === "fail");
-                const warns = r.issues[who].filter((i) => i.level === "warn");
-                if (!fails.length && !warns.length) return <p key={who} className="text-sm text-olive inline-flex items-center gap-1 mr-3"><CheckCircle2 size={15} /> {who === "alex" ? "Alex" : "Sam"}: fits the profile</p>;
+              {r.people.map((p) => {
+                const fails = p.issues.filter((i) => i.level === "fail");
+                const warns = p.issues.filter((i) => i.level === "warn");
+                if (!fails.length && !warns.length) return <p key={p.id} className="text-sm text-olive inline-flex items-center gap-1 mr-3"><CheckCircle2 size={15} /> {p.name}: fits the profile</p>;
                 return (
-                  <div key={who} className="text-sm">
+                  <div key={p.id} className="text-sm">
                     {fails.map((i, k) => <p key={k} className="text-clay-deep flex gap-1"><XCircle size={15} className="mt-0.5 shrink-0" />{i.msg}</p>)}
                     {warns.map((i, k) => <p key={k} className="text-[#7a5f0e] flex gap-1"><AlertTriangle size={15} className="mt-0.5 shrink-0" />{i.msg}</p>)}
                   </div>
@@ -208,7 +214,7 @@ export function RecipeBody({ r, initialServings }: { r: RecipeVM; initialServing
             </div>
           </div>
 
-          <MealScoreCard people={alex.length || sam.length ? [{ name: "Alex", score: r.scores.alex, macros: r.macros.alex }, { name: "Sam", score: r.scores.sam, macros: r.macros.sam }] : [{ name: "1 portion", score: r.scores.generic, macros: r.macros.generic }]} />
+          <MealScoreCard people={hasSplit ? r.people.map((p) => ({ name: p.name, score: p.score, macros: plate(p.id) })) : [{ name: "1 portion", score: r.genericScore, macros: r.macros.generic }]} />
           <SidesCard sides={r.sides} limit={r.sidesLimit} />
           <SwapCard swaps={r.swaps} />
           {r.kind !== "lesson" && <MealOrderTips />}
@@ -243,7 +249,7 @@ export function RecipeBody({ r, initialServings }: { r: RecipeVM; initialServing
                 <div className="p-4 space-y-3">
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className="grid h-8 w-8 place-items-center rounded-full bg-clay-deep text-white font-bold">{s.n}</span>
-                    <Chip tone={s.who === "sam" ? "sea" : s.who === "alex" ? "clay" : "neutral"}>{WHO_LABEL[s.who] ?? s.who}</Chip>
+                    <Chip tone={SKILL_TONE[s.skill] ?? "neutral"}>{SKILL_LABEL[s.skill] ?? s.skill}</Chip>
                     <span className="text-xs text-ink-muted">~{s.minutes} min</span>
                     {s.technique && <Link href={`/techniques/${s.technique}`} className="text-xs underline text-sea-deep">technique: {s.techniqueTitle ?? s.technique}</Link>}
                   </div>

@@ -26,8 +26,8 @@ describe("mealCost", () => {
   it("prices every line and splits per portion", () => {
     const c = mealCost(
       [
-        { ingredientId: "beef", component: "both", grams: 400 },
-        { ingredientId: "pepper", component: "both", grams: 200 },
+        { ingredientId: "beef", forUserId: null, grams: 400 },
+        { ingredientId: "pepper", forUserId: null, grams: 200 },
       ],
       2,
       prices,
@@ -38,9 +38,9 @@ describe("mealCost", () => {
   it("says how many lines are priced when some are unknown (a lower bound, not a guess)", () => {
     const c = mealCost(
       [
-        { ingredientId: "beef", component: "both", grams: 400 },
-        { ingredientId: "onion", component: "both", grams: 100 },
-        { ingredientId: "pepper", component: "alex", grams: 100 },
+        { ingredientId: "beef", forUserId: null, grams: 400 },
+        { ingredientId: "onion", forUserId: null, grams: 100 },
+        { ingredientId: "pepper", forUserId: "alex", grams: 100 },
       ],
       2,
       prices,
@@ -49,6 +49,25 @@ describe("mealCost", () => {
     expect(c.lines).toBe(3);
     expect(c.complete).toBe(false);
     expect(c.total).toBe(4.5);
+  });
+
+  it("three people: each person's extra is bought for their share of the servings", () => {
+    const people = [{ id: "alex", portionFactor: 1 }, { id: "sam", portionFactor: 1 }, { id: "robin", portionFactor: 1 }];
+    const lines = [
+      { ingredientId: "beef", forUserId: null, grams: 600 }, // base for 6 servings: 6.00
+      { ingredientId: "pepper", forUserId: "robin", grams: 100 }, // one portion 0.50, x 2 (6 servings = 2 meals for 3)
+      { ingredientId: "beef", forUserId: "alex", grams: 50 }, // 0.50 x 2
+    ];
+    expect(mealCost(lines, 6, prices, people)).toEqual({ total: 8, perPortion: 1.33, priced: 3, lines: 3, complete: true });
+  });
+
+  it("portion factors weight the extras; extras of someone no longer in the household are not counted", () => {
+    const people = [{ id: "alex", portionFactor: 1.5 }, { id: "sam", portionFactor: 0.5 }];
+    const lines = [
+      { ingredientId: "pepper", forUserId: "alex", grams: 100 }, // 2 servings = 1 meal, x 1.5 = 0.75
+      { ingredientId: "pepper", forUserId: "gone", grams: 100 },
+    ];
+    expect(mealCost(lines, 2, prices, people)).toEqual({ total: 0.75, perPortion: 0.38, priced: 1, lines: 1, complete: true });
   });
 
   it("an empty recipe is not complete and never divides by zero", () => {

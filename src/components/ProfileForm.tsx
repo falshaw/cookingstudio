@@ -24,6 +24,8 @@ export interface ProfileData {
   dailyProtein: number | null;
   dailyNetCarbs: number | null;
   portionFactor: number;
+  /** cook-along split: skilled = knives, hot fat, searing, sauces; beginner = beginner-safe jobs only */
+  cookingSkill: "skilled" | "beginner";
   practiceGoalPerWeek: number;
   referenceGroup: string;
   weightLostKg: number | null;
@@ -88,6 +90,12 @@ export function ProfileForm({ name, initial, feedPerWeek }: { name: string; init
           {N({ k: "omega3MaxPerWeek", label: "Oily fish meals per week — max" })}
           {N({ k: "redMeatMaxPerWeek", label: "Red-meat meals per week — max (beef, pork, lamb, bacon/ham; empty = no limit)" })}
           {N({ k: "portionFactor", label: "Portion size (1 = standard)", step: 0.05 })}
+          <label className="text-sm">Cook-along: I take
+            <select className="input-field mt-1" value={p.cookingSkill} onChange={(e) => setP({ ...p, cookingSkill: e.target.value === "skilled" ? "skilled" : "beginner" })} data-testid="cooking-skill">
+              <option value="skilled">the skilled jobs too (knives, hot fat, searing, sauces)</option>
+              <option value="beginner">beginner-safe jobs only</option>
+            </select>
+          </label>
         </div>
       </section>
       <section className="glass-card p-4 space-y-3">

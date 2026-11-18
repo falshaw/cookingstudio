@@ -3,7 +3,7 @@
 // sauce batch takes that person's portion off the PrepBatch. Idempotent per slot + day via
 // FoodLog.planKey (unique per user): a second tap logs nothing and takes nothing off the freezer.
 import { prisma } from "./prisma";
-import { compLines, nutritionMap, recipeMacros } from "./recipe-data";
+import { compLines, macrosFor, nutritionMap, recipeMacros, type PersonMacros } from "./recipe-data";
 import type { Macros } from "./nutrition";
 import { addDays, isoDate } from "./utils";
 
@@ -30,16 +30,16 @@ export function slotsToLog(slots: PlanSlotLite[], weekStart: string, d: number, 
 }
 
 /** This person's portion of a recipe (the food log never stores another person's portion). */
-export function mine(pm: { generic: Macros; alex: Macros; sam: Macros }, slug: string): Macros {
-  return slug === "alex" ? pm.alex : slug === "sam" ? pm.sam : pm.generic;
+export function mine(pm: PersonMacros, userId: string): Macros {
+  return macrosFor(pm, userId);
 }
 
 /** kcal + macros of `portions` × my portion of a recipe, from USDA data (same numbers as POST /api/food-log). */
-export async function recipeEntryMacros(recipeId: string, portions: number, slug: string) {
+export async function recipeEntryMacros(recipeId: string, portions: number, userId: string) {
   const rec = await prisma.recipe.findUnique({ where: { id: recipeId }, include: { ingredients: { include: { ingredient: true } } } });
   if (!rec) return null;
   const nut = await nutritionMap(rec.ingredients.map((i) => i.ingredient.fdcId));
-  const m = mine(recipeMacros(rec.servings, compLines(rec.ingredients, nut)), slug);
+  const m = mine(recipeMacros(rec.servings, compLines(rec.ingredients, nut), [{ id: userId, portionFactor: 1 }]), userId);
   return { title: rec.title, kcal: m.kcal * portions, protein: m.protein * portions, netCarbs: m.netCarbs * portions, fat: m.fat * portions };
 }
 
@@ -78,7 +78,7 @@ export async function planDayStatus(userId: string, day: string): Promise<PlanDa
  * Log `day`'s planned slots for this person. Each slot = one FoodLog row (my portion × 1) with its planKey;
  * a freezer slot also takes 1 portion off its PrepBatch, in the same transaction, only when the row is new.
  */
-export async function logPlanDay(user: { id: string; slug: string }, day: string): Promise<{ logged: number; skipped: number; fromFreezer: number } | null> {
+export async function logPlanDay(user: { id: string }, day: string): Promise<{ logged: number; skipped: number; fromFreezer: number } | null> {
   const hit = await findPlanFor(day);
   if (!hit) return null;
   const daySlots = hit.plan.slots.filter((s) => s.day === hit.d);
@@ -88,7 +88,7 @@ export async function logPlanDay(user: { id: string; slug: string }, day: string
   const todo = slotsToLog(daySlots, hit.ws, hit.d, already);
   let logged = 0, fromFreezer = 0;
   for (const { slot, key } of todo) {
-    const m = await recipeEntryMacros(slot.recipeId, 1, user.slug);
+    const m = await recipeEntryMacros(slot.recipeId, 1, user.id);
     if (!m) continue;
     const freezer = slot.source === "freezer" && slot.prepBatchId ? slot.prepBatchId : null;
     try {

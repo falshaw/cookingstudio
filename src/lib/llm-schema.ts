@@ -23,7 +23,8 @@ export const DraftIngredient = z.object({
   qty: num.min(0).max(5000),
   unit: z.string().min(1).max(20),
   prep: z.string().max(120).default(""),
-  component: z.enum(["both", "alex", "sam"]).default("both"),
+  /** "" = shared base (quantities for all servings); a household member's slug = that person's own extra, ONE portion */
+  for: z.string().max(40).regex(/^[a-z0-9-]*$/, "a household slug or empty").default(""),
 });
 
 export const DraftStep = z.object({
@@ -31,7 +32,8 @@ export const DraftStep = z.object({
   why: z.string().max(600).default(""),
   cue: z.string().max(400).default(""),
   mistake: z.string().max(400).default(""),
-  who: z.enum(["alex", "sam", "either"]).default("either"),
+  /** cook-along split: skilled = knives, hot fat, searing, sauces; beginner = beginner-safe; either */
+  skill: z.enum(["skilled", "beginner", "either"]).default("either"),
   minutes: z.number().int().min(0).max(600).default(5),
   technique: z.enum(TECHNIQUES).default("none"),
   timerSeconds: z.number().int().min(0).max(8 * 3600).default(0),

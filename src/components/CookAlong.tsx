@@ -6,8 +6,9 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft, ChevronLeft, ChevronRight, ClipboardList, Lightbulb, Mic, MicOff, Soup, Sun, Users, X } from "lucide-react";
 import type { RecipeVM } from "@/lib/recipe-view";
-import { scaleLines } from "@/lib/scale";
+import { defaultServings, scaleLines } from "@/lib/scale";
 import { cookTogether } from "@/lib/cooking";
+import { nameList } from "@/lib/household";
 import { fmtQty } from "@/lib/utils";
 import { Pic } from "./ui";
 import { StartTimerButton, TimerTray, useTimers } from "./Timers";
@@ -66,14 +67,18 @@ function useWakeLock() {
 export function CookAlong({ r, initialView, drill }: { r: RecipeVM; initialView: View; drill?: Drill }) {
   const [view, setView] = useState<View>(initialView);
   const [i, setI] = useState(drill?.start ?? 0);
-  const [servings, setServings] = useState<number>(drill?.servings ?? r.servings);
+  const [servings, setServings] = useState<number>(() => drill?.servings ?? defaultServings(r.servings, r.people.map((p) => ({ id: p.id, portionFactor: p.portionFactor }))));
   const [showWhy, setShowWhy] = useState(false);
   const [listening, setListening] = useState(false);
   const [heard, setHeard] = useState("");
   const recRef = useRef<SpeechRec | null>(null);
   const awake = useWakeLock();
   const { start } = useTimers();
-  const lines = useMemo(() => scaleLines(r.lines, r.servings, servings), [r.lines, r.servings, servings]);
+  const eaters = useMemo(() => r.people.map((p) => ({ id: p.id, portionFactor: p.portionFactor })), [r.people]);
+  const lines = useMemo(() => scaleLines(r.lines, r.servings, servings, eaters), [r.lines, r.servings, servings, eaters]);
+  // who is cooking today (default: the whole household); at least one cook stays selected
+  const [cookIds, setCookIds] = useState<string[]>(() => r.people.map((p) => p.id));
+  const toggleCook = (id: string) => setCookIds((ids) => (ids.includes(id) ? (ids.length > 1 ? ids.filter((x) => x !== id) : ids) : r.people.filter((p) => p.id === id || ids.includes(p.id)).map((p) => p.id)));
   const byId = useMemo(() => new Map(lines.map((l) => [l.id, l])), [lines]);
   const stepSegs = useMemo(() => amountsForSteps(r.steps, lines.map((l) => ({ id: l.id, qty: l.qty, unit: l.unit, name: l.ingredient.nameEn })), fmtQty), [r.steps, lines]);
   const step = r.steps[i];
@@ -185,12 +190,17 @@ export function CookAlong({ r, initialView, drill }: { r: RecipeVM; initialView:
   }, [listening]);
   useEffect(() => () => recRef.current?.stop(), []);
 
-  const timeline = useMemo(() => cookTogether(r.steps.map((s) => ({ n: s.n, who: s.who, minutes: s.minutes, text: s.text }))), [r.steps]);
+  const cooks = useMemo(() => r.people.filter((p) => cookIds.includes(p.id)).map((p) => ({ id: p.id, name: p.name, skill: p.cookingSkill })), [r.people, cookIds]);
+  const timeline = useMemo(() => cookTogether(r.steps.map((s) => ({ n: s.n, skill: s.skill, minutes: s.minutes, text: s.text })), cooks), [r.steps, cooks]);
+  const cookOf = (n: number) => cooks.find((c) => c.id === timeline.items.find((it) => it.n === n)?.lane)?.name;
+  const skilledNames = cooks.filter((c) => c.skill === "skilled").map((c) => c.name);
+  const beginnerNames = cooks.filter((c) => c.skill === "beginner").map((c) => c.name);
+  const nameOf = (id: string | null) => r.people.find((p) => p.id === id)?.name ?? "";
   // a drill makes only the sauce: the meat/fish it is cooked with is tonight's dinner, not on the drill list
   const sauceLines = drill ? lines.filter((l) => !l.ingredient.protein) : lines;
   const proteinNames = drill ? [...new Set(lines.filter((l) => l.ingredient.protein).map((l) => l.ingredient.nameEn))] : [];
-  const base = sauceLines.filter((l) => l.component === "both");
-  const extras = sauceLines.filter((l) => l.component !== "both");
+  const base = sauceLines.filter((l) => l.forUserId == null);
+  const extras = sauceLines.filter((l) => l.forUserId != null);
 
   return (
     <div className="min-h-[100dvh] bg-[#07060f] text-[#f4f1ff] cook-neon flex flex-col">
@@ -246,7 +256,7 @@ export function CookAlong({ r, initialView, drill }: { r: RecipeVM; initialView:
               </p>
             )}
             <p className="text-sm uppercase tracking-[0.2em] text-[#3df5ff] font-semibold">
-              Step {step.n} of {total} · {step.who === "sam" ? "Sam" : step.who === "alex" ? "Alex" : "either of you"} · ~{step.minutes} min
+              Step {step.n} of {total} · {cooks.length > 1 ? cookOf(step.n) ?? "anyone" : step.skill === "skilled" ? "skilled cook" : step.skill === "beginner" ? "beginner-safe" : "anyone"} · ~{step.minutes} min
             </p>
             <p className="text-[1.65rem] sm:text-[2rem] leading-snug font-medium" data-testid="cook-step-text">
               <StepText segs={stepSegs[i] ?? [{ text: step.text }]} amountClass="font-bold text-[#ff4fd8] [text-shadow:0_0_12px_rgba(255,79,216,0.6)]" />
@@ -281,8 +291,8 @@ export function CookAlong({ r, initialView, drill }: { r: RecipeVM; initialView:
             <input type="number" min={1} max={24} value={servings} onChange={(e) => setServings(Math.max(1, Math.min(24, +e.target.value || 1)))} className="w-20 rounded-lg bg-white/10 border border-white/20 px-2 py-1" />
           </label>
           {drill && proteinNames.length > 0 && <p className="mb-3 text-white/80">Not on this list: {proteinNames.join(", ")} — the sauce goes over tonight&apos;s dinner.</p>}
-          <MiseList lines={base} title={drill ? "For the sauce" : "Base (both)"} slug={r.slug} />
-          {extras.length > 0 && <MiseList lines={extras} title="Per-person extras" slug={r.slug} />}
+          <MiseList lines={base} title={drill ? "For the sauce" : "Base (everyone)"} slug={r.slug} nameOf={nameOf} />
+          {extras.length > 0 && <MiseList lines={extras} title="Per-person extras" slug={r.slug} nameOf={nameOf} />}
           {r.equipment.length > 0 && <p className="mt-6 text-white/80"><strong>Get out:</strong> {r.equipment.map((e) => e.replace("-", " ")).join(", ")}</p>}
           <div className="mt-6"><MealOrderTips dark /></div>
           <button onClick={() => setView("steps")} className="mt-6 btn-primary px-6 py-3 text-lg">Ready — start cooking</button>
@@ -292,19 +302,37 @@ export function CookAlong({ r, initialView, drill }: { r: RecipeVM; initialView:
       {view === "together" && (
         <main className="flex-1 p-4 pb-[calc(11rem+env(safe-area-inset-bottom))] max-w-5xl w-full mx-auto">
           <h2 className="font-display text-2xl font-bold mb-1">Cook together</h2>
-          <p className="text-white/70 mb-4">Who does what, minute by minute. Sam gets the beginner-safe jobs, Alex the knives and hot pans. Both finish at minute {timeline.total}.</p>
-          <div className="grid sm:grid-cols-2 gap-4">
-            {(["alex", "sam"] as const).map((lane) => (
-              <section key={lane} className="rounded-2xl border border-white/10 bg-white/5 p-3">
-                <h3 className="font-semibold text-lg mb-2">{lane === "alex" ? "Alex" : "Sam"} <span className="text-white/60 text-sm">· done at {lane === "alex" ? timeline.alexEnd : timeline.samEnd} min</span></h3>
+          <p className="text-white/70 mb-3">
+            Who does what, minute by minute.{" "}
+            {skilledNames.length > 0 && beginnerNames.length > 0
+              ? `${nameList(beginnerNames)} ${beginnerNames.length > 1 ? "get" : "gets"} the beginner-safe jobs, ${nameList(skilledNames)} the knives and hot pans.`
+              : skilledNames.length === 0 && cooks.length > 0
+                ? "Nobody is set as a skilled cook (Profiles), so the knife and hot-pan steps go to whoever is free."
+                : ""}{" "}
+            All done at minute {timeline.total}.
+          </p>
+          {r.people.length > 1 && (
+            <div className="mb-4 flex flex-wrap items-center gap-2" data-testid="cooks">
+              <span className="text-sm text-white/60">Cooking today:</span>
+              {r.people.map((p) => (
+                <button key={p.id} onClick={() => toggleCook(p.id)} aria-pressed={cookIds.includes(p.id)} className={`rounded-full border px-3 py-1 text-sm ${cookIds.includes(p.id) ? "neon-nav-active border-transparent" : "border-white/20 text-white/70"}`}>
+                  {p.name} <span className="text-white/50 text-xs">· {p.cookingSkill}</span>
+                </button>
+              ))}
+            </div>
+          )}
+          <div className={`grid gap-4 ${cooks.length >= 3 ? "sm:grid-cols-2 lg:grid-cols-3" : cooks.length === 2 ? "sm:grid-cols-2" : ""}`}>
+            {cooks.map((c) => (
+              <section key={c.id} className="rounded-2xl border border-white/10 bg-white/5 p-3" data-testid="lane">
+                <h3 className="font-semibold text-lg mb-2">{c.name} <span className="text-white/60 text-sm">· done at {timeline.ends[c.id] ?? 0} min</span></h3>
                 <ol className="space-y-2">
-                  {timeline.items.filter((it) => it.lane === lane).map((it) => (
+                  {timeline.items.filter((it) => it.lane === c.id).map((it) => (
                     <li key={it.n} className="rounded-xl bg-black/20 p-2">
                       <span className="font-mono text-[#ff4fd8]">{it.start}–{it.end} min</span> · <button className="underline" onClick={() => { setI(it.n - 1); setView("steps"); }}>step {it.n}</button>
                       <p className="text-white/85 text-sm mt-0.5 line-clamp-2">{it.text}</p>
                     </li>
                   ))}
-                  {timeline.items.every((it) => it.lane !== lane) && <li className="text-white/60 text-sm">Nothing for this cook — set the table, wash up as you go.</li>}
+                  {timeline.items.every((it) => it.lane !== c.id) && <li className="text-white/60 text-sm">Nothing for this cook — set the table, wash up as you go.</li>}
                 </ol>
               </section>
             ))}
@@ -328,7 +356,7 @@ export function CookAlong({ r, initialView, drill }: { r: RecipeVM; initialView:
 }
 
 // Same ticks as the recipe page's ingredient list (useTicks, per recipe, this device, 12 h).
-function MiseList({ lines, title, slug }: { lines: RecipeVM["lines"]; title: string; slug: string }) {
+function MiseList({ lines, title, slug, nameOf }: { lines: RecipeVM["lines"]; title: string; slug: string; nameOf: (id: string | null) => string }) {
   const { ticks: done, toggle } = useTicks(slug);
   return (
     <section className="mb-5">
@@ -341,7 +369,7 @@ function MiseList({ lines, title, slug }: { lines: RecipeVM["lines"]; title: str
               <Pic image={l.ingredient.image} alt={l.ingredient.nameEn} className="h-14 w-14 shrink-0" rounded="rounded-lg" />
               <span className="text-lg leading-tight">
                 <strong>{fmtQty(l.qty)} {l.unit}</strong> {l.ingredient.nameEn}
-                {l.component !== "both" && <span className="ml-1 text-xs rounded bg-white/15 px-1.5">{l.component === "alex" ? "Alex" : "Sam"}</span>}
+                {l.forUserId != null && <span className="ml-1 text-xs rounded bg-white/15 px-1.5">{nameOf(l.forUserId)}</span>}
                 {l.prep && <span className="block text-base text-[#ff9be9]">{l.prep}</span>}
               </span>
             </label>

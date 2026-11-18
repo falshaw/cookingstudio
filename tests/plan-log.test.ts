@@ -55,7 +55,7 @@ describe("editedEntry (PATCH /api/food-log)", () => {
 type Row = Record<string, unknown> & { id: string; userId: string; planKey: string | null };
 let logs: Row[];
 let batch: { id: string; portions: number; eaten: number };
-const RECIPE = { id: "crecipe000000000000000000001", title: "Bolognese", servings: 2, ingredients: [{ component: "both", grams: 400, ingredient: { fdcId: 1 } }] };
+const RECIPE = { id: "crecipe000000000000000000001", title: "Bolognese", servings: 2, ingredients: [{ forUserId: null, grams: 400, ingredient: { fdcId: 1 } }] };
 const SAUCE_BATCH = "cbatch00000000000000000001";
 const plan = (slots: PlanSlotLite[]) => ({ id: "cplan0000000000000000000001", weekStart: new Date("2026-11-09T00:00:00Z"), slots: slots.map((s) => ({ ...s, recipe: { title: s.source === "freezer" ? "Bolognese sauce" : "Bolognese" } })) });
 const req = (method: string, body: unknown) => new Request("http://127.0.0.1:3030/api/food-log", { method, body: JSON.stringify(body) });

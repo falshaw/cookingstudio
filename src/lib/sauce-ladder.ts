@@ -57,8 +57,12 @@ export function isFreezerSauce(r: { kind: string; sauceFamily: string | null; fr
 /** Same rule as a Prisma `where` (status is added by the caller). */
 export const FREEZER_SAUCE_WHERE = { kind: "lesson", sauceFamily: { not: null }, freezerDays: { gt: 0 } } as const;
 
-/** Freezer batch: cook 6, eat 2 tonight, freeze 4 single portions. */
-export const BATCH_PRESET = { cook: 6, tonight: 2 } as const;
+/** Freezer batch for a household of `people`: one dinner tonight + two dinners frozen as single portions
+ *  (two people: cook 6, eat 2, freeze 4). Capped at 24 portions. */
+export function batchPreset(people: number): { cook: number; tonight: number } {
+  const n = Math.max(1, Math.min(8, Math.round(people)));
+  return { cook: 3 * n, tonight: n };
+}
 
 /** One rescue tip per Level-1 (quick) sauce. Kept in code — the seed files belong to the recipe content. */
 export const RESCUE_TIPS: Record<string, { problem: string; fix: string }> = {

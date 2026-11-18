@@ -9,7 +9,7 @@ import { WeightClient } from "@/components/WeightClient";
 import { WeekHealth } from "@/components/WeekHealth";
 import { REFERENCE, foodLabTimeline, referenceGroup, gapFoods, smoothWeights, sourceLabel, weekStats, type GapFood } from "@/lib/health-stats";
 
-// Private tracker: everyone sees ONLY their own labs, weight and food data — no partner view
+// Private tracker: everyone sees ONLY their own labs, weight and food data — no view of anyone else
 //. Lab data stays in this database — never sent to an outside service or into any prompt.
 export default async function HealthPage() {
   const me = (await currentUser())!;

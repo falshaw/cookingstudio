@@ -26,6 +26,7 @@ const Body = z.object({
   dailyProtein: z.number().int().min(0).max(1000).nullable(),
   dailyNetCarbs: z.number().int().min(0).max(1000).nullable(),
   portionFactor: z.number().min(0.25).max(3),
+  cookingSkill: z.enum(["skilled", "beginner"]).default("beginner"),
   practiceGoalPerWeek: z.number().int().min(0).max(21),
   referenceGroup: z.enum(["general", "male", "female"]).default("general"),
   weightLostKg: z.number().min(-100).max(200).nullable(),

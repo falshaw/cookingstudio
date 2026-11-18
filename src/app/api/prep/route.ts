@@ -6,7 +6,7 @@ const Body = z.discriminatedUnion("action", [
   // freshTonight: freezer-sauce batch — cook `portions`, eat this many the same night (counted as eaten), freeze the rest
   z.object({ action: z.literal("create"), recipeId: zId, portions: z.number().int().min(1).max(24), freshTonight: z.number().int().min(0).max(23).default(0) }),
   z.object({ action: z.literal("cooked"), id: zId, location: z.enum(["fridge", "freezer"]).default("fridge") }),
-  z.object({ action: z.literal("eat"), id: zId, portions: z.number().int().min(1).max(4).default(1) }),
+  z.object({ action: z.literal("eat"), id: zId, portions: z.number().int().min(1).max(24).default(1) }),
   z.object({ action: z.literal("move"), id: zId, location: z.enum(["fridge", "freezer"]) }),
   z.object({ action: z.literal("delete"), id: zId }),
 ]);

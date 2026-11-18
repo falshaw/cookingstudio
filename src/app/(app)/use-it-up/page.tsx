@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { serverNow } from "@/lib/utils";
 import { PageHeader, Chip } from "@/components/ui";
 import { TeachForm } from "@/components/TeachForm";
-import { compLines, loadProfiles, nutritionMap, recipeMacros, ruleLines, toRuleProfile } from "@/lib/recipe-data";
+import { compLines, eatersOf, loadProfiles, macrosFor, nutritionMap, recipeMacros, ruleLines, toRuleProfile } from "@/lib/recipe-data";
 import { checkPortion } from "@/lib/rules";
 import { currentUser } from "@/lib/auth";
 import { SauceFromFridge } from "@/components/SauceFromFridge";
@@ -26,7 +26,7 @@ export default async function UseItUpPage({ searchParams }: { searchParams: Prom
   const results = ranked
     .map((r) => {
       const uses = [...new Set(r.ingredients.filter((i) => picked.has(i.ingredientId)).map((i) => i.ingredient.nameEn))];
-      const m = recipeMacros(r.servings, compLines(r.ingredients, nut));
+      const m = recipeMacros(r.servings, compLines(r.ingredients, nut), eatersOf(users));
       const fails = users.flatMap((u) =>
         checkPortion(r.kind === "lesson" ? { ...toRuleProfile(u), maxNetCarbsPerMeal: null, minProteinPerMeal: null, vegetarian: false } : toRuleProfile(u), {
           title: r.title,
@@ -35,7 +35,7 @@ export default async function UseItUpPage({ searchParams }: { searchParams: Prom
           precooked: r.kind !== "plan",
           lines: ruleLines(r.ingredients),
           context: { title: r.title, cuisine: r.cuisine, tags: r.flavourTags, sauceFamily: r.sauceFamily },
-          macros: u.slug === "alex" ? m.alex : m.sam,
+          macros: macrosFor(m, u.id),
         }).filter((i) => i.level === "fail"),
       );
       return { r, uses, fails };

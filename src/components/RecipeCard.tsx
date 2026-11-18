@@ -16,7 +16,7 @@ export interface RecipeCardData {
   hero: { id: string; status: string; video?: string | null } | null;
   cookedCount?: number;
   confidence?: number | null;
-  /** meal score (the "alex" portion for shared dinners, else one portion) */
+  /** meal score (the viewer's plate when the recipe has per-person extras, else one portion) */
   score?: { value: number; who: string } | null;
   disliked?: boolean;
 }

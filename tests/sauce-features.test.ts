@@ -51,11 +51,11 @@ describe("freezer sauces", () => {
   });
   it("the plan never fills a dinner from a frozen non-sauce lesson", () => {
     const m = { kcal: 500, protein: 30, carbs: 10, netCarbs: 8, fat: 20, satFat: 5, fibre: 4, sugar: 2 } as Macros;
-    const line = { slug: "x", nameEn: "x", component: "both", grams: 100, isMeat: false, isFish: false, isOmega3: false, isAlcohol: false, isAddedSugar: false, isRefinedStarch: false } as RuleLine;
-    const c = (slug: string, kind: string, fam: string | null): Candidate => ({ id: slug, slug, title: slug, kind, mealTypes: ["dinner"], totalMinutes: 20, servings: 2, lines: [line], macros: { generic: m, alex: m, sam: m }, scores: { alex: 80, sam: 80 }, context: { title: slug, cuisine: "", tags: [], sauceFamily: fam } });
+    const line = { slug: "x", nameEn: "x", forUserId: null, grams: 100, isMeat: false, isFish: false, isOmega3: false, isAlcohol: false, isAddedSugar: false, isRefinedStarch: false } as RuleLine;
+    const c = (slug: string, kind: string, fam: string | null): Candidate => ({ id: slug, slug, title: slug, kind, mealTypes: ["dinner"], totalMinutes: 20, servings: 2, lines: [line], macros: { generic: m, byUser: {} }, scores: {}, context: { title: slug, cuisine: "", tags: [], sauceFamily: fam } });
     const cands = new Map([c("pasta", "plan", null), c("perfect-rice", "lesson", null), c("tomato-sauce", "lesson", "tomato")].map((x) => [x.slug, x]));
     const week = Array.from({ length: 7 }, (_, d) => ({ day: d, meal: "dinner" as const, slug: "pasta" }));
-    const people = [toRuleProfile({ slug: "alex", name: "Alex", profile: null })];
+    const people = [toRuleProfile({ id: "alex", slug: "alex", name: "Alex", profile: null }), toRuleProfile({ id: "sam", slug: "sam", name: "Sam", profile: null })];
     expect(fillFromFreezer(week, cands, people, [{ id: "b1", slug: "perfect-rice", left: 4 }]).some((s) => s.freezerBatchId)).toBe(false);
     expect(fillFromFreezer(week, cands, people, [{ id: "b2", slug: "tomato-sauce", left: 4 }]).filter((s) => s.freezerBatchId).length).toBe(2);
   });

@@ -3,7 +3,8 @@
 import { prisma } from "./prisma";
 import { evaluateWeek, loadCandidates, loadFreezerBatches, redMeatCounts, redMeatFits, tunaCount, tunaFits, slotIssues, solveWeek, fillFromFreezer, fillLeftoverLunches, writePlan, type Meal, type SlotChoice } from "./planner";
 import { hasFail, isOmega3Portion } from "./rules";
-import { loadProfiles, toRuleProfile } from "./recipe-data";
+import { eatersOf, loadProfiles, toRuleProfile } from "./recipe-data";
+import { plates } from "./household";
 
 export class PlanActionError extends Error {
   constructor(message: string, public status = 400) {
@@ -17,8 +18,7 @@ export const slotOrder = (s: { day: number; meal: string }) => s.day * 3 + MEAL_
 async function context() {
   const users = await loadProfiles();
   const people = users.map(toRuleProfile);
-  const pf = { alex: users.find((u) => u.slug === "alex")?.profile?.portionFactor ?? 1, sam: users.find((u) => u.slug === "sam")?.profile?.portionFactor ?? 1 };
-  const cands = await loadCandidates(pf);
+  const cands = await loadCandidates(eatersOf(users));
   const favs = new Set((await prisma.favourite.findMany({ select: { recipeId: true } })).map((f) => f.recipeId));
   return { people, cands, favs };
 }
@@ -36,9 +36,9 @@ export async function refreshReport(planId: string): Promise<void> {
 export async function solveInstantWeek(ws: Date) {
   const { people, cands, favs } = await context();
   const byslug = new Map(cands.map((c) => [c.slug, c]));
-  const choices = fillLeftoverLunches(fillFromFreezer(solveWeek(cands, people, [], (ws.getTime() / 86_400_000) % 9973 || 7, favs), byslug, people, await loadFreezerBatches()), byslug, people);
+  const choices = fillLeftoverLunches(fillFromFreezer(solveWeek(cands, people, [], (ws.getTime() / 86_400_000) % 9973 || 7, favs), byslug, people, await loadFreezerBatches(plates(people))), byslug, people);
   const report = evaluateWeek(choices, byslug, people);
-  const planId = await writePlan(ws, choices, byslug, "solver", report);
+  const planId = await writePlan(ws, choices, byslug, "solver", report, plates(people));
   return { planId, report };
 }
 
@@ -70,14 +70,14 @@ export async function setSlot(slotId: string, recipeId: string) {
   await refreshReport(slot.planId);
 }
 
-/** Swap: a different recipe that passes this slot for both people and keeps the week's oily-fish count in range. */
+/** Swap: a different recipe that passes this slot for everyone and keeps the week's oily-fish count in range. */
 export async function swapSlot(slotId: string): Promise<string> {
   const slot = await loadSlot(slotId);
   const { people, cands, favs } = await context();
   const meal = slot.meal as Meal;
   const fishIn = (slug: string) => {
     const c = cands.find((x) => x.slug === slug);
-    return !!c && people.some((p) => isOmega3Portion(c.lines, p.slug));
+    return !!c && people.some((p) => isOmega3Portion(c.lines, p.id));
   };
   const fishOthers = slot.plan.slots.filter((s) => s.id !== slot.id && fishIn(s.recipe.slug)).length;
   const min = Math.max(0, ...people.map((p) => p.omega3MinPerWeek ?? 0));

@@ -30,7 +30,7 @@ export default async function RecipesPage({ searchParams }: { searchParams: Prom
     prisma.equipment.findMany({ orderBy: { sort: "asc" } }),
     practiceMap(user.id),
   ]);
-  const scores = await recipeScores(recipes.map((r) => r.id));
+  const scores = await recipeScores(recipes.map((r) => r.id), user.id);
   const mine = new Map((await prisma.dislike.findMany({ where: { userId: user.id, recipeId: { not: null } } })).map((d) => [d.recipeId!, d.reason]));
   const missingKit = new Set(equipment.filter((e) => !e.have).map((e) => e.slug));
   const canCook = sp.mykit === "1" ? recipes.filter((r) => r.equipment.every((e) => !missingKit.has(e))) : recipes;

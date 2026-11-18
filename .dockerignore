@@ -49,3 +49,5 @@ backups
 uploads
 *.sql
 *.dump
+# ...except the schema migrations the init container applies
+!prisma/migrations/**/*.sql

@@ -57,9 +57,10 @@ services:
       retries: 5
       start_period: 20s
 
-  # One-shot: creates the schema and seeds the two logins, the USDA nutrition table, the
-  # ingredient guide and the recipe library, connected as the database owner (the runtime
-  # role has no DDL). Idempotent — safe on every `up`; existing recipes and profiles are kept.
+  # One-shot: applies the schema migrations (prisma/migrate.ts; a database made by the old `prisma db push`
+  # is baselined first, nothing is lost) and seeds the household logins, the USDA nutrition table, the
+  # ingredient guide and the recipe library, connected as the database owner (the runtime role has no DDL).
+  # Idempotent — safe on every `up`; existing recipes and profiles are kept, new SEED_USERS are added.
   cookingstudio-init:
     image: cookingstudio-init:local
     build:
@@ -67,13 +68,13 @@ services:
       dockerfile: Dockerfile
       target: builder
     restart: "no"
-    command: ["sh", "-c", "npx prisma db push && npx tsx prisma/seed.ts"]
+    command: ["sh", "-c", "npx tsx prisma/migrate.ts && npx tsx prisma/seed.ts"]
+    # The household is SEED_USERS plus SEED_<SLUG>_EMAIL / _PASSWORD / _NAME per person, any number of
+    # people, so the seed reads them from .env (variable names depend on the slugs).
+    env_file:
+      - .env
     environment:
       - DATABASE_URL=postgresql://kitchen:${POSTGRES_PASSWORD}@cookingstudio-postgres:5432/kitchen
-      - SEED_ALEX_EMAIL=${SEED_ALEX_EMAIL:-alex@example.com}
-      - SEED_ALEX_PASSWORD=${SEED_ALEX_PASSWORD:?SEED_ALEX_PASSWORD required in .env (12+ characters)}
-      - SEED_SAM_EMAIL=${SEED_SAM_EMAIL:-sam@example.com}
-      - SEED_SAM_PASSWORD=${SEED_SAM_PASSWORD:?SEED_SAM_PASSWORD required in .env (12+ characters)}
     depends_on:
       cookingstudio-postgres:
         condition: service_healthy

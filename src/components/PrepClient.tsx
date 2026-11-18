@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Plus, ShoppingCart, Snowflake } from "lucide-react";
-import { BATCH_PRESET } from "@/lib/sauce-ladder";
+import { batchPreset } from "@/lib/sauce-ladder";
 
 function PrepClient({ recipes }: { recipes: { id: string; title: string; servings: number }[]; planId: string | null }) {
   const router = useRouter();
@@ -33,8 +33,9 @@ function PrepClient({ recipes }: { recipes: { id: string; title: string; serving
   );
 }
 
-/** Freezer batch: cook one sauce for e.g. 6, eat 2 fresh tonight, freeze 4 single portions. */
-function SauceBatchClient({ sauces }: { sauces: { id: string; slug: string; title: string }[] }) {
+/** Freezer batch: cook one sauce for e.g. 6, eat 2 fresh tonight, freeze 4 single portions (scaled to the household). */
+function SauceBatchClient({ sauces, people }: { sauces: { id: string; slug: string; title: string }[]; people: number }) {
+  const BATCH_PRESET = batchPreset(people);
   const router = useRouter();
   const [rid, setRid] = useState("");
   const [total, setTotal] = useState<number>(BATCH_PRESET.cook);
@@ -51,7 +52,7 @@ function SauceBatchClient({ sauces }: { sauces: { id: string; slug: string; titl
     setMsg(`${sauce?.title ?? "Sauce"}: cook ${portions}, eat ${fresh}, freeze ${portions - fresh} — added below.`);
     router.refresh();
   }
-  /** one click: the 6 / 2 / 4 batch */
+  /** one click: the preset batch (6 / 2 / 4 for two people) */
   async function preset() {
     setTotal(BATCH_PRESET.cook);
     setTonight(BATCH_PRESET.tonight);
@@ -88,15 +89,14 @@ function SauceBatchClient({ sauces }: { sauces: { id: string; slug: string; titl
   );
 }
 
-function Action({ id, action, label }: { id: string; action: "cooked" | "cooked-freezer" | "eat" | "eat-2" | "move-freezer" | "delete"; label: string }) {
+function Action({ id, action, label, portions = 1 }: { id: string; action: "cooked" | "cooked-freezer" | "eat" | "move-freezer" | "delete"; label: string; portions?: number }) {
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const body =
     action === "cooked" ? { action: "cooked", id, location: "fridge" } :
     action === "cooked-freezer" ? { action: "cooked", id, location: "freezer" } :
     action === "move-freezer" ? { action: "move", id, location: "freezer" } :
-    action === "eat" ? { action: "eat", id, portions: 1 } :
-    action === "eat-2" ? { action: "eat", id, portions: 2 } : { action: "delete", id };
+    action === "eat" ? { action: "eat", id, portions } : { action: "delete", id };
   return (
     <button
       disabled={busy}

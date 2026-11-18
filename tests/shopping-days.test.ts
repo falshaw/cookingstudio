@@ -39,13 +39,13 @@ describe("pickPlanDays", () => {
 });
 
 const ingredient = (id: string) => ({ id, slug: id, nameEn: id, section: "produce", packQty: null, packUnit: "", packLabel: "", freezable: false });
-const recipe = (id: string, ing: string) => ({ id, title: id, servings: 2, cuisine: "", flavourTags: [], sauceFamily: null, ingredients: [{ ingredientId: ing, component: "both", qty: 200, unit: "g", ingredient: ingredient(ing) }] });
+const recipe = (id: string, ing: string) => ({ id, title: id, servings: 2, cuisine: "", flavourTags: [], sauceFamily: null, ingredients: [{ ingredientId: ing, forUserId: null, qty: 200, unit: "g", ingredient: ingredient(ing) }] });
 
 beforeEach(() => {
   h.overrides = {
     mealPlan: { findUnique: async () => ({ id: "cplan0000000000000000000001", weekStart: new Date("2026-11-09T00:00:00Z"), slots: SLOTS, batches: BATCHES }) },
     recipe: { findMany: async (a: { where: { id: { in: string[] } } }) => [recipe("pasta", "tomato"), recipe("stew", "beef"), recipe("curry", "chicken"), recipe("soup", "leek")].filter((r) => a.where.id.in.includes(r.id)) },
-    userProfile: { findMany: async () => [{ portionFactor: 1, user: { slug: "alex" } }, { portionFactor: 1, user: { slug: "sam" } }] },
+    user: { findMany: async () => [{ id: "alex", slug: "alex", name: "Alex", profile: { portionFactor: 1 }, dislikes: [] }, { id: "sam", slug: "sam", name: "Sam", profile: { portionFactor: 1 }, dislikes: [] }] },
     ingredient: { findMany: async (a: { where: { id: { in: string[] } } }) => a.where.id.in.map(ingredient) },
   };
 });

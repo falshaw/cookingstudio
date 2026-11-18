@@ -95,7 +95,7 @@ export function KeysClient({ keys }: { keys: KeyRow[] }) {
             <input value={name} onChange={(e) => setName(e.target.value)} maxLength={60} required className="input-field mt-1" />
           </label>
           <fieldset className="text-sm">
-            <legend className="mb-1">What this key may do (only for you — never the other person&apos;s data)</legend>
+            <legend className="mb-1">What this key may do (only for you — never anyone else&apos;s data)</legend>
             {SCOPES.map((s) => (
               <label key={s} className="flex items-center gap-2 py-0.5">
                 <input type="checkbox" checked={scopes.includes(s)} onChange={() => toggle(s)} />

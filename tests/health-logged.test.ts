@@ -13,8 +13,8 @@ const refs = new Map([
   [3, { kcal: 20, protein: 1, carbs: 4, fat: 0.2, satFat: 0, fibre: 2, sugar: 2, b12: 0, iron: 0.4, zinc: 0.2, ala: 0, magnesium: 15, vitD: 0 }], // courgette
 ]);
 const recipes = [
-  { id: "rice-bowl", title: "Rice bowl", servings: 2, ingredients: [{ component: "both", grams: 200, ingredient: ing("basmati-rice", 1) }, { component: "both", grams: 400, ingredient: ing("courgette", 3) }] },
-  { id: "salmon", title: "Salmon", servings: 2, ingredients: [{ component: "both", grams: 300, ingredient: ing("salmon", 2, { isFish: true, isOmega3: true }) }, { component: "both", grams: 400, ingredient: ing("courgette", 3) }] },
+  { id: "rice-bowl", title: "Rice bowl", servings: 2, ingredients: [{ forUserId: null, grams: 200, ingredient: ing("basmati-rice", 1) }, { forUserId: null, grams: 400, ingredient: ing("courgette", 3) }] },
+  { id: "salmon", title: "Salmon", servings: 2, ingredients: [{ forUserId: null, grams: 300, ingredient: ing("salmon", 2, { isFish: true, isOmega3: true }) }, { forUserId: null, grams: 400, ingredient: ing("courgette", 3) }] },
 ];
 const WS = "2026-11-09";
 const slots = [0, 1, 2].flatMap((day) => [{ day, meal: "lunch", recipeId: "rice-bowl" }, { day, meal: "dinner", recipeId: "rice-bowl" }]);

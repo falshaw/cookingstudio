@@ -1,3 +1,4 @@
+import { HOUSEHOLD_ORDER } from "@/lib/household";
 import Link from "next/link";
 import {
   Search, ChefHat, AlertTriangle, Repeat, Carrot, Egg, Fish, Cherry, Croissant, Pizza, Salad, Soup, Beef, Citrus, Wheat, Flame, UtensilsCrossed,
@@ -26,7 +27,7 @@ export default async function Dashboard() {
   const wsIso = isoDate(ws);
   const today = dayIndex(wsIso, day) ?? 0;
   const [users, recipes, lessons, cooks, recent, drafts, expiring, plan, sauces, profile, foodToday, shop] = await Promise.all([
-    prisma.user.findMany({ orderBy: { slug: "desc" }, include: { profile: { select: { practiceGoalPerWeek: true } } } }),
+    prisma.user.findMany({ orderBy: HOUSEHOLD_ORDER, include: { profile: { select: { practiceGoalPerWeek: true } } } }),
     prisma.recipe.findMany({ where: { status: "published" }, include: { hero: HERO_SELECT } }),
     prisma.recipe.findMany({ where: { kind: "lesson", status: "published" }, select: { id: true, level: true } }),
     prisma.cookLog.findMany({ select: { userId: true, recipeId: true, cookedAt: true } }),
@@ -58,7 +59,7 @@ export default async function Dashboard() {
   const hour = Number(new Intl.DateTimeFormat("en-US", { hour: "2-digit", hourCycle: "h23", timeZone: appTimeZone() }).format(new Date(serverNow())));
   const heroSlot = pickHeroMeal(todaySlots, hour);
   const others = todaySlots.filter((s) => s !== heroSlot);
-  const macroBySlot = new Map(await Promise.all(todaySlots.map(async (s) => [s.id, await recipeEntryMacros(s.recipeId, 1, me.slug)] as const)));
+  const macroBySlot = new Map(await Promise.all(todaySlots.map(async (s) => [s.id, await recipeEntryMacros(s.recipeId, 1, me.id)] as const)));
   const heroMacros = heroSlot ? macroBySlot.get(heroSlot.id) : null;
   const suggestion = !heroSlot ? (again[0] ?? starter[0] ?? null) : null;
 

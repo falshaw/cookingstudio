@@ -57,43 +57,61 @@ export function clock(s: number): string {
 
 export interface TimelineStep {
   n: number;
-  who: string; // alex | sam | either
+  /** skilled = knives, hot fat, searing, sauces · beginner = beginner-safe · either */
+  skill: string;
   minutes: number;
   text: string;
 }
 
+export interface Cook {
+  id: string;
+  name: string;
+  skill: "skilled" | "beginner";
+}
+
 export interface LaneItem {
   n: number;
-  lane: "alex" | "sam";
+  /** id of the cook doing it */
+  lane: string;
   start: number;
   end: number;
   text: string;
 }
 
 /**
- * Two cooks, steps in recipe order. A step starts when its cook is free AND the step before it has
- * started (so order is kept but work overlaps). "either" goes to whoever is free first — the "sam" lane
- * only takes beginner-safe steps (tagged sam/either). Returns both lanes and the finish time,
- * and the minute each cook should START so both finish together.
+ * N cooks, steps in recipe order. A step starts when its cook is free AND the step before it has started
+ * (so order is kept but work overlaps). Who may take a step:
+ * - "skilled" → skilled cooks only (everyone when nobody is skilled — someone has to do it);
+ * - "beginner" → beginner cooks (everyone when there is no beginner);
+ * - "either" → anyone.
+ * Among those, the cook who is free first gets it; on a tie a beginner goes first (keeps the skilled cooks
+ * free for the hard steps), then household order. With one skilled and one beginner cook this is the old
+ * two-lane split. Returns every step's lane, the finish time and when each cook is done.
  */
-export function cookTogether(steps: TimelineStep[]): { items: LaneItem[]; total: number; alexEnd: number; samEnd: number } {
-  let alexFree = 0;
-  let samFree = 0;
+export function cookTogether(steps: TimelineStep[], cooks: Cook[]): { items: LaneItem[]; total: number; ends: Record<string, number> } {
+  const free = new Map(cooks.map((c) => [c.id, 0]));
   let prevStart = 0;
   const items: LaneItem[] = [];
+  if (!cooks.length) return { items, total: 0, ends: {} };
+  const skilled = cooks.filter((c) => c.skill === "skilled");
+  const beginners = cooks.filter((c) => c.skill === "beginner");
   for (const s of steps) {
     const dur = Math.max(1, s.minutes);
-    let lane: "alex" | "sam";
-    if (s.who === "alex") lane = "alex";
-    else if (s.who === "sam") lane = "sam";
-    else lane = samFree <= alexFree ? "sam" : "alex";
-    const free = lane === "alex" ? alexFree : samFree;
-    const start = Math.max(free, prevStart);
+    let pool = cooks;
+    if (s.skill === "skilled" && skilled.length) pool = skilled;
+    else if (s.skill === "beginner" && beginners.length) pool = beginners;
+    let cook = pool[0];
+    for (const c of pool) {
+      const a = free.get(c.id)!;
+      const b = free.get(cook.id)!;
+      if (a < b || (a === b && c.skill === "beginner" && cook.skill !== "beginner")) cook = c;
+    }
+    const start = Math.max(free.get(cook.id)!, prevStart);
     const end = start + dur;
-    if (lane === "alex") alexFree = end;
-    else samFree = end;
+    free.set(cook.id, end);
     prevStart = start;
-    items.push({ n: s.n, lane, start, end, text: s.text });
+    items.push({ n: s.n, lane: cook.id, start, end, text: s.text });
   }
-  return { items, total: Math.max(alexFree, samFree), alexEnd: alexFree, samEnd: samFree };
+  const ends = Object.fromEntries(free);
+  return { items, total: Math.max(0, ...free.values()), ends };
 }

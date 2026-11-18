@@ -9,7 +9,7 @@ export async function GET(req: Request) {
   const slug = new URL(req.url).searchParams.get("slug");
   const rows = await prisma.recipe.findMany({
     where: slug ? { slug } : { status: "published" },
-    include: { ingredients: { include: { ingredient: true }, orderBy: { sort: "asc" } }, steps: { orderBy: { n: "asc" } } },
+    include: { ingredients: { include: { ingredient: true, forUser: { select: { slug: true } } }, orderBy: { sort: "asc" } }, steps: { orderBy: { n: "asc" } } },
   });
   const recipes = rows.map((r) => ({
     level: r.level,
@@ -31,8 +31,8 @@ export async function GET(req: Request) {
       protein: r.protein,
       flavourTags: r.flavourTags,
       spiceLevel: r.spiceLevel,
-      ingredients: r.ingredients.map((i) => ({ name: i.ingredient.nameEn, grams: i.grams, qty: i.qty, unit: i.unit, prep: i.prep, component: i.component })),
-      steps: r.steps.map((s) => ({ text: s.text, why: s.why, cue: s.cue, mistake: s.mistake, who: s.who, minutes: s.minutes, technique: s.technique ?? "none", timerSeconds: s.timerSeconds, imagePrompt: s.imagePrompt })),
+      ingredients: r.ingredients.map((i) => ({ name: i.ingredient.nameEn, grams: i.grams, qty: i.qty, unit: i.unit, prep: i.prep, for: i.forUser?.slug ?? "" })),
+      steps: r.steps.map((s) => ({ text: s.text, why: s.why, cue: s.cue, mistake: s.mistake, skill: s.skill, minutes: s.minutes, technique: s.technique ?? "none", timerSeconds: s.timerSeconds, imagePrompt: s.imagePrompt })),
     },
   }));
   return new NextResponse(JSON.stringify({ app: "cookingstudio", exportedAt: new Date().toISOString(), recipes }, null, 2), {

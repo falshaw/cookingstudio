@@ -2,8 +2,11 @@
 
 import { useState } from "react";
 import { Heart } from "lucide-react";
+import { nameList } from "@/lib/household";
 
-export function FavButton({ recipeId, initial, partnerName, partnerFav }: { recipeId: string; initial: boolean; partnerName?: string; partnerFav?: boolean }) {
+/** `others` = how many other household members there are, `lovedBy` = the names of those who hearted it. */
+export function FavButton({ recipeId, initial, others = 0, lovedBy = [] }: { recipeId: string; initial: boolean; others?: number; lovedBy?: string[] }) {
+  const all = others > 0 && lovedBy.length === others;
   const [on, setOn] = useState(initial);
   return (
     <span className="inline-flex items-center gap-2">
@@ -19,8 +22,8 @@ export function FavButton({ recipeId, initial, partnerName, partnerFav }: { reci
       >
         <Heart size={16} className={on ? "fill-clay text-clay" : ""} /> {on ? "Favourite" : "Favourite?"}
       </button>
-      {on && partnerFav && <span className="rounded-full bg-gold/15 border border-gold/30 px-2 py-0.5 text-xs text-[#7a5f0e]">♥ both love it</span>}
-      {!on && partnerFav && partnerName && <span className="text-xs text-ink-muted">{partnerName} loves it</span>}
+      {on && all && <span className="rounded-full bg-gold/15 border border-gold/30 px-2 py-0.5 text-xs text-[#7a5f0e]">♥ {others === 1 ? "both love it" : "everyone loves it"}</span>}
+      {!(on && all) && lovedBy.length > 0 && <span className="text-xs text-ink-muted">{nameList(lovedBy)} {lovedBy.length === 1 ? "loves" : "love"} it</span>}
     </span>
   );
 }

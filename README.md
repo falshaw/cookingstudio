@@ -16,11 +16,11 @@ Every diet rule and every health number is computed in code, never left to a mod
 | Area | What it does |
 |---|---|
 | **Recipe library** | 180 seed recipes: basics and mother sauces, derived sauces, meat and fish, weekday plan meals, meal-prep batches, curries, everyday European home cooking, quick sauces and more. Each step has a why, a "what it should look like" cue and the common mistake. |
-| **Cook-along** | Full-screen step mode with big text, inline amounts, timers and a screen wake lock. "Cook together" splits the steps into two lanes so both cooks finish at the same minute. |
+| **Cook-along** | Full-screen step mode with big text, inline amounts, timers and a screen wake lock. "Cook together" splits the steps over everyone who is cooking, by cooking skill (see [Household](#household)). |
 | **Sauce School** | A ladder of sauce lessons by family (mother, pan, emulsion, tomato, blender, BBQ, Mediterranean, curry). Cooking an everyday dish credits the sauce lesson it teaches. |
 | **Techniques and levels** | Technique cards (searing, roux, emulsions, freezing …) and a level path that tracks practice per week. |
-| **Weekly planner** | The local model proposes a week; code checks every portion against both profiles (vegetarian, avoid list, net carbs, protein, cook time, oily fish and red meat per week, optional tuna cap) and regenerates or falls back to a deterministic solver. Lock, swap, leftovers on weekday lunches, frozen portions fill dinners. |
-| **Meal prep and freezer** | Cook one sauce for six, eat two tonight, freeze the rest as single portions; the planner uses them. |
+| **Weekly planner** | The local model proposes a week; code checks every portion against every household member's profile (vegetarian, avoid list, net carbs, protein, cook time, oily fish and red meat per week, optional tuna cap) and regenerates or falls back to a deterministic solver. Lock, swap, leftovers on weekday lunches, frozen portions fill dinners. |
+| **Meal prep and freezer** | Cook one big pot of sauce, eat tonight's dinner from it, freeze the rest as single portions; the planner uses them. |
 | **Shopping list** | One merged list by aisle from recipes or the plan, with pack sizes and leftovers per pack, stock-aware ("hide what we have"), an avoid-list guard, and a plain-text share link. Ticking an item puts it in stock with a best-before date; unticking undoes exactly that. |
 | **Kitchen and stock** | Fridge, freezer, pantry and spices with best-before dates, an equipment list, and "use it up" suggestions for what expires soon. |
 | **Ingredient guide** | What each ingredient is, substitutes, storage, freezing, and what it tastes like. |
@@ -32,7 +32,7 @@ Every diet rule and every health number is computed in code, never left to a mod
 
 ### Health, in detail (private per person)
 
-Every number below is computed in code from what you logged (planned meals fill the days you did not log). A model never invents a value. Each person sees only their own data: there is no partner view on health, glucose, labs or the report.
+Every number below is computed in code from what you logged (planned meals fill the days you did not log). A model never invents a value. Each person sees only their own data: nobody else in the household can open their health, glucose, labs or report.
 
 | Part | What it does |
 |---|---|
@@ -46,9 +46,14 @@ Every number below is computed in code from what you logged (planned meals fill 
 
 Nutrition comes only from the USDA SR Legacy table (per 100 g, including micronutrients and omega-3 fatty acids). Macros are never taken from a model.
 
-## The two-person model
+## Household
 
-The app is built for two people who cook and eat together. The seed creates two logins with the placeholder names **Alex** and **Sam**; recipe ingredient lines are either shared (`both`) or one person's extra portion (`alex` / `sam`), and cook-along steps go to one of the two lanes (Alex takes knives and hot pans, Sam the beginner-safe jobs, `either` goes to whoever is free). Each person sets their own diet rules on **Profiles**; nothing about anyone's diet is hard-coded.
+- **How many people:** one or more. Every login is one household member with their own profile, diet rules, portion size and private health data. The people come from `SEED_USERS` in `.env` (default `alex,sam`; the example file has three: `alex,sam,robin`), each with `SEED_<SLUG>_PASSWORD` and optional `_EMAIL` / `_NAME`. To add someone later, add their slug and password and run `docker compose up -d` again; existing people keep their data.
+- **Shared base and per-person extras:** a recipe line is either part of the shared base (amounts for the recipe's servings) or one person's own extra (amount for one of their portions, for example the chicken for the one person who eats meat). Scaling, macros, rule checks, meal scores, the shopping list, the food log and meal cost all use the same split: the base is shared by everyone, each person adds only their own extras, multiplied by their portion size. A person's extra that is on their own avoid list is left off the shopping list; a shared line on someone's avoid list stays on it, marked with who avoids it.
+- **Planning:** every meal of the week is checked against every member's rules. A meal is one portion per person, so prep batches and frozen sauce portions cover fewer meals in a bigger household.
+- **Cook-along split:** each step is tagged `skilled` (knives, hot fat, searing, sauces), `beginner` (beginner-safe) or `either`. On **Profiles** each person says whether they take the skilled jobs. "Cook together" lets you pick who is cooking today and gives skilled steps to skilled cooks, beginner steps to beginners and `either` steps to whoever is free first, so everyone finishes around the same minute. With nobody set as skilled, the skilled steps go to whoever is free.
+
+Each person sets their own diet rules on **Profiles**; nothing about anyone's diet is hard-coded. The seeded recipes name per-person extras by slug (`alex`, `sam`); in a household without those slugs those extra lines are left out.
 
 ## Local-first and private
 
@@ -79,9 +84,11 @@ cp .env.example .env      # replace every change-me value (openssl rand -hex 32)
 docker compose up -d --build
 ```
 
-Open <http://127.0.0.1:3030> and sign in with `SEED_ALEX_EMAIL` / `SEED_ALEX_PASSWORD` (or the Sam login) from your `.env`.
+Open <http://127.0.0.1:3030> and sign in with any household login from your `.env` (for example `SEED_ALEX_EMAIL` / `SEED_ALEX_PASSWORD`).
 
-What happens on `up`: Postgres starts and creates the least-privilege `kitchen_app` role; a one-shot `cookingstudio-init` container creates the schema and seeds the two logins, the USDA nutrition table, the ingredient guide, techniques, equipment and the 180 recipes; then the app starts. Re-running `up` is safe: existing recipes and profiles are kept.
+What happens on `up`: Postgres starts and creates the least-privilege `kitchen_app` role; a one-shot `cookingstudio-init` container applies the schema migrations (`prisma/migrations`) and seeds the household logins, the USDA nutrition table, the ingredient guide, techniques, equipment and the 180 recipes; then the app starts. Re-running `up` is safe: existing recipes and profiles are kept.
+
+Upgrading an install from before schema migrations (its tables were created with `prisma db push`): the init container sees tables without a migration history, marks the first migration (`0_init`, that schema) as applied and runs the newer ones on top. The household migration turns the old fixed `alex` / `sam` lines into per-person lines of the users with those slugs (if a slug does not exist, the oldest other user takes its place; only in a one-person install are the second person's extra lines dropped, since nobody eats them). Old cook-along lanes become step skills, and the `alex` user becomes the skilled cook. Recipes, plans, logs and shopping lists stay as they were.
 
 Every seeded recipe comes with its pictures: a hero picture (a looping clip for 125 of them), a picture per step, and one per ingredient and technique. They ship in `prisma/seed-images` (WebP stills, H.264 loops, about 64 MB, all AI-generated) and the seed links them on first start. Recipes you add later (teach-me, URL import) show a calm placeholder until you turn on picture painting (`IMAGE_GENERATION=on`, ComfyUI on the host); a picture rendered there replaces the shipped one.
 
@@ -89,7 +96,7 @@ The recipe grid loads 480 px WebP thumbnails (`<name>.thumb.webp`, shipped for t
 
 **Security before first start:**
 
-- Set your own `JWT_SECRET` (`openssl rand -hex 32`) and real values for `POSTGRES_PASSWORD`, `APP_DB_PASSWORD` and both `SEED_*_PASSWORD`s. The app refuses a placeholder JWT secret, and the seed refuses the `.env.example` passwords.
+- Set your own `JWT_SECRET` (`openssl rand -hex 32`) and real values for `POSTGRES_PASSWORD`, `APP_DB_PASSWORD` and every `SEED_<SLUG>_PASSWORD`. The app refuses a placeholder JWT secret, and the seed refuses the `.env.example` passwords.
 - Set `COOKIE_SECURE=true` when the app is served over HTTPS (for example behind a reverse proxy), and do that before you add a LAN host to `ALLOWED_HOSTS`. Over plain http on the LAN the session cookie travels unencrypted.
 
 ### Local AI (optional)
@@ -113,7 +120,7 @@ All settings live in `.env`; `.env.example` documents each one.
 |---|---|
 | `POSTGRES_PASSWORD`, `APP_DB_PASSWORD` | Owner and runtime-role passwords (required) |
 | `JWT_SECRET` | Session signing key, 32+ characters (required) |
-| `SEED_ALEX_EMAIL`, `SEED_ALEX_PASSWORD`, `SEED_SAM_EMAIL`, `SEED_SAM_PASSWORD` | The two logins, created on first start (passwords 12+ characters) |
+| `SEED_USERS`, `SEED_<SLUG>_PASSWORD`, `SEED_<SLUG>_EMAIL`, `SEED_<SLUG>_NAME` | The household: comma list of slugs, and per person a password (12+ characters), email (default `<slug>@example.com`) and name. Created on start, new slugs are added on the next `up` |
 | `APP_TIMEZONE` | IANA time zone for "today" (default `UTC`) |
 | `SHOP_REGION` | Where you shop, only used to word AI prompts (default empty) |
 | `TUNA_MAX_PER_WEEK` | Optional household tuna cap for the planner (default: no cap) |
@@ -126,14 +133,15 @@ All settings live in `.env`; `.env.example` documents each one.
 
 ```bash
 npm install --include=dev
-docker compose up -d cookingstudio-postgres cookingstudio-init
+docker compose up -d cookingstudio-postgres cookingstudio-init   # migrations + seed
 npx prisma generate
 npm run dev              # http://localhost:3030
 
 npm run typecheck        # tsc --noEmit
 npm run lint             # eslint
 npm test                 # vitest
-npm run check:plan       # every plan/prep recipe against both profiles
+npm run check:plan       # every plan/prep recipe against every profile
+npm run db:migrate       # apply prisma/migrations (owner DATABASE_URL); new schema changes: npx prisma migrate dev
 ```
 
 ## Screenshots

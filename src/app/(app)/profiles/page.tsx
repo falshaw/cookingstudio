@@ -1,3 +1,4 @@
+import { HOUSEHOLD_ORDER } from "@/lib/household";
 import { prisma } from "@/lib/prisma";
 import { currentUser } from "@/lib/auth";
 import { PageHeader, Chip } from "@/components/ui";
@@ -6,9 +7,9 @@ import { getSetting } from "@/lib/feed";
 
 export default async function ProfilesPage() {
   const me = (await currentUser())!;
-  const users = await prisma.user.findMany({ orderBy: { slug: "desc" }, include: { profile: true } });
+  const users = await prisma.user.findMany({ orderBy: HOUSEHOLD_ORDER, include: { profile: true } });
   const mine = users.find((u) => u.id === me.id)!;
-  const other = users.find((u) => u.id !== me.id);
+  const others = users.filter((u) => u.id !== me.id);
   const perWeek = await getSetting<number>("feed.perWeek", 3);
   const p = mine.profile;
   return (
@@ -40,6 +41,7 @@ export default async function ProfilesPage() {
           dailyProtein: p?.dailyProtein ?? null,
           dailyNetCarbs: p?.dailyNetCarbs ?? null,
           portionFactor: p?.portionFactor ?? 1,
+          cookingSkill: p?.cookingSkill === "skilled" ? "skilled" : "beginner",
           practiceGoalPerWeek: p?.practiceGoalPerWeek ?? 3,
           referenceGroup: p?.referenceGroup ?? "general",
           weightLostKg: p?.weightLostKg ?? null,
@@ -47,9 +49,9 @@ export default async function ProfilesPage() {
           tasteOverrides: (p?.tasteOverrides as { likes: string[]; dislikes: string[] } | null) ?? { likes: [], dislikes: [] },
         }}
       />
-      {other && (
-        <section className="glass-card p-4 mt-6">
-          <h2 className="font-display text-lg font-semibold mb-2">{other.name}&apos;s food rules (read-only)</h2>
+      {others.map((other) => (
+        <section key={other.id} className="glass-card p-4 mt-6">
+          <h2 className="font-display text-lg font-semibold mb-2">{other.name}&apos;s food rules (read-only) · {other.profile?.cookingSkill === "skilled" ? "skilled cook" : "beginner cook"}</h2>
           <div className="flex flex-wrap gap-1.5 text-sm">
             {other.profile?.vegetarian && <Chip tone="olive">vegetarian{other.profile.vegBreakfastAllowed.length ? ` (except ${other.profile.vegBreakfastAllowed.join(", ")} at breakfast)` : ""}</Chip>}
             {other.profile?.avoidFoods.map((f) => <Chip key={f} tone="red">no {f}</Chip>)}
@@ -60,7 +62,7 @@ export default async function ProfilesPage() {
             {!other.profile?.vegetarian && !other.profile?.avoidFoods.length && !other.profile?.likedFoods.length && <span className="text-ink-muted">Nothing filled in yet.</span>}
           </div>
         </section>
-      )}
+      ))}
     </div>
   );
 }

@@ -22,14 +22,14 @@ import { inRegion } from "./region";
 
 const run = promisify(execFile);
 
-const RECIPE_SYSTEM = `You write recipes for two beginner home cooks${inRegion()}. Plain words, correct technique, safe temperatures (°C, fan oven), realistic quantities in grams. Never invent facts. Answer only with the JSON object.`;
+const RECIPE_SYSTEM = `You write recipes for beginner home cooks${inRegion()}. Plain words, correct technique, safe temperatures (°C, fan oven), realistic quantities in grams. Never invent facts. Answer only with the JSON object.`;
 
 export function recipePrompt(dish: string, rules: string, sauce = ""): string {
   return `Recipe to teach: ${dish}.
-Every ingredient: grams for the stated servings, a home measure (qty + unit: g, ml, tbsp, tsp, pc, clove), prep (what to do before cooking, "" if none), component "both".
+Every ingredient: grams for the stated servings, a home measure (qty + unit: g, ml, tbsp, tsp, pc, clove), prep (what to do before cooking, "" if none), for "" (shared by everyone).
 Steps 4-10, one action each.
 why = the cooking science in 1-2 sentences. cue = what it looks/sounds/smells like when done, with a time. mistake = the most common beginner mistake and how to avoid it.
-who = "sam" for beginner-safe tasks (washing, measuring, stirring, assembling), "alex" for knives, hot fat, searing, sauces, else "either". minutes = step duration. timerSeconds = timed wait in seconds or 0.
+skill = "beginner" for beginner-safe tasks (washing, measuring, stirring, assembling), "skilled" for knives, hot fat, searing, sauces, else "either". minutes = step duration. timerSeconds = timed wait in seconds or 0.
 technique = main technique or "none". imagePrompt = photo-realistic close-up of this exact step, hands allowed, no faces, no text.
 troubleshoot = 2-4 problems with fixes. goesWith = what to serve it with. equipment = tools needed.${sauce ? `\n${sauce}` : ""}
 Household rules: ${rules}`;
@@ -48,7 +48,9 @@ export async function householdRuleText(): Promise<string> {
 /** Reject a draft if any person's hard ingredient rules fail (alcohol, sugar, avoid list). */
 export async function draftRuleCheck(d: RecipeDraft): Promise<string | null> {
   const people = (await loadProfiles()).map(toRuleProfile);
-  const lines = d.ingredients.map((i) => ({ slug: slugify(i.name), nameEn: i.name, component: i.component, grams: i.grams, ...inferFlags(i.name) }));
+  const unknown = [...new Set(d.ingredients.map((i) => i.for).filter((s) => s && !people.some((p) => p.slug === s)))];
+  if (unknown.length) return `"for" names nobody in this household: ${unknown.join(", ")} (use "" or one of ${people.map((p) => p.slug).join(", ")})`;
+  const lines = d.ingredients.map((i) => ({ slug: slugify(i.name), nameEn: i.name, forUserId: i.for ? people.find((p) => p.slug === i.for)!.id : null, grams: i.grams, ...inferFlags(i.name) }));
   const fails = people.flatMap((p) => checkIngredientsOnly(p, d.title, lines, { title: d.title, cuisine: d.cuisine, tags: d.flavourTags }));
   return fails.length ? fails.map((f) => f.msg).join("; ") : null;
 }

@@ -21,13 +21,13 @@ export default async function RecipePage({ params, searchParams }: { params: Pro
   const r = await recipeVM(slug, user.id);
   if (!r) notFound();
   const total = r.prepMinutes + r.cookMinutes;
-  const hasSplit = r.lines.some((l) => l.component !== "both");
-  const mine = hasSplit ? r.macros[user.slug === "sam" ? "sam" : "alex"] : r.macros.generic;
+  const hasSplit = r.lines.some((l) => l.forUserId != null);
+  const mine = hasSplit ? r.macros.byUser[user.id] ?? r.macros.generic : r.macros.generic;
   const ingredientCount = new Set(r.lines.map((l) => l.ingredient.slug)).size;
   // Meal cost from receipt prices; null = nothing in it bought yet
   const cost = await recipeCost(r.id);
   const favs = await prisma.favourite.findMany({ where: { recipeId: r.id }, include: { user: { select: { id: true, name: true } } } });
-  const partner = await prisma.user.findFirst({ where: { id: { not: user.id } }, select: { name: true, id: true } });
+  const others = r.people.filter((p) => p.id !== user.id);
   const myDislike = await prisma.dislike.findUnique({ where: { userId_recipeId: { userId: user.id, recipeId: r.id } } });
   const draft = await prisma.recipe.findUnique({ where: { id: r.id }, select: { status: true } });
   const sauceLesson = await viewerSauceLesson(r.id, r.sauceLesson, user.id);
@@ -77,7 +77,7 @@ export default async function RecipePage({ params, searchParams }: { params: Pro
             </Link>
           )}
           <div className="mt-3 flex flex-wrap items-center gap-3">
-            <FavButton recipeId={r.id} initial={favs.some((f) => f.userId === user.id)} partnerName={partner?.name} partnerFav={favs.some((f) => f.userId === partner?.id)} />
+            <FavButton recipeId={r.id} initial={favs.some((f) => f.userId === user.id)} others={others.length} lovedBy={others.filter((p) => favs.some((f) => f.userId === p.id)).map((p) => p.name)} />
             <DislikeButton recipeId={r.id} initial={{ on: !!myDislike, reason: myDislike?.reason ?? "" }} />
             {draft?.status === "draft" && <Chip tone="gold">Draft — approve it on Home</Chip>}
           </div>

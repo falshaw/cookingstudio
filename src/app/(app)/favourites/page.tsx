@@ -3,9 +3,10 @@ import { PageHeader, Chip, Empty } from "@/components/ui";
 import { RecipeCard } from "@/components/RecipeCard";
 import { tasteFor } from "@/lib/taste";
 import Link from "next/link";
+import { HOUSEHOLD_ORDER } from "@/lib/household";
 
 export default async function FavouritesPage() {
-  const users = await prisma.user.findMany({ orderBy: { slug: "desc" }, select: { id: true, name: true } });
+  const users = await prisma.user.findMany({ orderBy: HOUSEHOLD_ORDER, select: { id: true, name: true } });
   const favs = await prisma.favourite.findMany({ include: { recipe: { include: { hero: { select: { id: true, status: true, video: true } } } } } });
   const byRecipe = new Map<string, { recipe: (typeof favs)[number]["recipe"]; who: Set<string> }>();
   for (const f of favs) {
@@ -18,7 +19,7 @@ export default async function FavouritesPage() {
   return (
     <div>
       <PageHeader eyebrow="What you love" title="Favourites & our taste">
-        Hearts are per person; “both love it” recipes are weighted highest by the planner. The taste profile is worked out in code from favourites, ratings, how often you cook something, confidence, rejected drafts and your tweak notes — edit overrides on <Link href="/profiles" className="underline">Profiles</Link>.
+        Hearts are per person; recipes everyone loves are weighted highest by the planner. The taste profile is worked out in code from favourites, ratings, how often you cook something, confidence, rejected drafts and your tweak notes — edit overrides on <Link href="/profiles" className="underline">Profiles</Link>.
       </PageHeader>
       {list.length === 0 ? (
         <Empty>No favourites yet — tap the heart on any recipe.</Empty>
@@ -28,7 +29,7 @@ export default async function FavouritesPage() {
             <div key={recipe.id} className="relative">
               <RecipeCard r={recipe} />
               <div className="absolute top-2 left-2 flex gap-1">
-                {who.size === users.length ? <Chip tone="gold" className="bg-paper">♥ both love it</Chip> : users.filter((u) => who.has(u.id)).map((u) => <Chip key={u.id} className="bg-paper">♥ {u.name}</Chip>)}
+                {who.size === users.length && users.length > 1 ? <Chip tone="gold" className="bg-paper">♥ {users.length === 2 ? "both love it" : "everyone loves it"}</Chip> : users.filter((u) => who.has(u.id)).map((u) => <Chip key={u.id} className="bg-paper">♥ {u.name}</Chip>)}
               </div>
             </div>
           ))}

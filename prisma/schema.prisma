@@ -1,4 +1,5 @@
-// CookingStudio — cooking practice app for a two-person household (lanes "alex" and "sam").
+// CookingStudio — cooking practice app for a household of any size: every user of the instance is one
+// household member with their own profile, diet rules, portion factor and private health data.
 // Prisma 7: no url here (prisma.config.ts), runtime uses the PrismaPg adapter.
 generator client {
   provider = "prisma-client-js"
@@ -10,7 +11,7 @@ datasource db {
 
 model User {
   id                  String    @id @default(cuid())
-  slug                String    @unique // "alex" | "sam"
+  slug                String    @unique // short stable handle, e.g. "alex"; seed recipes key per-person extras by it
   email               String    @unique
   name                String
   passwordHash        String
@@ -31,6 +32,10 @@ model User {
   glucose    GlucoseReading[]
   dislikes   Dislike[]
   apiKeys    ApiKey[]
+  /// recipe lines that are this person's own extra portion
+  extras     RecipeIngredient[]
+  /// shopping items bought for this person's own extras
+  shopFor    ShoppingItem[]
 }
 
 /// Personal API key for scripts and tools. Acts as its owner on scoped routes only (`withScoped`).
@@ -92,6 +97,8 @@ model UserProfile {
   dailyProtein        Int?
   dailyNetCarbs       Int?
   portionFactor       Float     @default(1)
+  /// cook-along split: skilled = knives, hot fat, searing, sauces; beginner = beginner-safe jobs only
+  cookingSkill        String    @default("beginner")
   practiceGoalPerWeek Int       @default(3)
   /// manual edits on top of the computed taste profile: {likes:[], dislikes:[], spice:n}
   tasteOverrides      Json?
@@ -306,8 +313,8 @@ model RecipeIngredient {
   id           String     @id @default(cuid())
   recipeId     String
   ingredientId String
-  /// both = shared base (quantities for recipe.servings); alex/sam = per ONE portion of that person
-  component    String     @default("both")
+  /// null = shared base (quantities for recipe.servings); a user id = that person's own extra, per ONE portion
+  forUserId    String?
   grams        Float
   qty          Float
   unit         String
@@ -315,9 +322,11 @@ model RecipeIngredient {
   sort         Int        @default(0)
   recipe       Recipe     @relation(fields: [recipeId], references: [id], onDelete: Cascade)
   ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
+  forUser      User?      @relation(fields: [forUserId], references: [id], onDelete: Cascade)
 
   @@index([recipeId])
   @@index([ingredientId])
+  @@index([forUserId])
 }
 
 model Step {
@@ -328,7 +337,8 @@ model Step {
   why           String   @default("")
   cue           String   @default("")
   mistake       String   @default("")
-  who           String   @default("either") // alex | sam | either
+  /// who may do it in cook-along: skilled (knives, hot fat, searing) | beginner (beginner-safe) | either
+  skill         String   @default("either")
   minutes       Int      @default(5)
   timerSeconds  Int      @default(0)
   technique     String?
@@ -460,11 +470,12 @@ model ShoppingItem {
   qty          Float
   unit         String
   section      String
-  forWho       String       @default("base") // base | alex | sam
+  /// null = for the household; a user id = that person's own extra
+  forUserId    String?
   inPantry     Boolean      @default(false)
   /// realistic pack + what to do with the rest of the pack
   packNote     String       @default("")
-  /// e.g. "Alex avoids" — shared item on someone's avoid list (never-list guard); "" = none
+  /// e.g. "Robin avoids" — shared item on someone's avoid list (never-list guard); "" = none
   avoidNote    String       @default("")
   checked      Boolean      @default(false)
   /// what ticking "bought" did to stock, so unticking can undo exactly that:
@@ -472,6 +483,7 @@ model ShoppingItem {
   stockUndo    Json?
   sort         Int          @default(0)
   list         ShoppingList @relation(fields: [listId], references: [id], onDelete: Cascade)
+  forUser      User?        @relation(fields: [forUserId], references: [id], onDelete: Cascade)
 
   @@index([listId])
 }

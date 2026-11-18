@@ -121,6 +121,18 @@ export function stepPrompt(base: string, ingredients: string[]): string {
   return `${base.replace(/\.$/, "")}${ingredients.length ? `. Only these ingredients visible: ${ingredients.join(", ")}` : ""}. Nothing else in the shot`;
 }
 
+/**
+ * Draft `for` slugs → user ids ("" → null). Unknown slugs are listed in `unknown`; with `dropUnknown` their lines
+ * are left out (the seed: a recipe file may name someone who is not in this household), else the caller refuses.
+ */
+export async function resolvePeople(db: Db, d: RecipeDraft): Promise<{ ids: Map<string, string>; unknown: string[] }> {
+  const wanted = [...new Set(d.ingredients.map((i) => i.for).filter(Boolean))];
+  if (!wanted.length) return { ids: new Map(), unknown: [] };
+  const users = await db.user.findMany({ where: { slug: { in: wanted } }, select: { id: true, slug: true } });
+  const ids = new Map(users.map((u) => [u.slug, u.id]));
+  return { ids, unknown: wanted.filter((s) => !ids.has(s)) };
+}
+
 export interface SaveOpts {
   slug: string;
   level: number;
@@ -136,12 +148,18 @@ export interface SaveOpts {
   heroPrompt?: string;
   leftoverIdeas?: string;
   status?: "published" | "draft";
+  /** leave out lines for a person who is not in this household (seed) instead of refusing the draft */
+  dropUnknownPeople?: boolean;
 }
 
 export async function saveRecipe(db: Db, d: RecipeDraft, o: SaveOpts): Promise<{ id: string; newIngredients: string[] }> {
   const newIngredients: string[] = [];
-  const resolved: { ingredientId: string; d: RecipeDraft["ingredients"][number] }[] = [];
+  const people = await resolvePeople(db, d);
+  if (people.unknown.length && !o.dropUnknownPeople) throw new Error(`unknown household member: ${people.unknown.join(", ")}`);
+  const resolved: { ingredientId: string; forUserId: string | null; d: RecipeDraft["ingredients"][number] }[] = [];
   for (const ing of d.ingredients) {
+    const forUserId = ing.for ? people.ids.get(ing.for) ?? null : null;
+    if (ing.for && !forUserId) continue;
     const alias = o.aliases?.[ing.name.toLowerCase()];
     let id: string | null = null;
     if (alias) id = (await db.ingredient.findUnique({ where: { slug: alias } }))?.id ?? null;
@@ -150,7 +168,7 @@ export async function saveRecipe(db: Db, d: RecipeDraft, o: SaveOpts): Promise<{
       id = r.id;
       if (r.created) newIngredients.push(id);
     }
-    resolved.push({ ingredientId: id, d: ing });
+    resolved.push({ ingredientId: id, forUserId, d: ing });
   }
 
   const recipe = await db.$transaction(async (tx) => {
@@ -188,9 +206,9 @@ export async function saveRecipe(db: Db, d: RecipeDraft, o: SaveOpts): Promise<{
     });
     const lines: { id: string; nameEn: string }[] = [];
     for (let i = 0; i < resolved.length; i++) {
-      const { ingredientId, d: ing } = resolved[i];
+      const { ingredientId, forUserId, d: ing } = resolved[i];
       const row = await tx.recipeIngredient.create({
-        data: { recipeId: r.id, ingredientId, component: ing.component, grams: ing.grams, qty: ing.qty, unit: ing.unit, prep: ing.prep, sort: i },
+        data: { recipeId: r.id, ingredientId, forUserId, grams: ing.grams, qty: ing.qty, unit: ing.unit, prep: ing.prep, sort: i },
         include: { ingredient: { select: { nameEn: true } } },
       });
       lines.push({ id: row.id, nameEn: row.ingredient.nameEn });
@@ -211,7 +229,7 @@ export async function saveRecipe(db: Db, d: RecipeDraft, o: SaveOpts): Promise<{
           why: s.why,
           cue: s.cue,
           mistake: s.mistake,
-          who: s.who,
+          skill: s.skill,
           minutes: s.minutes,
           timerSeconds: s.timerSeconds,
           technique: s.technique === "none" ? null : s.technique,

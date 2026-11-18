@@ -6,14 +6,17 @@ import Link from "next/link";
 import { CalendarDays, MessageCircle, Plus, Trash2, X } from "lucide-react";
 import { SECTIONS, whatsappText } from "@/lib/shopping";
 import { fmtQty, cn } from "@/lib/utils";
+import { possessive } from "@/lib/household";
 
-interface Item { id: string; name: string; qty: number; unit: string; section: string; forWho: string; inPantry: boolean; packNote: string; avoidNote: string; checked: boolean; ingredientId: string | null; stockAdded: boolean; stockUntil: string | null }
+/** forName = whose own extra it is ("" = household), forTone = their household position (chip colour). */
+interface Item { id: string; name: string; qty: number; unit: string; section: string; forName: string; forTone: number; inPantry: boolean; packNote: string; avoidNote: string; checked: boolean; ingredientId: string | null; stockAdded: boolean; stockUntil: string | null }
 interface List { id: string; name: string; createdAt: string; items: Item[] }
 /** What a tick put into stock: the best-before day (YYYY-MM-DD) when one was set, else null. */
 type Stocked = { until: string | null };
 
 /** YYYY-MM-DD → DD.MM for the stock hint. */
 const dayMonth = (s: string) => `${s.slice(8, 10)}.${s.slice(5, 7)}`;
+const TONES = ["bg-clay/10 text-clay-deep", "bg-sea/10 text-sea-deep", "bg-olive/10 text-olive", "bg-gold/15 text-[#7a5f0e]"];
 
 export function ShoppingClient({ recipes, preselect, planId, lists, initialListId }: { recipes: { id: string; slug: string; title: string; servings: number }[]; preselect: { recipeId: string; servings: number } | null; planId: string | null; lists: List[]; initialListId: string | null }) {
   const router = useRouter();
@@ -147,7 +150,7 @@ export function ShoppingClient({ recipes, preselect, planId, lists, initialListI
                           <input type="checkbox" checked={!!checked[i.id]} onChange={(e) => tick(i.id, e.target.checked)} className="mt-1 h-6 w-6 accent-[#5e6b4f]" aria-label={i.name} />
                           <span className="flex-1">
                             <span className={cn("font-medium", checked[i.id] && "line-through")}>{i.name}</span>
-                            {i.forWho !== "base" && <span className={cn("ml-2 rounded px-1.5 py-0.5 text-[11px] font-semibold", i.forWho === "alex" ? "bg-clay/10 text-clay-deep" : "bg-sea/10 text-sea-deep")}>{i.forWho === "alex" ? "Alex's extra" : "Sam's extra"}</span>}
+                            {i.forName && <span className={cn("ml-2 rounded px-1.5 py-0.5 text-[11px] font-semibold", TONES[i.forTone % TONES.length])} data-testid="extra-chip">{possessive(i.forName)} extra</span>}
                             {i.avoidNote && <span className="ml-2 rounded bg-clay/15 px-1.5 py-0.5 text-[11px] font-semibold text-clay-deep">⚠ {i.avoidNote}</span>}
                             {i.inPantry && <span className="ml-2 rounded bg-olive/10 px-1.5 py-0.5 text-[11px] text-olive">in stock</span>}
                             {checked[i.id] && stocked[i.id] && <span className="ml-2 rounded bg-olive/10 px-1.5 py-0.5 text-[11px] font-semibold text-olive" data-testid="stock-hint">{stocked[i.id]?.until ? `✓ in stock until ${dayMonth(stocked[i.id]?.until ?? "")}` : "✓ added to stock"}</span>}

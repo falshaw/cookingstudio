@@ -24,8 +24,8 @@ describe("meal score", () => {
 });
 
 describe("swaps", () => {
-  const alex: RuleProfile = { slug: "alex", name: "Alex", vegetarian: false, vegBreakfastAllowed: [], avoidFoods: ["milk"], noAlcohol: true, noAddedSugar: false, noRefinedStarch: true, maxNetCarbsPerMeal: 55, minProteinPerMeal: 20, maxCookMinutes: 40, omega3MinPerWeek: 1, omega3MaxPerWeek: 3 };
-  const line = (id: string, slug: string, nameEn: string, component = "both") => ({ id, slug, nameEn, component, grams: 150, ...inferFlags(nameEn) });
+  const alex: RuleProfile = { id: "alex", slug: "alex", name: "Alex", vegetarian: false, vegBreakfastAllowed: [], avoidFoods: ["milk"], noAlcohol: true, noAddedSugar: false, noRefinedStarch: true, maxNetCarbsPerMeal: 55, minProteinPerMeal: 20, maxCookMinutes: 40, omega3MinPerWeek: 1, omega3MaxPerWeek: 3 };
+  const line = (id: string, slug: string, nameEn: string, forUserId: string | null = null) => ({ id, slug, nameEn, forUserId, grams: 150, ...inferFlags(nameEn) });
   it("suggests swaps only for lines that break this person's rules", () => {
     const s = suggestSwaps(alex, [line("1", "basmati-rice", "Basmati rice"), line("2", "red-wine", "Dry red wine"), line("3", "courgette", "Courgette"), line("4", "spaghetti", "Spaghetti", "sam"), line("5", "milk", "Milk")]);
     expect(s.map((x) => [x.lineId, x.reason])).toEqual([["1", "white rice/bread/pasta"], ["2", "contains alcohol"], ["5", "on the avoid list"]]);
@@ -40,13 +40,19 @@ describe("swaps", () => {
   });
   it("splits a shared line into the other person's portion + the swap for this person", () => {
     const rice = SWAPS.find((s) => s.from === "basmati-rice")!;
-    const v = planVariant({ component: "both", grams: 150, qty: 150, unit: "g" }, rice, "alex", 2);
-    expect(v.original).toEqual({ component: "sam", grams: 75, qty: 75 });
-    expect(v.added).toEqual({ ingredientSlug: "cauliflower", component: "alex", grams: 188, qty: 188, unit: "g" });
+    const v = planVariant({ forUserId: null, grams: 150, qty: 150, unit: "g" }, rice, "alex", 2, ["alex", "sam"]);
+    expect(v.keepFor).toEqual([{ forUserId: "sam", grams: 75, qty: 75 }]);
+    expect(v.added).toEqual({ ingredientSlug: "cauliflower", forUserId: "alex", grams: 188, qty: 188, unit: "g" });
+  });
+  it("with three people the shared line becomes one portion line for each of the other two", () => {
+    const rice = SWAPS.find((s) => s.from === "basmati-rice")!;
+    const v = planVariant({ forUserId: null, grams: 300, qty: 300, unit: "g" }, rice, "sam", 3, ["alex", "sam", "robin"]);
+    expect(v.keepFor).toEqual([{ forUserId: "alex", grams: 100, qty: 100 }, { forUserId: "robin", grams: 100, qty: 100 }]);
+    expect(v.added?.forUserId).toBe("sam");
   });
   it("removes a person-only line when the swap is 'leave it out'", () => {
     const bread = SWAPS.find((s) => s.from === "sourdough-bread")!;
-    expect(planVariant({ component: "alex", grams: 60, qty: 60, unit: "g" }, bread, "alex", 2)).toEqual({ original: null, added: null });
+    expect(planVariant({ forUserId: "alex", grams: 60, qty: 60, unit: "g" }, bread, "alex", 2, ["alex", "sam"])).toEqual({ keepFor: [], added: null });
   });
 });
 

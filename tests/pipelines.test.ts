@@ -31,13 +31,13 @@ const draft = (over: Record<string, unknown> = {}) =>
     prepMinutes: 15,
     cookMinutes: 12,
     ingredients: [
-      { name: "Chicken thighs", grams: 400, qty: 400, unit: "g", prep: "cubed", component: "both" },
-      { name: "Lemon", grams: 40, qty: 1, unit: "pc", prep: "juiced", component: "both" },
+      { name: "Chicken thighs", grams: 400, qty: 400, unit: "g", prep: "cubed", for: "" },
+      { name: "Lemon", grams: 40, qty: 1, unit: "pc", prep: "juiced", for: "" },
     ],
     sauceLesson: "s1-pan-juices-cream",
     steps: [
-      { text: "Thread the chicken onto skewers and grill 10 minutes.", why: "High heat browns.", cue: "Golden, 74 °C", mistake: "Crowding", who: "alex", minutes: 12, technique: "sear", timerSeconds: 600, imagePrompt: "chicken skewers on a grill" },
-      { text: "Make the sauce: scrape the brown bits from the tray, squeeze in the lemon and a splash of water and bubble 2 minutes until it coats the spoon.", why: "The brown bits are the flavour.", cue: "Glossy, coats a spoon", mistake: "Leaving the juices in the tray", who: "alex", minutes: 3, technique: "deglaze", timerSeconds: 120, imagePrompt: "spoon scraping a tray" },
+      { text: "Thread the chicken onto skewers and grill 10 minutes.", why: "High heat browns.", cue: "Golden, 74 °C", mistake: "Crowding", skill: "skilled", minutes: 12, technique: "sear", timerSeconds: 600, imagePrompt: "chicken skewers on a grill" },
+      { text: "Make the sauce: scrape the brown bits from the tray, squeeze in the lemon and a splash of water and bubble 2 minutes until it coats the spoon.", why: "The brown bits are the flavour.", cue: "Glossy, coats a spoon", mistake: "Leaving the juices in the tray", skill: "skilled", minutes: 3, technique: "deglaze", timerSeconds: 120, imagePrompt: "spoon scraping a tray" },
     ],
     ...over,
   });
@@ -77,7 +77,7 @@ describe("teach-me pipeline", () => {
 
   it("rejects a recipe that breaks a household rule (wine) and regenerates", async () => {
     const withWine = JSON.parse(draft());
-    withWine.ingredients.push({ name: "Dry red wine", grams: 100, qty: 100, unit: "ml", prep: "", component: "both" });
+    withWine.ingredients.push({ name: "Dry red wine", grams: 100, qty: 100, unit: "ml", prep: "", for: "" });
     ollama.queue.push(JSON.stringify(withWine), draft());
     await worker.runJob(job("teach", { dish: "chicken souvlaki" }));
     expect(ollama.requests).toHaveLength(2);
@@ -137,7 +137,7 @@ describe("sauce rule on teach-me (checked in code)", () => {
 describe("URL import pipeline", () => {
   it("parses the page into a draft for the edit preview and reports rule issues", async () => {
     const withMilk = JSON.parse(draft());
-    withMilk.ingredients.push({ name: "Milk", grams: 200, qty: 200, unit: "ml", prep: "", component: "both" });
+    withMilk.ingredients.push({ name: "Milk", grams: 200, qty: 200, unit: "ml", prep: "", for: "" });
     ollama.queue.push(JSON.stringify(withMilk));
     const r = (await worker.runJob(job("import-url", { url: "https://example.com/souvlaki" }))) as { draft: { title: string }; ruleIssues: string | null };
     expect(r.draft.title).toBe("Chicken souvlaki");
@@ -214,8 +214,8 @@ describe("weekly feed pipeline", () => {
     prepMinutes: 10,
     cookMinutes: 20,
     ingredients: [
-      { component: "both", grams: 600, ingredient: { slug: "courgette", nameEn: "Courgette", fdcId: 1, isMeat: false, isFish: false, isOmega3: false, isAlcohol: false, isAddedSugar: false, isRefinedStarch: false } },
-      { component: "alex", grams: 180, ingredient: { slug: "chicken-thighs", nameEn: "Chicken thighs", fdcId: 2, isMeat: true, isFish: false, isOmega3: false, isAlcohol: false, isAddedSugar: false, isRefinedStarch: false } },
+      { forUserId: null, grams: 600, ingredient: { slug: "courgette", nameEn: "Courgette", fdcId: 1, isMeat: false, isFish: false, isOmega3: false, isAlcohol: false, isAddedSugar: false, isRefinedStarch: false } },
+      { forUserId: "calex00000000000000000000001", grams: 180, ingredient: { slug: "chicken-thighs", nameEn: "Chicken thighs", fdcId: 2, isMeat: true, isFish: false, isOmega3: false, isAlcohol: false, isAddedSugar: false, isRefinedStarch: false } },
     ],
   };
   it("skips a duplicate title, then drafts a meal-prep recipe that passes both profiles", async () => {

@@ -1,4 +1,4 @@
-// Seed: the two household users (from .env), starter profiles, USDA nutrition table, levels, techniques,
+// Seed: the household users (SEED_USERS + their SEED_<SLUG>_* values in .env), starter profiles, USDA nutrition table, levels, techniques,
 // equipment, ingredient guide, recipes, and the pictures: the shipped ones in prisma/seed-images are linked
 // right away; anything without a shipped picture stays queued for ComfyUI (only if it is set up).
 // Runs in the one-shot init container, or on the host with the OWNER url:
@@ -14,6 +14,7 @@ import { RecipeDraft } from "../src/lib/llm-schema";
 import { saveRecipe } from "../src/lib/recipe-save";
 import { inferFlags } from "../src/lib/flags";
 import { scoreName } from "../src/lib/nutrition-search";
+import { seedUsers } from "./seed-users";
 
 const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }) });
 const DIR = path.join(__dirname, "seed-data");
@@ -26,39 +27,28 @@ interface IngSeed {
   where: string; keeps: number | null; opened: number | null; frz: boolean; frzMonths?: number; frzHow?: string; pack: [string, number | null, string]; fdc: string; taste: string;
 }
 type Line = [string, number, string, number, string, string];
-interface StepSeed { t: string; w: string; c: string; m: string; who: string; min: number; tech: string; tmr: number; img: string }
+interface StepSeed { t: string; w: string; c: string; m: string; skill: "skilled" | "beginner" | "either"; min: number; tech: string; tmr: number; img: string }
 interface RecipeSeed {
   slug: string; level: number; kind: "lesson" | "plan" | "prep"; meals: string[]; sauce?: string; lesson?: string; title: string; desc: string; serv: number; prep: number; cook: number;
   fridge: number; freezer: number; reheat: string; left: string; variant?: string; cuisine: string; protein: string; flav: string[]; spice: number; equip: string[];
   trouble: [string, string][]; goes: string; ing: Line[]; steps: StepSeed[];
 }
 
-// The .env.example value ("change-me-12-chars-or-more") and any other "change me" / placeholder wording.
-const PLACEHOLDER_PW = /change[-_ ]?me|placeholder/i;
-
 async function users() {
-  const defs = [
-    { slug: "alex", name: "Alex", email: process.env.SEED_ALEX_EMAIL, pw: process.env.SEED_ALEX_PASSWORD },
-    { slug: "sam", name: "Sam", email: process.env.SEED_SAM_EMAIL, pw: process.env.SEED_SAM_PASSWORD },
-  ];
+  const defs = seedUsers();
+  const out = [];
   for (const d of defs) {
-    if (!d.email || !d.pw) throw new Error(`SEED_${d.slug.toUpperCase()}_EMAIL / _PASSWORD missing in .env`);
-    if (d.pw.length < 12) throw new Error(`SEED_${d.slug.toUpperCase()}_PASSWORD must be at least 12 characters`);
-    if (PLACEHOLDER_PW.test(d.pw)) {
-      throw new Error(`SEED_${d.slug.toUpperCase()}_PASSWORD is still the .env.example placeholder. Set a real password in .env (e.g. openssl rand -hex 16) and start again.`);
-    }
     const passwordHash = await hashPassword(d.pw);
-    await prisma.user.upsert({ where: { slug: d.slug }, create: { slug: d.slug, name: d.name, email: d.email.toLowerCase(), passwordHash }, update: { email: d.email.toLowerCase(), passwordHash } });
+    out.push(await prisma.user.upsert({ where: { slug: d.slug }, create: { slug: d.slug, name: d.name, email: d.email, passwordHash }, update: { email: d.email, passwordHash } }));
   }
-  const alex = await prisma.user.findUniqueOrThrow({ where: { slug: "alex" } });
-  const sam = await prisma.user.findUniqueOrThrow({ where: { slug: "sam" } });
   // Starter profiles, created once and then owned by the user (a re-seed never overwrites them). Everything
-  // diet-related stays empty: each person sets their own rules on /profiles.
-  for (const u of [alex, sam]) {
+  // diet-related stays empty: each person sets their own rules on /profiles. Cook-along: the first person
+  // in SEED_USERS starts as the skilled cook, everyone else as a beginner (changeable on /profiles).
+  for (const [i, u] of out.entries()) {
     if (await prisma.userProfile.findUnique({ where: { userId: u.id } })) continue;
-    await prisma.userProfile.create({ data: { userId: u.id, maxCookMinutes: 30, practiceGoalPerWeek: 3, trackedNutrients: ["fibre", "magnesium", "vitD"] } });
+    await prisma.userProfile.create({ data: { userId: u.id, maxCookMinutes: 30, practiceGoalPerWeek: 3, trackedNutrients: ["fibre", "magnesium", "vitD"], cookingSkill: i === 0 ? "skilled" : "beginner" } });
   }
-  return { alex, sam };
+  return out;
 }
 
 const NUT_COLS = ["kcal", "protein", "carbs", "fat", "satFat", "fibre", "sugar", "b12", "iron", "zinc", "ala", "magnesium", "vitD", "epa", "dha", "mufa", "pufa"] as const;
@@ -152,13 +142,16 @@ async function recipes() {
           const ing = bySlug.get(slug);
           if (!ing) throw new Error(`${r.slug}: unknown ingredient slug "${slug}"`);
           aliases[ing.nameEn.toLowerCase()] = slug;
-          return { name: ing.nameEn, grams, qty, unit, prep, component: comp || "both" };
+          // comp = "" (shared) or the slug of the person whose own extra this is
+          return { name: ing.nameEn, grams, qty, unit, prep, for: comp || "" };
         }),
-        steps: r.steps.map((s) => ({ text: s.t, why: s.w, cue: s.c, mistake: s.m, who: s.who, minutes: s.min, technique: s.tech, timerSeconds: s.tmr, imagePrompt: s.img })),
+        steps: r.steps.map((s) => ({ text: s.t, why: s.w, cue: s.c, mistake: s.m, skill: s.skill, minutes: s.min, technique: s.tech, timerSeconds: s.tmr, imagePrompt: s.img })),
       });
       await saveRecipe(prisma, draft, {
         slug: r.slug, level: r.level, kind: r.kind, mealTypes: r.meals, source: "seed", sauceFamily: r.sauce ?? null, sauceLesson: r.lesson ?? null,
         variantNote: r.variant ?? "", leftoverIdeas: r.left, aliases, heroPrompt: `the finished dish: ${r.title}, plated on a ceramic plate, home dining table`,
+        // a recipe file keys extras by slug; a person who is not in this household gets no extra line
+        dropUnknownPeople: true,
       });
       made++;
     }

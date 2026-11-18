@@ -3,7 +3,7 @@ import { guardAvoids, mergeShopping, roundForShop, sectionOrder, whatsappText, t
 import type { RuleProfile } from "@/lib/rules";
 import { packsFor } from "@/lib/shopping-build";
 
-const c = (o: Partial<Contribution>): Contribution => ({ ingredientId: "onion", name: "Onion", section: "produce", qty: 1, unit: "pc", component: "both", ...o });
+const c = (o: Partial<Contribution>): Contribution => ({ ingredientId: "onion", name: "Onion", section: "produce", qty: 1, unit: "pc", forUserId: null, ...o });
 
 describe("shopping-list merge", () => {
   it("sums the same ingredient + unit + who", () => {
@@ -12,9 +12,10 @@ describe("shopping-list merge", () => {
     expect(m[0].qty).toBe(4); // 3.5 rounded up to whole onions
   });
   it("keeps different units and Alex's extras apart", () => {
-    const m = mergeShopping([c({ qty: 1 }), c({ qty: 150, unit: "g" }), c({ qty: 1, component: "alex" })]);
+    const m = mergeShopping([c({ qty: 1 }), c({ qty: 150, unit: "g" }), c({ qty: 1, forUserId: "alex" })]);
     expect(m).toHaveLength(3);
-    expect(m.find((x) => x.forWho === "alex")?.qty).toBe(1);
+    expect(m.find((x) => x.forUserId === "alex")?.qty).toBe(1);
+    expect(m.filter((x) => x.forUserId == null)).toHaveLength(2);
   });
   it("groups by supermarket section in aisle order", () => {
     const m = mergeShopping([c({ ingredientId: "spice", name: "Cumin", section: "spices", unit: "tsp" }), c({ ingredientId: "fish", name: "Salmon", section: "fish", unit: "g", qty: 150 }), c({})]);
@@ -36,10 +37,10 @@ describe("shopping-list merge", () => {
 });
 
 describe("avoid-list guard", () => {
-  const person = (slug: string, name: string, avoidFoods: string[], o: Partial<RuleProfile> = {}): RuleProfile => ({ slug, name, vegetarian: false, vegBreakfastAllowed: [], avoidFoods, noAlcohol: false, noAddedSugar: false, noRefinedStarch: false, maxNetCarbsPerMeal: null, minProteinPerMeal: null, maxCookMinutes: null, omega3MinPerWeek: null, omega3MaxPerWeek: null, ...o });
+  const person = (slug: string, name: string, avoidFoods: string[], o: Partial<RuleProfile> = {}): RuleProfile => ({ id: slug, slug, name, vegetarian: false, vegBreakfastAllowed: [], avoidFoods, noAlcohol: false, noAddedSugar: false, noRefinedStarch: false, maxNetCarbsPerMeal: null, minProteinPerMeal: null, maxCookMinutes: null, omega3MinPerWeek: null, omega3MaxPerWeek: null, ...o });
   const alex = person("alex", "Alex", ["prawns", "sour-cream", "coconut"], { avoidExceptions: [{ allow: "coconut-milk", contexts: ["curry", "thai"] }] });
   const sam = person("sam", "Sam", ["mushroom"]);
-  const prawns = c({ ingredientId: "prawns", slug: "prawns", name: "Prawns (raw, peeled)", section: "frozen", unit: "g", qty: 180, component: "alex" });
+  const prawns = c({ ingredientId: "prawns", slug: "prawns", name: "Prawns (raw, peeled)", section: "frozen", unit: "g", qty: 180, forUserId: "alex" });
   const yogurt = c({ ingredientId: "yog", slug: "sour-cream", name: "Sour cream", section: "dairy", unit: "g", qty: 150 });
 
   it("leaves out a person's own extra that is on their avoid list, with a short note", () => {
@@ -48,7 +49,7 @@ describe("avoid-list guard", () => {
     expect(r.leftOut).toEqual(["Prawns (Alex avoids)"]);
   });
   it("only checks an extra against its owner's list", () => {
-    const r = guardAvoids([{ ...prawns, component: "sam" }, c({ ingredientId: "mush", slug: "mushroom", name: "Mushroom", component: "alex" })], [alex, sam]);
+    const r = guardAvoids([{ ...prawns, forUserId: "sam" }, c({ ingredientId: "mush", slug: "mushroom", name: "Mushroom", forUserId: "alex" })], [alex, sam]);
     expect(r.items).toHaveLength(2);
     expect(r.leftOut).toEqual([]);
   });
@@ -69,16 +70,25 @@ describe("avoid-list guard", () => {
     expect(guardAvoids([{ ...milk, ctx: { title: "Thai green curry", cuisine: "thai" } }], [alex]).items[0].avoidBy).toBeUndefined();
     expect(guardAvoids([{ ...milk, ctx: { title: "Smoothie" } }], [alex]).items[0].avoidBy).toEqual(["Alex"]);
   });
+  it("three people: each extra is checked against its own owner, a shared line names everyone who avoids it", () => {
+    const robin = person("robin", "Robin", ["sour-cream", "onion"]);
+    const r = guardAvoids([yogurt, c({ slug: "onion", forUserId: "robin" }), c({ ingredientId: "onion2", slug: "onion", name: "Onion", forUserId: "sam" })], [alex, sam, robin]);
+    expect(r.leftOut).toEqual(["Onion (Robin avoids)"]);
+    expect(r.items.map((i) => i.forUserId)).toEqual([null, "sam"]);
+    expect(mergeShopping(r.items).find((i) => i.ingredientId === "yog")?.avoidNote).toBe("Alex & Robin avoid");
+    const all = guardAvoids([yogurt], [alex, { ...sam, avoidFoods: ["sour-cream"] }, robin]);
+    expect(mergeShopping(all.items)[0].avoidNote).toBe("Alex, Robin & Sam avoid"); // names sorted
+  });
   it("passes lines without a slug (stock top-ups) through untouched", () => {
     expect(guardAvoids([{ ...prawns, slug: undefined }], [alex]).items).toHaveLength(1);
   });
 });
 
 describe("WhatsApp text", () => {
-  const it0 = { qty: 1, unit: "pc", forWho: "base", inPantry: false, packNote: "", checked: false };
+  const it0 = { qty: 1, unit: "pc", forName: "", inPantry: false, packNote: "", checked: false };
   const items = [
     { ...it0, name: "Lemon", section: "produce", packNote: "buy 1 × 1 kg net (~8) · 7 pc left over" },
-    { ...it0, name: "Feta", section: "cheese", qty: 100, unit: "g", forWho: "sam" },
+    { ...it0, name: "Feta", section: "cheese", qty: 100, unit: "g", forName: "Sam" },
     { ...it0, name: "Capers", section: "pantry", inPantry: true },
     { ...it0, name: "Tomatoes", section: "produce", checked: true },
   ];

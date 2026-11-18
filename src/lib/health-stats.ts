@@ -56,12 +56,12 @@ export const glDayBand = (gl: number) => (gl < 80 ? "green" : gl <= 120 ? "amber
 type Ref = { carbs: number; fibre: number | null; protein: number; fat: number; satFat: number | null; kcal: number; sugar?: number | null; b12: number | null; iron: number | null; zinc: number | null; ala: number | null; magnesium: number | null; vitD: number | null; epa?: number | null; dha?: number | null; mufa?: number | null; pufa?: number | null };
 
 /** Glycemic load of one person's portion: only GI-listed foods count; the rest is reported, not guessed. */
-export function portionGl(lines: { component: string; grams: number; slug: string; ref: { carbs: number; fibre: number | null } | null }[], servings: number, who: string | null, pf = 1): { gl: number | null; uncounted: number } {
+export function portionGl(lines: { forUserId: string | null; grams: number; slug: string; ref: { carbs: number; fibre: number | null } | null }[], servings: number, personId: string | null, pf = 1): { gl: number | null; uncounted: number } {
   let gl = 0, uncounted = 0, listed = false;
   for (const l of lines) {
-    if (l.component !== "both" && l.component !== who) continue;
+    if (l.forUserId != null && l.forUserId !== personId) continue;
     if (!l.ref) continue;
-    const g = l.component === "both" ? (l.grams * pf) / Math.max(1, servings) : l.grams * pf;
+    const g = l.forUserId == null ? (l.grams * pf) / Math.max(1, servings) : l.grams * pf;
     const avail = Math.max(0, l.ref.carbs - (l.ref.fibre ?? 0)) * (g / 100);
     const gi = GI[l.slug];
     if (gi != null) {
@@ -132,7 +132,7 @@ export interface WeekStats {
   detailDays: number;
 }
 
-type RecipeRow = { id: string; title: string; servings: number; ingredients: { component: string; grams: number; ingredient: { slug: string; fdcId: number | null; isMeat: boolean; isFish: boolean; isOmega3: boolean; isAlcohol: boolean; isAddedSugar: boolean; isRefinedStarch: boolean; nameEn: string } }[] };
+type RecipeRow = { id: string; title: string; servings: number; ingredients: { forUserId: string | null; grams: number; ingredient: { slug: string; fdcId: number | null; isMeat: boolean; isFish: boolean; isOmega3: boolean; isAlcohol: boolean; isAddedSugar: boolean; isRefinedStarch: boolean; nameEn: string } }[] };
 type LogEntry = { date: Date; meal: string; label: string; recipeId: string | null; portions: number; netCarbs: number; protein: number };
 
 const NUTRIENT_KEYS = ["b12", "iron", "zinc", "ala", "magnesium", "vitD"] as const;
@@ -141,8 +141,8 @@ const NUTRIENT_KEYS = ["b12", "iron", "zinc", "ala", "magnesium", "vitD"] as con
 function addRecipe(day: DayStats, r: RecipeRow, who: string, scale: number, refs: Map<number, Ref>) {
   let gl = 0, uncounted = 0, nc = 0, pr = 0, fi = 0, sf = 0;
   for (const l of r.ingredients) {
-    if (l.component !== "both" && l.component !== who) continue;
-    const g = l.component === "both" ? (l.grams * scale) / Math.max(1, r.servings) : l.grams * scale;
+    if (l.forUserId != null && l.forUserId !== who) continue;
+    const g = l.forUserId == null ? (l.grams * scale) / Math.max(1, r.servings) : l.grams * scale;
     const ref = l.ingredient.fdcId != null ? refs.get(l.ingredient.fdcId) : undefined;
     if (!ref) continue;
     const k = g / 100;
@@ -173,6 +173,7 @@ const emptyDay = (d: number, date: string, source: DaySource): DayStats => ({ da
  * the plan slots. Unit-tested in tests/health-logged.test.ts.
  */
 export function computeWeek(input: {
+  /** user id of the person: their extras count, everyone else's do not */
   who: string;
   pf: number;
   weekStart: string;
@@ -293,20 +294,20 @@ export function sourceLabel(s: { logged: number; planned: number }): string {
   return `${s.logged} day${s.logged === 1 ? "" : "s"} logged · ${s.planned} planned`;
 }
 
-export async function weekStats(user: { id?: string; slug: string; profile: { portionFactor: number } | null }, ws: Date = weekStart(new Date())): Promise<WeekStats> {
+export async function weekStats(user: { id: string; slug: string; profile: { portionFactor: number } | null }, ws: Date = weekStart(new Date())): Promise<WeekStats> {
   const wsDay = ws.toISOString().slice(0, 10);
   const end = new Date(ws.getTime() + 7 * 86_400_000);
   const [plan, logs] = await Promise.all([
     prisma.mealPlan.findUnique({ where: { weekStart: ws }, include: { slots: true } }),
-    // the food log is private: only this person's own entries, never the partner's
-    user.id ? prisma.foodLog.findMany({ where: { userId: user.id, date: { gte: ws, lt: end } }, select: { date: true, meal: true, label: true, recipeId: true, portions: true, netCarbs: true, protein: true } }) : Promise.resolve([] as LogEntry[]),
+    // the food log is private: only this person's own entries, never anyone else's
+    prisma.foodLog.findMany({ where: { userId: user.id, date: { gte: ws, lt: end } }, select: { date: true, meal: true, label: true, recipeId: true, portions: true, netCarbs: true, protein: true } }),
   ]);
   const slots = plan?.slots ?? [];
   const ids = [...new Set([...slots.map((s) => s.recipeId), ...logs.map((l) => l.recipeId).filter((x): x is string => !!x)])];
   const recipes = ids.length ? await prisma.recipe.findMany({ where: { id: { in: ids } }, include: { ingredients: { include: { ingredient: true } } } }) : [];
   const fdc = [...new Set(recipes.flatMap((r) => r.ingredients.map((i) => i.ingredient.fdcId)).filter((x): x is number => x != null))];
   const refs = new Map((fdc.length ? await prisma.nutritionRef.findMany({ where: { fdcId: { in: fdc } } }) : []).map((r) => [r.fdcId, r as Ref]));
-  return computeWeek({ who: user.slug, pf: user.profile?.portionFactor ?? 1, weekStart: wsDay, slots, logs, recipes, refs });
+  return computeWeek({ who: user.id, pf: user.profile?.portionFactor ?? 1, weekStart: wsDay, slots, logs, recipes, refs });
 }
 
 /** Trailing 7-day mean for each weight entry (entries within the 7 days ending that date). */

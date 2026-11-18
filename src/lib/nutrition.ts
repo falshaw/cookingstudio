@@ -80,19 +80,18 @@ export function roundMacros(m: Macros): Macros {
   return r;
 }
 
-export type Who = "alex" | "sam";
-
 export interface CompLine extends NutLine {
-  component: string; // both | alex | sam
+  /** null = shared base, else the user id whose own extra this line is */
+  forUserId: string | null;
 }
 
 /**
  * One person's plate: their share of the shared base (base is written for `servings` portions)
- * times their portion factor, plus their own extras (written per ONE portion).
+ * times their portion factor, plus their own extras (written per ONE portion). `personId` null = base only.
  */
-export function portionMacros(lines: CompLine[], servings: number, who: Who | null, portionFactor = 1): Macros {
-  const base = sumMacros(lines.filter((l) => l.component === "both"), portionFactor / Math.max(1, servings));
-  if (!who) return base;
-  const extra = sumMacros(lines.filter((l) => l.component === who), portionFactor);
+export function portionMacros(lines: CompLine[], servings: number, personId: string | null, portionFactor = 1): Macros {
+  const base = sumMacros(lines.filter((l) => l.forUserId == null), portionFactor / Math.max(1, servings));
+  if (!personId) return base;
+  const extra = sumMacros(lines.filter((l) => l.forUserId === personId), portionFactor);
   return addMacros(base, extra);
 }

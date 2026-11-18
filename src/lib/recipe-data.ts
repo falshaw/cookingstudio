@@ -2,6 +2,7 @@
 import { prisma } from "./prisma";
 import { portionMacros, roundMacros, type CompLine, type Macros, type Per100 } from "./nutrition";
 import type { AvoidException, RuleLine, RuleProfile } from "./rules";
+import { HOUSEHOLD_ORDER, pfOf } from "./household";
 
 export async function nutritionMap(fdcIds: (number | null)[]): Promise<Map<number, Per100>> {
   const ids = [...new Set(fdcIds.filter((x): x is number => x != null))];
@@ -22,17 +23,17 @@ export async function loadRecipe(slug: string) {
 
 export type FullRecipe = NonNullable<Awaited<ReturnType<typeof loadRecipe>>>;
 
-type LineLike = { component: string; grams: number; ingredient: { slug: string; nameEn: string; fdcId: number | null; isMeat: boolean; isFish: boolean; isOmega3: boolean; isAlcohol: boolean; isAddedSugar: boolean; isRefinedStarch: boolean } };
+type LineLike = { forUserId: string | null; grams: number; ingredient: { slug: string; nameEn: string; fdcId: number | null; isMeat: boolean; isFish: boolean; isOmega3: boolean; isAlcohol: boolean; isAddedSugar: boolean; isRefinedStarch: boolean } };
 
 export function compLines(lines: LineLike[], nut: Map<number, Per100>): CompLine[] {
-  return lines.map((l) => ({ component: l.component, grams: l.grams, ref: l.ingredient.fdcId != null ? nut.get(l.ingredient.fdcId) ?? null : null }));
+  return lines.map((l) => ({ forUserId: l.forUserId, grams: l.grams, ref: l.ingredient.fdcId != null ? nut.get(l.ingredient.fdcId) ?? null : null }));
 }
 
 export function ruleLines(lines: LineLike[]): RuleLine[] {
   return lines.map((l) => ({
     slug: l.ingredient.slug,
     nameEn: l.ingredient.nameEn,
-    component: l.component,
+    forUserId: l.forUserId,
     grams: l.grams,
     isMeat: l.ingredient.isMeat,
     isFish: l.ingredient.isFish,
@@ -43,29 +44,39 @@ export function ruleLines(lines: LineLike[]): RuleLine[] {
   }));
 }
 
+/** Macros of one portion: `generic` = the shared base only (portion factor 1), `byUser` = each person's plate. */
 export interface PersonMacros {
   generic: Macros;
-  alex: Macros;
-  sam: Macros;
+  byUser: Record<string, Macros>;
 }
 
-export function recipeMacros(servings: number, lines: CompLine[], pf: { alex: number; sam: number } = { alex: 1, sam: 1 }): PersonMacros {
-  return {
-    generic: roundMacros(portionMacros(lines, servings, null)),
-    alex: roundMacros(portionMacros(lines, servings, "alex", pf.alex)),
-    sam: roundMacros(portionMacros(lines, servings, "sam", pf.sam)),
-  };
+/** Per-person macros for every household member (their base share × portion factor + their own extras). */
+export function recipeMacros(servings: number, lines: CompLine[], people: { id: string; portionFactor?: number | null }[] = []): PersonMacros {
+  const byUser: Record<string, Macros> = {};
+  for (const p of people) byUser[p.id] = roundMacros(portionMacros(lines, servings, p.id, pfOf(p)));
+  return { generic: roundMacros(portionMacros(lines, servings, null)), byUser };
 }
 
+/** This person's portion (the shared base when they are not in the table). */
+export function macrosFor(pm: PersonMacros, userId: string | null | undefined): Macros {
+  return (userId && pm.byUser[userId]) || pm.generic;
+}
+
+/** Every household member with profile and dislikes, in household order. */
 export async function loadProfiles() {
-  const users = await prisma.user.findMany({ include: { profile: true, dislikes: { select: { recipeId: true, ingredient: { select: { slug: true } } } } }, orderBy: { slug: "desc" } }); // alex, sam
-  return users;
+  return prisma.user.findMany({ include: { profile: true, dislikes: { select: { recipeId: true, ingredient: { select: { slug: true } } } } }, orderBy: HOUSEHOLD_ORDER });
 }
 
-export function toRuleProfile(u: { slug: string; name: string; profile: null | { vegetarian: boolean; vegBreakfastAllowed: string[]; avoidFoods: string[]; noAlcohol: boolean; noAddedSugar: boolean; noRefinedStarch: boolean; maxNetCarbsPerMeal: number | null; minProteinPerMeal: number | null; maxCookMinutes: number | null; maxLunchMinutes?: number | null; omega3MinPerWeek: number | null; omega3MaxPerWeek: number | null; redMeatMaxPerWeek?: number | null; avoidExceptions?: unknown }; dislikes?: { recipeId: string | null; ingredient: { slug: string } | null }[] }): RuleProfile {
+/** { id, portionFactor } of every member — what recipeMacros and the scaler need. */
+export function eatersOf(users: { id: string; profile: { portionFactor: number } | null }[]): { id: string; portionFactor: number }[] {
+  return users.map((u) => ({ id: u.id, portionFactor: u.profile?.portionFactor ?? 1 }));
+}
+
+export function toRuleProfile(u: { id: string; slug: string; name: string; profile: null | { vegetarian: boolean; vegBreakfastAllowed: string[]; avoidFoods: string[]; noAlcohol: boolean; noAddedSugar: boolean; noRefinedStarch: boolean; maxNetCarbsPerMeal: number | null; minProteinPerMeal: number | null; maxCookMinutes: number | null; maxLunchMinutes?: number | null; omega3MinPerWeek: number | null; omega3MaxPerWeek: number | null; redMeatMaxPerWeek?: number | null; avoidExceptions?: unknown }; dislikes?: { recipeId: string | null; ingredient: { slug: string } | null }[] }): RuleProfile {
   const p = u.profile;
   const dis = u.dislikes ?? [];
   return {
+    id: u.id,
     slug: u.slug,
     name: u.name,
     vegetarian: p?.vegetarian ?? false,

@@ -18,13 +18,16 @@ interface Slot {
   locked: boolean;
   source: string;
   recipe: { id: string; slug: string; title: string; kind: string; goesWith: string };
-  alex: { netCarbs: number; protein: number; kcal: number } | null;
-  sam: { netCarbs: number; protein: number; kcal: number } | null;
+  /** the signed-in person's portion */
+  mine: { netCarbs: number; protein: number; kcal: number } | null;
   issues: Issue[];
-  scores: { alex: number; sam: number } | null;
+  /** meal score per user id */
+  scores: Record<string, number> | null;
 }
 
-export function PlanClient({ week, planId, generatedBy, slots, batches, report, favIds, recipes }: {
+const scoreClass = (n: number) => (n >= 75 ? "text-olive font-semibold" : n >= 55 ? "text-[#7a5f0e] font-semibold" : "text-clay-deep font-semibold");
+
+export function PlanClient({ week, planId, generatedBy, slots, batches, report, favIds, recipes, people }: {
   week: string;
   planId: string | null;
   generatedBy: string | null;
@@ -33,6 +36,8 @@ export function PlanClient({ week, planId, generatedBy, slots, batches, report, 
   report: { ok: boolean; week: Issue[]; omega3: Record<string, number>; redMeat?: Record<string, number> } | null;
   favIds: string[];
   recipes: { id: string; title: string; mealTypes: string[] }[];
+  /** household members in household order */
+  people: { id: string; slug: string; name: string }[];
 }) {
   const router = useRouter();
   const [jobId, setJobId] = useState<string | null>(null);
@@ -98,7 +103,7 @@ export function PlanClient({ week, planId, generatedBy, slots, batches, report, 
             {report.ok ? <CheckCircle2 size={16} className="text-olive" /> : <XCircle size={16} className="text-clay-deep" />}
             {report.ok ? "This week passes every rule." : "Some meals break a rule — swap them."}
           </p>
-          <span className="ml-2 text-ink-soft">Oily fish: Alex {report.omega3.alex ?? 0}× ·{report.redMeat ? ` Red meat: Alex ${report.redMeat.alex ?? 0}× · Sam ${report.redMeat.sam ?? 0}× ·` : ""} made by {generatedBy === "llm" ? "local AI + rule check" : "rule solver"}</span>
+          <span className="ml-2 text-ink-soft">Oily fish: {people.map((p) => `${p.name} ${report.omega3[p.slug] ?? 0}×`).join(" · ")} ·{report.redMeat ? ` Red meat: ${people.map((p) => `${p.name} ${report.redMeat?.[p.slug] ?? 0}×`).join(" · ")} ·` : ""} made by {generatedBy === "llm" ? "local AI + rule check" : "rule solver"}</span>
           {report.week.map((i, k) => <p key={k} className="text-clay-deep">{i.msg}</p>)}
         </div>
       )}
@@ -133,8 +138,15 @@ export function PlanClient({ week, planId, generatedBy, slots, batches, report, 
                           {fav.has(s.recipe.id) && <Heart size={12} className="text-clay fill-clay" aria-label="favourite" />}
                         </div>
                         {s.source === "freezer" && <p className="text-[11px] text-ink-muted mt-1">Thaw the night before · cook fresh: your protein{s.recipe.goesWith ? ` + ${s.recipe.goesWith}` : ""}</p>}
-                        {s.alex && s.source !== "freezer" && <p className="text-[11px] text-ink-muted mt-1 tabular-nums">A {s.alex.netCarbs}g nc · {s.alex.protein}g P</p>}
-                        {s.scores && s.source !== "freezer" && <p className="text-[11px] mt-0.5 tabular-nums" title="Meal score 0–100 (Alex · Sam)">score <span className={s.scores.alex >= 75 ? "text-olive font-semibold" : s.scores.alex >= 55 ? "text-[#7a5f0e] font-semibold" : "text-clay-deep font-semibold"}>A {s.scores.alex}</span> · <span className={s.scores.sam >= 75 ? "text-olive font-semibold" : s.scores.sam >= 55 ? "text-[#7a5f0e] font-semibold" : "text-clay-deep font-semibold"}>S {s.scores.sam}</span></p>}
+                        {s.mine && s.source !== "freezer" && <p className="text-[11px] text-ink-muted mt-1 tabular-nums" title="Your portion">you {s.mine.netCarbs}g nc · {s.mine.protein}g P</p>}
+                        {s.scores && s.source !== "freezer" && (
+                          <p className="text-[11px] mt-0.5 tabular-nums" title={`Meal score 0–100 (${people.map((p) => p.name).join(" · ")})`}>
+                            score{" "}
+                            {people.map((p, k) => (
+                              <span key={p.id}>{k > 0 && " · "}<span className={scoreClass(s.scores?.[p.id] ?? 0)}>{p.name.slice(0, 3)} {s.scores?.[p.id] ?? "–"}</span></span>
+                            ))}
+                          </p>
+                        )}
                         {fails.map((i, k) => <p key={k} className="text-[11px] text-clay-deep flex gap-0.5"><XCircle size={11} className="mt-0.5 shrink-0" />{i.msg}</p>)}
                         {warns.map((i, k) => <p key={k} className="text-[11px] text-[#7a5f0e] flex gap-0.5"><AlertTriangle size={11} className="mt-0.5 shrink-0" />{i.msg}</p>)}
                         <div className="mt-1.5 flex gap-1">

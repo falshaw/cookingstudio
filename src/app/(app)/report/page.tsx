@@ -9,7 +9,7 @@ import { smoothWeights, sourceLabel } from "@/lib/health-stats";
 import { weekStart } from "@/lib/utils";
 import { ollamaUp } from "@/lib/ollama";
 
-// Private: always the signed-in user's own report — no partner view.
+// Private: always the signed-in user's own report — no view of anyone else.
 export default async function ReportPage() {
   const me = (await currentUser())!;
   const n = await reportNumbers(me.id);

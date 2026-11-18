@@ -1,3 +1,4 @@
+import { HOUSEHOLD_ORDER } from "@/lib/household";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { currentUser } from "@/lib/auth";
@@ -8,7 +9,7 @@ import { DeleteCookButton } from "@/components/DeleteCookButton";
 export default async function LogPage({ searchParams }: { searchParams: Promise<{ who?: string }> }) {
   const me = (await currentUser())!;
   const { who } = await searchParams;
-  const users = await prisma.user.findMany({ orderBy: { slug: "desc" }, include: { profile: { select: { practiceGoalPerWeek: true } } } });
+  const users = await prisma.user.findMany({ orderBy: HOUSEHOLD_ORDER, include: { profile: { select: { practiceGoalPerWeek: true } } } });
   const sel = users.find((u) => u.slug === who) ?? users.find((u) => u.id === me.id)!;
   const [logs, levels, lessons] = await Promise.all([
     prisma.cookLog.findMany({ where: { userId: sel.id }, orderBy: { cookedAt: "desc" }, include: { recipe: { select: { slug: true, title: true, level: true } } } }),

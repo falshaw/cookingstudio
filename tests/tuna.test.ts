@@ -5,7 +5,7 @@ vi.mock("@/lib/prisma", () => ({ prisma: {} }));
 import { checkWeekTuna, isTunaLine, isTunaMeal, tunaMaxPerWeek, type RuleLine } from "@/lib/rules";
 import { tunaCount, tunaFits, type Candidate } from "@/lib/planner";
 
-const line = (slug: string, o: Partial<RuleLine> = {}): RuleLine => ({ slug, nameEn: slug.replace(/-/g, " "), component: "both", grams: 150, isMeat: false, isFish: true, isOmega3: false, isAlcohol: false, isAddedSugar: false, isRefinedStarch: false, ...o });
+const line = (slug: string, o: Partial<RuleLine> = {}): RuleLine => ({ slug, nameEn: slug.replace(/-/g, " "), forUserId: null, grams: 150, isMeat: false, isFish: true, isOmega3: false, isAlcohol: false, isAddedSugar: false, isRefinedStarch: false, ...o });
 const cand = (slug: string, lines: RuleLine[]): Candidate => ({ slug, lines } as unknown as Candidate);
 
 afterEach(() => vi.unstubAllEnvs());
@@ -14,7 +14,7 @@ describe("tuna cap", () => {
   it("matches tinned tuna, not other fish", () => {
     expect(isTunaLine(line("tuna-tin", { nameEn: "Tinned tuna" }))).toBe(true);
     expect(isTunaLine(line("salmon-fillet"))).toBe(false);
-    expect(isTunaMeal([line("lemon", { isFish: false }), line("tuna-tin", { component: "alex" })])).toBe(true);
+    expect(isTunaMeal([line("lemon", { isFish: false }), line("tuna-tin", { forUserId: "alex" })])).toBe(true);
   });
   it("reads the cap from the environment, unset = no cap", () => {
     expect(tunaMaxPerWeek(undefined)).toBeNull();

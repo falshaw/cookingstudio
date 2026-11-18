@@ -26,9 +26,9 @@ const refs = [
 const recipe = (id: string, slug: string, kind = "plan", mealTypes = ["lunch", "dinner"]) => ({
   id, slug, title: slug, kind, mealTypes, servings: 2, prepMinutes: 10, cookMinutes: 15, status: "published",
   ingredients: [
-    { id: `${id}a`, component: "both", grams: 400, qty: 400, unit: "g", ingredientId: "ccourgette", ingredient: ing("courgette", "Courgette", 1) },
-    { id: `${id}b`, component: "alex", grams: 150, qty: 150, unit: "g", ingredientId: "csalmon", ingredient: ing("salmon", "Salmon fillet", 2, { isFish: true, isOmega3: true }) },
-    { id: `${id}c`, component: "sam", grams: 75, qty: 75, unit: "g", ingredientId: "cbasmatirice", ingredient: ing("basmati-rice", "Basmati rice", 3, { isRefinedStarch: true }) },
+    { id: `${id}a`, forUserId: null, grams: 400, qty: 400, unit: "g", ingredientId: "ccourgette", ingredient: ing("courgette", "Courgette", 1) },
+    { id: `${id}b`, forUserId: "calex00000000000000000000001", grams: 150, qty: 150, unit: "g", ingredientId: "csalmon", ingredient: ing("salmon", "Salmon fillet", 2, { isFish: true, isOmega3: true }) },
+    { id: `${id}c`, forUserId: "csam000000000000000000001", grams: 75, qty: 75, unit: "g", ingredientId: "cbasmatirice", ingredient: ing("basmati-rice", "Basmati rice", 3, { isRefinedStarch: true }) },
   ],
   steps: [],
 });
@@ -38,6 +38,7 @@ const users = [
   { id: "calex00000000000000000000001", slug: "alex", name: "Alex", email: "alex@kitchen.local", profile: alexProfile },
   { id: "csam000000000000000000001", slug: "sam", name: "Sam", email: "sam@kitchen.local", profile: samProfile },
 ];
+const EATERS = users.map((u) => ({ id: u.id, portionFactor: 1 }));
 const recipes = [recipe("crecipeaaaaaaaaaaaaaaaaaaa1", "salmon-tray"), recipe("crecipebbbbbbbbbbbbbbbbbbb1", "fish-bowl"), recipe("crecipeccccccccccccccccccc1", "yogurt", "plan", ["breakfast"])];
 
 beforeEach(() => {
@@ -54,8 +55,8 @@ describe("planner", () => {
     const { loadCandidates, solveWeek, evaluateWeek } = await import("@/lib/planner");
     const { loadProfiles, toRuleProfile } = await import("@/lib/recipe-data");
     const people = (await loadProfiles()).map(toRuleProfile);
-    const cands = await loadCandidates({ alex: 1, sam: 1 });
-    expect(cands[0].macros.alex.protein).toBeCloseTo(32.4, 1); // 150 g salmon (30 g) + half of 400 g courgette (2.4 g)
+    const cands = await loadCandidates(EATERS);
+    expect(cands[0].macros.byUser[users[0].id].protein).toBeCloseTo(32.4, 1); // 150 g salmon (30 g) + half of 400 g courgette (2.4 g)
     const week = solveWeek(cands, people, [], 7, new Set([cands[0].id]));
     const rep = evaluateWeek(week, new Map(cands.map((c) => [c.slug, c])), people);
     expect(week.filter((s) => s.meal === "breakfast").every((s) => s.slug === "yogurt")).toBe(true); // only breakfast-type recipes at breakfast
@@ -68,7 +69,7 @@ describe("planner", () => {
     const { evaluateWeek, loadCandidates, slotIssues } = await import("@/lib/planner");
     const { loadProfiles, toRuleProfile } = await import("@/lib/recipe-data");
     const people = (await loadProfiles()).map(toRuleProfile);
-    const cands = await loadCandidates({ alex: 1, sam: 1 });
+    const cands = await loadCandidates(EATERS);
     const rep = evaluateWeek([{ day: 0, meal: "dinner", slug: "ghost" }], new Map(cands.map((c) => [c.slug, c])), people);
     expect(rep.ok).toBe(false);
     expect(rep.slots[0].issues[0].code).toBe("unknown");
@@ -105,7 +106,7 @@ describe("plan actions", () => {
 
 describe("recipe view, data and shopping build", () => {
   it("builds the recipe page model with per-person checks and stock", async () => {
-    h.overrides.recipe = { findUnique: async () => ({ ...recipes[0], description: "", level: 3, equipment: [], sauceFamily: null, troubleshoot: [{ problem: "p", fix: "f" }], goesWith: "", variantNote: "", fridgeDays: 2, freezerDays: 0, reheat: "", leftoverIdeas: "", hero: null, steps: [{ n: 1, text: "Simmer 10 minutes", why: "", cue: "", mistake: "", who: "alex", minutes: 10, timerSeconds: 0, technique: "reduce", image: null, ingredientIds: [] }] }) };
+    h.overrides.recipe = { findUnique: async () => ({ ...recipes[0], description: "", level: 3, equipment: [], sauceFamily: null, troubleshoot: [{ problem: "p", fix: "f" }], goesWith: "", variantNote: "", fridgeDays: 2, freezerDays: 0, reheat: "", leftoverIdeas: "", hero: null, steps: [{ n: 1, text: "Simmer 10 minutes", why: "", cue: "", mistake: "", skill: "skilled", minutes: 10, timerSeconds: 0, technique: "reduce", image: null, ingredientIds: [] }] }) };
     h.overrides.stockItem = { findMany: async () => [{ ingredientId: "ccourgette", status: "in" }] };
     h.overrides.technique = { findMany: async () => [{ slug: "reduce", title: "Reducing" }] };
     h.overrides.cookLog = { findMany: async () => [{ recipeId: recipes[0].id, user: { id: users[0].id, name: "Alex" }, confidence: 3, tweak: "less salt" }] };
@@ -113,7 +114,9 @@ describe("recipe view, data and shopping build", () => {
     const vm = (await recipeVM("salmon-tray", users[0].id))!;
     expect(vm.steps[0].timers[0].seconds).toBe(600);
     expect(vm.steps[0].techniqueTitle).toBe("Reducing");
-    expect(vm.issues.sam.some((i) => i.code === "vegetarian")).toBe(false);
+    expect(vm.people.map((p) => p.slug)).toEqual(["alex", "sam"]);
+    expect(vm.people[1].issues.some((i) => i.code === "vegetarian")).toBe(false);
+    expect(vm.steps[0].skill).toBe("skilled");
     expect(vm.missing).toEqual(["Salmon fillet", "Basmati rice"]);
     expect(vm.lastTweak).toBe("less salt");
     expect(vm.practice[0].count).toBe(1);
@@ -127,7 +130,7 @@ describe("recipe view, data and shopping build", () => {
     const courgette = items.find((i) => i.name === "Courgette")!;
     expect(courgette.qty).toBe(800);
     expect(courgette.packNote).toMatch(/buy 4 × 250 g/);
-    expect(items.find((i) => i.forWho === "alex")?.name).toBe("Salmon fillet");
+    expect(items.find((i) => i.forUserId === users[0].id)).toMatchObject({ name: "Salmon fillet", forName: "Alex", qty: 300 });
     await expect(saveList("Test", "recipes", items)).resolves.toBeTruthy();
   });
   it("leaves out Alex's own extra on his avoid list and tags a shared one", async () => {
@@ -141,10 +144,9 @@ describe("recipe view, data and shopping build", () => {
   });
   it("builds a list from a plan with prep batches and buys for leftover lunches (cook double)", async () => {
     h.overrides.mealPlan = { findUnique: async () => ({ id: "cp", slots: [{ recipeId: recipes[0].id, source: "fresh" }, { recipeId: recipes[1].id, source: "leftover" }], batches: [{ recipeId: recipes[1].id, portions: 6 }] }) };
-    h.overrides.userProfile = { findMany: async () => [{ portionFactor: 1, user: { slug: "alex" } }, { portionFactor: 1, user: { slug: "sam" } }] };
     const { buildFromPlan } = await import("@/lib/shopping-build");
     const { items } = await buildFromPlan("cp");
-    expect(items.find((i) => i.name === "Courgette" && i.forWho === "base")!.qty).toBe(2000); // 400 fresh + 400 leftover lunch + 1200 batch
+    expect(items.find((i) => i.name === "Courgette" && i.forUserId == null)!.qty).toBe(2000); // 400 fresh + 400 leftover lunch + 1200 batch
   });
   it("finds the best USDA match for a search term", async () => {
     h.overrides.nutritionRef = { findMany: async () => [{ fdcId: 7, name: "Onions, raw" }, { fdcId: 8, name: "Onions, dehydrated flakes, babyfood" }] };
@@ -161,7 +163,7 @@ describe("recipe save", () => {
     h.overrides.recipeIngredient = { create: async (a: { data: Record<string, unknown> }) => ({ id: "cri", ...a.data, ingredient: { nameEn: "Cherry tomatoes" } }) };
     const { saveRecipe, ingredientKey, stepIngredientIds } = await import("@/lib/recipe-save");
     const { client } = makePrisma(h.overrides);
-    const r = await saveRecipe(client as never, { title: "T", description: "", servings: 2, prepMinutes: 1, cookMinutes: 1, fridgeDays: 2, freezerDays: 0, reheat: "", troubleshoot: [], goesWith: "", equipment: [], cuisine: "", protein: "", flavourTags: [], spiceLevel: 0, sauceLesson: "", ingredients: [{ name: "Cherry tomatoes", grams: 200, qty: 200, unit: "g", prep: "", component: "both" }], steps: [{ text: "Halve the tomatoes", why: "", cue: "", mistake: "", who: "sam", minutes: 2, technique: "none", timerSeconds: 0, imagePrompt: "" }] }, { slug: "t", level: 1, kind: "lesson", mealTypes: ["dinner"], source: "teach" });
+    const r = await saveRecipe(client as never, { title: "T", description: "", servings: 2, prepMinutes: 1, cookMinutes: 1, fridgeDays: 2, freezerDays: 0, reheat: "", troubleshoot: [], goesWith: "", equipment: [], cuisine: "", protein: "", flavourTags: [], spiceLevel: 0, sauceLesson: "", ingredients: [{ name: "Cherry tomatoes", grams: 200, qty: 200, unit: "g", prep: "", for: "" }], steps: [{ text: "Halve the tomatoes", why: "", cue: "", mistake: "", skill: "beginner", minutes: 2, technique: "none", timerSeconds: 0, imagePrompt: "" }] }, { slug: "t", level: 1, kind: "lesson", mealTypes: ["dinner"], source: "teach" });
     expect(r.newIngredients).toHaveLength(1);
     expect(created).toEqual(["cherry-tomato"]);
     expect(ingredientKey("Large ripe Potatoes")).toBe("potato");
@@ -295,9 +297,69 @@ describe("dislikes (👎)", () => {
     const sam = toRuleProfile({ ...users[1], dislikes: [{ recipeId: recipes[0].id, ingredient: null }, { recipeId: null, ingredient: { slug: "courgette" } }] });
     const alex = toRuleProfile(users[0]);
     expect(sam.avoidFoods).toContain("courgette");
-    const cands = await loadCandidates({ alex: 1, sam: 1 });
+    const cands = await loadCandidates(EATERS);
     const issues = slotIssues(cands[0], "dinner", [alex, sam], false);
     expect(issues.some((i) => i.code === "disliked" && i.who === "sam")).toBe(true);
     expect(issues.some((i) => i.code === "avoid" && i.who === "sam")).toBe(true);
+  });
+});
+
+describe("a household of three", () => {
+  const robin = { id: "crobin0000000000000000000001", slug: "robin", name: "Robin", email: "robin@example.com", profile: { ...samProfile, vegetarian: false, noRefinedStarch: true, trackedNutrients: [] } };
+  const three = [...users, robin];
+  const withRobin = (r: (typeof recipes)[number]) => ({ ...r, ingredients: [...r.ingredients, { id: `${r.id}d`, forUserId: robin.id, grams: 100, qty: 100, unit: "g", ingredientId: "cbasmatirice", ingredient: ing("basmati-rice", "Basmati rice", 3, { isRefinedStarch: true }) }] });
+  beforeEach(() => {
+    h.overrides.user = { findMany: async () => three, findUnique: async () => users[0], findUniqueOrThrow: async () => users[0] };
+    h.overrides.recipe = { findMany: async () => recipes.map(withRobin), findUnique: async () => withRobin(recipes[0]) };
+  });
+  it("computes every member's plate and checks every member's rules", async () => {
+    const { loadCandidates, slotIssues } = await import("@/lib/planner");
+    const { loadProfiles, toRuleProfile } = await import("@/lib/recipe-data");
+    const people = (await loadProfiles()).map(toRuleProfile);
+    const cands = await loadCandidates(three.map((u) => ({ id: u.id, portionFactor: 1 })));
+    const m = cands[0].macros.byUser;
+    expect(Object.keys(m)).toHaveLength(3);
+    expect(m[robin.id].protein).toBeCloseTo(2.4 + 7, 1); // half the courgette base + Robin's 100 g rice
+    expect(Object.keys(cands[0].scores)).toEqual(three.map((u) => u.id));
+    expect(people.map((p) => p.slug)).toEqual(["alex", "sam", "robin"]);
+    // Robin's own rice is flagged for Robin (white rice) — Sam's rice line is not Robin's plate
+    const starch = slotIssues(cands[0], "dinner", people, false).filter((i) => i.code === "starch");
+    expect(starch.map((i) => i.who)).toEqual(["robin"]);
+  });
+  it("buys each person's extra for their share of the servings", async () => {
+    h.overrides.stockItem = { findMany: async () => [] };
+    h.overrides.ingredient = { findMany: async () => [] };
+    const { buildFromRecipes } = await import("@/lib/shopping-build");
+    const { items } = await buildFromRecipes([{ recipeId: recipes[0].id, servings: 6 }]); // 2 meals for 3
+    expect(items.find((i) => i.name === "Courgette")?.qty).toBe(1200);
+    expect(items.find((i) => i.forUserId === users[0].id)).toMatchObject({ name: "Salmon fillet", qty: 300 });
+    expect(items.find((i) => i.forUserId === robin.id)).toMatchObject({ name: "Basmati rice", qty: 200, forName: "Robin" });
+    expect(items.find((i) => i.forUserId === users[1].id)?.qty).toBe(150);
+  });
+  it("a plan slot buys one meal for all three; a 6-portion prep batch is 2 meals each", async () => {
+    h.overrides.mealPlan = { findUnique: async () => ({ id: "cp", slots: [{ recipeId: recipes[0].id, source: "fresh" }], batches: [{ recipeId: recipes[1].id, portions: 6 }] }) };
+    h.overrides.stockItem = { findMany: async () => [] };
+    h.overrides.ingredient = { findMany: async () => [] };
+    const { buildFromPlan } = await import("@/lib/shopping-build");
+    const { items } = await buildFromPlan("cp");
+    // base: slot 400 × 3/2 + batch 400 × 6/2
+    expect(items.find((i) => i.name === "Courgette" && i.forUserId == null)!.qty).toBe(1800);
+    // Robin's rice: 100 g for the slot + 2 × 100 g from the batch
+    expect(items.find((i) => i.forUserId === robin.id)!.qty).toBe(300);
+  });
+  it("the recipe page lists three people with their own checks and scores", async () => {
+    h.overrides.recipe = { findUnique: async () => ({ ...withRobin(recipes[0]), description: "", level: 3, equipment: [], sauceFamily: null, troubleshoot: [], goesWith: "", variantNote: "", fridgeDays: 2, freezerDays: 0, reheat: "", leftoverIdeas: "", hero: null, steps: [] }) };
+    const { recipeVM } = await import("@/lib/recipe-view");
+    const vm = (await recipeVM("salmon-tray", robin.id))!;
+    expect(vm.people.map((p) => p.name)).toEqual(["Alex", "Sam", "Robin"]);
+    expect(vm.people.every((p) => typeof p.score.score === "number")).toBe(true);
+    expect(vm.lines.filter((l) => l.forUserId === robin.id)).toHaveLength(1);
+  });
+  it("weekly health numbers count only the person's own extras", async () => {
+    h.overrides.mealPlan = { findUnique: async () => ({ id: "cp", slots: [{ day: 0, meal: "dinner", recipeId: recipes[0].id }] }) };
+    const { weekStats } = await import("@/lib/health-stats");
+    const r = await weekStats(robin);
+    expect(r.fish).toBe(0);
+    expect(r.days[0].gl).toBe(Math.round((58 * (80 - 1.3) * 1) / 100)); // Robin's 100 g basmati only
   });
 });

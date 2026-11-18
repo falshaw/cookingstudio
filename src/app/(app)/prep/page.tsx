@@ -5,7 +5,8 @@ import { PrepClient, PrepAction, SauceBatchClient } from "@/components/PrepClien
 import { cookTogether } from "@/lib/cooking";
 import { weekStart, serverNow } from "@/lib/utils";
 import { loadCandidates, slotIssues } from "@/lib/planner";
-import { loadProfiles, toRuleProfile } from "@/lib/recipe-data";
+import { eatersOf, loadProfiles, toRuleProfile } from "@/lib/recipe-data";
+import { nameList, plates, toMember } from "@/lib/household";
 import { FREEZER_SAUCE_WHERE } from "@/lib/sauce-ladder";
 
 export default async function PrepPage() {
@@ -20,24 +21,27 @@ export default async function PrepPage() {
   // flag sauces someone can't eat (avoid list, vegetarian…) — the plan never uses those portions for them
   const users = await loadProfiles();
   const people = users.map(toRuleProfile);
-  const sauceCands = new Map((await loadCandidates({ alex: 1, sam: 1 })).filter((c) => c.kind === "lesson").map((c) => [c.id, c]));
+  const sauceCands = new Map((await loadCandidates(eatersOf(users))).filter((c) => c.kind === "lesson").map((c) => [c.id, c]));
   const sauceOptions = sauces.map((r) => {
     const c = sauceCands.get(r.id);
     const fails = c ? slotIssues(c, "dinner", people, true, true).filter((i) => i.level === "fail") : [];
     const who = [...new Set(fails.map((i) => people.find((p) => p.slug === i.who)?.name ?? i.who))];
     const terms = [...new Set(fails.map((i) => i.msg.match(/\(([^)]+)\)$/)?.[1]).filter(Boolean))];
-    return { id: r.id, slug: r.slug, title: who.length ? `${r.title} — not for ${who.join(" & ")}${terms.length ? ` (${terms.join(", ")})` : ""}` : r.title };
+    return { id: r.id, slug: r.slug, title: who.length ? `${r.title} — not for ${nameList(who)}${terms.length ? ` (${terms.join(", ")})` : ""}` : r.title };
   });
   const session = batches.filter((b) => !b.cookedAt);
-  // Prep-session timeline: longest-cooking batch first (oven / slow cooker start early), all steps on two lanes.
+  // Prep-session timeline: longest-cooking batch first (oven / slow cooker start early), all steps split over
+  // the household's cooks by cooking skill.
   const ordered = [...session].sort((a, b) => b.recipe.cookMinutes - a.recipe.cookMinutes);
-  const steps = ordered.flatMap((b, bi) => b.recipe.steps.map((s) => ({ n: bi * 100 + s.n, who: s.who, minutes: s.minutes, text: `${b.recipe.title}: ${s.text}` })));
-  const timeline = cookTogether(steps);
+  const steps = ordered.flatMap((b, bi) => b.recipe.steps.map((s) => ({ n: bi * 100 + s.n, skill: s.skill, minutes: s.minutes, text: `${b.recipe.title}: ${s.text}` })));
+  const cooks = users.map(toMember).map((m) => ({ id: m.id, name: m.name, skill: m.cookingSkill }));
+  const timeline = cookTogether(steps, cooks);
+  const n = plates(users);
   const today = serverNow();
   return (
     <div>
       <PageHeader eyebrow="Cook once, eat for days" title="Meal prep">
-        Plan a prep session (e.g. Sunday, ~2 h), follow one timeline for both of you, then track portions left in the fridge and freezer. Prepped portions fill meals on the plan.
+        Plan a prep session (e.g. Sunday, ~2 h), follow one timeline for everyone cooking, then track portions left in the fridge and freezer. Prepped portions fill meals on the plan.
       </PageHeader>
 
       <section className="mb-6">
@@ -56,7 +60,7 @@ export default async function PrepPage() {
           </ol>
           <p className="mt-2">More detail: <Link href="/techniques/freezing" className="underline">Freezing, thawing &amp; cooling food safely</Link>.</p>
         </details>
-        <SauceBatchClient sauces={sauceOptions} />
+        <SauceBatchClient sauces={sauceOptions} people={n} />
       </section>
 
       <h2 className="font-display text-lg font-semibold mb-2">Whole-meal prep</h2>
@@ -90,11 +94,11 @@ export default async function PrepPage() {
             </ul>
             <div className="glass-card p-4" data-testid="prep-timeline">
               <h3 className="font-semibold mb-2">Session timeline — about {timeline.total} min</h3>
-              <div className="grid sm:grid-cols-2 gap-4">
-                {(["alex", "sam"] as const).map((lane) => (
-                  <ol key={lane} className="space-y-1.5 text-sm">
-                    <li className="font-semibold">{lane === "alex" ? "Alex" : "Sam"} · done at {lane === "alex" ? timeline.alexEnd : timeline.samEnd} min</li>
-                    {timeline.items.filter((i) => i.lane === lane).map((i) => (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {cooks.filter((c) => timeline.items.some((i) => i.lane === c.id)).map((c) => (
+                  <ol key={c.id} className="space-y-1.5 text-sm">
+                    <li className="font-semibold">{c.name} · done at {timeline.ends[c.id]} min</li>
+                    {timeline.items.filter((i) => i.lane === c.id).map((i) => (
                       <li key={i.n} className="rounded-lg bg-sand p-2"><span className="font-mono text-clay-deep">{i.start}–{i.end}′</span> {i.text}</li>
                     ))}
                   </ol>
@@ -123,7 +127,7 @@ export default async function PrepPage() {
                 {b.recipe.kind === "lesson" && b.recipe.goesWith && <p className="text-xs text-ink-muted">Cook fresh with it: {b.recipe.goesWith}</p>}
                 {b.recipe.kind === "lesson" && b.location === "freezer" && <p className="text-xs text-ink-muted">Thaw in the fridge the night before, or heat from frozen in a pan with a splash of water.</p>}
                 <div className="mt-2 flex gap-2">
-                  {b.recipe.kind === "lesson" && b.portions - b.eaten >= 2 && <PrepAction id={b.id} action="eat-2" label="Used 2 (dinner for two)" />}
+                  {b.recipe.kind === "lesson" && n > 1 && b.portions - b.eaten >= n && <PrepAction id={b.id} action="eat" portions={n} label={`Used ${n} (dinner for everyone)`} />}
                   <PrepAction id={b.id} action="eat" label={b.recipe.kind === "lesson" ? "Used 1" : "Ate 1 portion"} />
                   {b.location === "fridge" && (b.recipe.freezerDays ?? 0) > 0 && <PrepAction id={b.id} action="move-freezer" label="Move to freezer" />}
                 </div>

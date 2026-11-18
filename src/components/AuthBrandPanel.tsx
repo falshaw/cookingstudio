@@ -77,7 +77,7 @@ export default function AuthBrandPanel({
       <div className="relative">
         <div className="h-px w-full bg-line" />
         <div className="mt-4 flex items-center gap-4 text-xs font-medium text-ink-muted">
-          {[["#5e6b4f", "Runs locally"], ["#2f6e8f", "Two cooks"], ["#bf5a36", "Your kitchen"]].map(([dot, label]) => (
+          {[["#5e6b4f", "Runs locally"], ["#2f6e8f", "Whole household"], ["#bf5a36", "Your kitchen"]].map(([dot, label]) => (
             <span key={label} className="inline-flex items-center gap-1.5">
               <span className="h-1.5 w-1.5 rounded-full" style={{ background: dot }} />
               {label}

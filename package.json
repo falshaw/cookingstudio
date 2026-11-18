@@ -8,7 +8,7 @@
     "start": "next start -p 3030",
     "lint": "eslint .",
     "typecheck": "node node_modules/typescript/bin/tsc --noEmit",
-    "db:push": "npx prisma db push",
+    "db:migrate": "npx tsx prisma/migrate.ts",
     "db:generate": "npx prisma generate",
     "db:seed": "npx tsx prisma/seed.ts",
     "test": "vitest run",

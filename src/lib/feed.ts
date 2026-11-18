@@ -7,7 +7,8 @@ import { generateValidated, ollamaUp } from "./ollama";
 import { RecipeDraft } from "./llm-schema";
 import { saveRecipe, ingredientKey } from "./recipe-save";
 import { slugify, weekStart } from "./utils";
-import { compLines, loadProfiles, nutritionMap, recipeMacros, ruleLines, toRuleProfile } from "./recipe-data";
+import { compLines, eatersOf, loadProfiles, macrosFor, nutritionMap, recipeMacros, ruleLines, toRuleProfile } from "./recipe-data";
+import { HOUSEHOLD_ORDER, pfOf } from "./household";
 import { checkPortion, type RuleProfile } from "./rules";
 import { inRegion } from "./region";
 import { tasteFor } from "./taste";
@@ -61,10 +62,10 @@ export async function maybeScheduleFeed(): Promise<void> {
   if (last && Date.now() - new Date(last).getTime() < intervalMs) return;
   if (await prisma.job.findFirst({ where: { type: "feed", status: { in: ["queued", "running"] } } })) return;
   if (!(await ollamaUp())) return; // skip quietly, try again next idle tick
-  const alex = await prisma.user.findUnique({ where: { slug: "alex" } });
-  if (!alex) return;
+  const owner = await prisma.user.findFirst({ orderBy: HOUSEHOLD_ORDER }); // the job needs a user: the first member
+  if (!owner) return;
   await setSetting("feed.lastRun", new Date().toISOString());
-  await prisma.job.create({ data: { userId: alex.id, type: "feed", input: { auto: true } } });
+  await prisma.job.create({ data: { userId: owner.id, type: "feed", input: { auto: true } } });
 }
 
 export interface Gap {
@@ -108,24 +109,24 @@ export async function pickGap(): Promise<Gap> {
 /** How to split a shared recipe into the common base and per-person lines — built from the profiles, so every
  *  household rule in the prompt comes from someone's settings (vegetarian flag, net-carb cap). */
 export function splitRules(kind: Gap["recipeKind"], people: Pick<RuleProfile, "slug" | "name" | "vegetarian" | "maxNetCarbsPerMeal">[]): string {
-  if (kind === "lesson") return 'All ingredient components "both". servings 4 for a sauce, else 2.';
+  if (kind === "lesson") return 'Every ingredient has for "" (shared). servings 4 for a sauce, else 2.';
   const names = (ps: typeof people) => ps.map((p) => p.name).join(" and ");
   const veg = people.filter((p) => p.vegetarian);
   const eaters = people.filter((p) => !p.vegetarian);
   const base = veg.length && eaters.length
-    ? `The shared base is VEGETARIAN (${names(veg)} ${veg.length > 1 ? "are" : "is"} vegetarian): base ingredients component "both". ${eaters.map((p) => `${p.name} eats meat or fish: add that protein (150-200 g raw per portion) with component "${p.slug}", cooked separately, quantities for ONE portion.`).join(" ")}`
+    ? `The shared base is VEGETARIAN (${names(veg)} ${veg.length > 1 ? "are" : "is"} vegetarian): base ingredients have for "". ${eaters.map((p) => `${p.name} eats meat or fish: add that protein (150-200 g raw per portion) with for "${p.slug}", cooked separately, quantities for ONE portion.`).join(" ")}`
     : veg.length
-      ? "Everyone is vegetarian: no meat or fish anywhere (component \"both\")."
-      : `Everyone eats meat and fish: the shared base (component "both") may include the main protein (150-200 g raw per portion).`;
+      ? 'Everyone is vegetarian: no meat or fish anywhere (every ingredient has for "").'
+      : `Everyone eats meat and fish: the shared base (for "") may include the main protein (150-200 g raw per portion).`;
   // Person lines are always ONE portion — a model left alone puts whole-pot amounts on them.
   const slugs = people.map((p) => `"${p.slug}"`).join(" or ");
-  const qty = `Quantities: "both" lines are for the whole recipe (all servings); every ${slugs} line is the amount for ONE portion of that person, never the whole pot (e.g. rice ~75 g dry per portion, not 450 g).`;
+  const qty = `Quantities: lines with for "" are for the whole recipe (all servings); every line with for ${slugs} is the amount for ONE portion of that person, never the whole pot (e.g. rice ~75 g dry per portion, not 450 g).`;
   const carbs = people
     .filter((p) => p.maxNetCarbsPerMeal != null)
     .map((p) => {
-      const other = people.find((o) => o.slug !== p.slug && o.maxNetCarbsPerMeal == null);
+      const others = people.filter((o) => o.slug !== p.slug && o.maxNetCarbsPerMeal == null);
       const target = Math.max(0, (p.maxNetCarbsPerMeal ?? 0) - 5);
-      return `${p.name} max ${p.maxNetCarbsPerMeal} g net carbs per meal${other ? `: any rice/bread/pasta/potato is component "${other.slug}" and ${p.name} gets a vegetable swap with component "${p.slug}"` : ": keep rice/bread/pasta/potato small"}. Aim for UNDER ${target} g net carbs in ${p.name}'s portion (the share of the "both" base plus the "${p.slug}" lines): starchy vegetables count too (sweet potato, parsnip, squash, sweetcorn, peas, carrots in quantity) and so do beans, lentils and chickpeas.`;
+      return `${p.name} max ${p.maxNetCarbsPerMeal} g net carbs per meal${others.length ? `: any rice/bread/pasta/potato is an own line (one per person) for ${others.map((o) => `"${o.slug}"`).join(" and ")}, and ${p.name} gets a vegetable swap with for "${p.slug}"` : ": keep rice/bread/pasta/potato small"}. Aim for UNDER ${target} g net carbs in ${p.name}'s portion (the share of the shared base plus the "${p.slug}" lines): starchy vegetables count too (sweet potato, parsnip, squash, sweetcorn, peas, carrots in quantity) and so do beans, lentils and chickpeas.`;
     })
     .join(" ");
   return `${base} ${qty}${carbs ? ` ${carbs}` : ""} servings ${kind === "prep" ? 6 : 2}. Max 30 minutes active cooking.${kind === "prep" ? " Give fridgeDays, freezerDays and reheat." : ""}`;
@@ -162,7 +163,7 @@ export async function runFeedJob(log: (m: string) => Promise<void>): Promise<{ s
     const draft = await generateValidated({
       prompt: `Create ONE new recipe: ${gap.brief}.
 ${splitRules(gap.recipeKind, people)}
-Every ingredient: grams, home measure (qty + unit), prep, component. Steps 4-10 with why, cue (what it looks/sounds/smells like + time), mistake, who (sam = beginner-safe tasks, alex = knives/hot fat/searing/sauces, else either), minutes, timerSeconds, technique, imagePrompt (photo-realistic close-up of the step, no faces, no text). troubleshoot, goesWith, equipment, cuisine, protein (main protein in one word), flavourTags (3-5 words), spiceLevel 0-3.
+Every ingredient: grams, home measure (qty + unit), prep, for. Steps 4-10 with why, cue (what it looks/sounds/smells like + time), mistake, skill (beginner = beginner-safe tasks, skilled = knives/hot fat/searing/sauces, else either), minutes, timerSeconds, technique, imagePrompt (photo-realistic close-up of the step, no faces, no text). troubleshoot, goesWith, equipment, cuisine, protein (main protein in one word), flavourTags (3-5 words), spiceLevel 0-3.
 ${sauceRuleText(lessons, isLesson)}
 Household rules: ${ruleParts.join("; ")}.
 Tastes (from their history):
@@ -170,11 +171,16 @@ ${tasteText}
 Do NOT repeat any of these existing recipes: ${existing.map((e) => e.title).join("; ")}.
 ${rejectedReasons ? `Recently rejected (avoid the same problems): ${rejectedReasons}` : ""}${dislikedText ? `
 Disliked dishes (avoid similar): ${dislikedText}` : ""}${feedback ? `\nYour previous recipe was REJECTED: ${feedback}` : ""}`,
-      system: `You write correct, safe recipes for two beginner home cooks${inRegion()}. Answer only with the JSON object.`,
+      system: `You write correct, safe recipes for beginner home cooks${inRegion()}. Answer only with the JSON object.`,
       schema: RecipeDraft,
       attempts: 2,
       onLog: log,
-      check: (d) => (existingKeys.has(ingredientKey(d.title)) ? `"${d.title}" already exists — make a different dish` : sauceIssues(d, { lessonSlugs, isLesson })),
+      check: (d) => {
+        if (existingKeys.has(ingredientKey(d.title))) return `"${d.title}" already exists — make a different dish`;
+        const unknown = [...new Set(d.ingredients.map((i) => i.for).filter((f) => f && !people.some((p) => p.slug === f)))];
+        if (unknown.length) return `"for" must be "" or one of ${people.map((p) => `"${p.slug}"`).join(", ")}, not ${unknown.join(", ")}`;
+        return sauceIssues(d, { lessonSlugs, isLesson });
+      },
     });
     const slug = `${slugify(draft.title)}-${Date.now().toString(36).slice(-4)}`;
     const mealTypes = gap.recipeKind === "lesson" ? ["dinner"] : ["lunch", "dinner"];
@@ -199,11 +205,7 @@ export async function checkSavedRecipe(recipeId: string, kind: string): Promise<
   if (!r) return ["missing"];
   const users = await loadProfiles();
   const nut = await nutritionMap(r.ingredients.map((i) => i.ingredient.fdcId));
-  const pf = {
-    alex: users.find((u) => u.slug === "alex")?.profile?.portionFactor ?? 1,
-    sam: users.find((u) => u.slug === "sam")?.profile?.portionFactor ?? 1,
-  };
-  const m = recipeMacros(r.servings, compLines(r.ingredients, nut), pf);
+  const m = recipeMacros(r.servings, compLines(r.ingredients, nut), eatersOf(users));
   const out: string[] = [];
   for (const u of users) {
     const p = toRuleProfile(u);
@@ -214,15 +216,15 @@ export async function checkSavedRecipe(recipeId: string, kind: string): Promise<
       precooked: kind !== "plan",
       lines: ruleLines(r.ingredients),
       context: { title: r.title, cuisine: r.cuisine, tags: r.flavourTags, sauceFamily: r.sauceFamily },
-      macros: u.slug === "alex" ? m.alex : u.slug === "sam" ? m.sam : m.generic,
+      macros: macrosFor(m, u.id),
     });
     out.push(...issues.filter((i) => i.level === "fail").map((i) => i.msg));
     // Tell the next attempt WHICH ingredients carry the carbs — "37.6 g > 30 g" alone leaves the model guessing.
     if (issues.some((i) => i.level === "fail" && i.code === "netcarbs")) {
-      const factor = u.slug === "alex" ? pf.alex : u.slug === "sam" ? pf.sam : 1;
-      const top = carbSources(r.ingredients, nut, r.servings, u.slug, factor).slice(0, 3);
+      const factor = pfOf({ portionFactor: u.profile?.portionFactor });
+      const top = carbSources(r.ingredients, nut, r.servings, u.id, factor).slice(0, 3);
       if (top.length)
-        out.push(`${u.name}'s biggest net-carb sources per portion: ${top.map((t) => `${t.name} ${t.grams} g = ${t.netCarbs} g`).join(", ")}. Cut these or move them to the other person's component; target under ${Math.max(0, (toRuleProfile(u).maxNetCarbsPerMeal ?? 30) - 5)} g`);
+        out.push(`${u.name}'s biggest net-carb sources per portion: ${top.map((t) => `${t.name} ${t.grams} g = ${t.netCarbs} g`).join(", ")}. Cut these or move them to the own lines of people without a carb limit; target under ${Math.max(0, (toRuleProfile(u).maxNetCarbsPerMeal ?? 30) - 5)} g`);
     }
   }
   return out;
@@ -230,17 +232,18 @@ export async function checkSavedRecipe(recipeId: string, kind: string): Promise<
 
 /** Net carbs each ingredient adds to one person's portion, biggest first (base share + own lines). */
 export function carbSources(
-  lines: { component: string; grams: number; ingredient: { nameEn: string; fdcId: number | null } }[],
+  lines: { forUserId: string | null; grams: number; ingredient: { nameEn: string; fdcId: number | null } }[],
   nut: Map<number, { carbs: number; fibre: number | null }>,
   servings: number,
+  /** user id of the person */
   who: string,
   factor: number,
 ): { name: string; grams: number; netCarbs: number }[] {
   return lines
-    .filter((l) => l.component === "both" || l.component === who)
+    .filter((l) => l.forUserId == null || l.forUserId === who)
     .map((l) => {
       const ref = l.ingredient.fdcId != null ? nut.get(l.ingredient.fdcId) : undefined;
-      const grams = l.component === "both" ? (l.grams * factor) / Math.max(1, servings) : l.grams * factor;
+      const grams = l.forUserId == null ? (l.grams * factor) / Math.max(1, servings) : l.grams * factor;
       const net = ref ? (grams / 100) * Math.max(0, ref.carbs - (ref.fibre ?? 0)) : 0;
       return { name: l.ingredient.nameEn, grams: Math.round(grams), netCarbs: Math.round(net * 10) / 10 };
     })

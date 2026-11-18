@@ -30,7 +30,9 @@ export const SWAPS: Swap[] = [
 
 export interface SwapSuggestion {
   lineId: string;
+  /** user id of the person the swap is for */
   who: string;
+  whoName: string;
   fromName: string;
   reason: string;
   swap: Swap;
@@ -49,7 +51,7 @@ export function swapFor(p: RuleProfile, slug: string): Swap | null {
 export function suggestSwaps(p: RuleProfile, lines: SwapLine[], ctx?: RecipeContext): SwapSuggestion[] {
   const out: SwapSuggestion[] = [];
   for (const l of lines) {
-    if (l.component !== "both" && l.component !== p.slug) continue;
+    if (l.forUserId != null && l.forUserId !== p.id) continue;
     let reason = "";
     if (p.noAlcohol && l.isAlcohol) reason = "contains alcohol";
     else if (p.noAddedSugar && l.isAddedSugar) reason = "added sugar";
@@ -57,29 +59,29 @@ export function suggestSwaps(p: RuleProfile, lines: SwapLine[], ctx?: RecipeCont
     else if (p.noRefinedStarch && l.isRefinedStarch) reason = "white rice/bread/pasta";
     if (!reason) continue;
     const swap = swapFor(p, l.slug);
-    if (swap) out.push({ lineId: l.id, who: p.slug, fromName: l.nameEn, reason, swap });
+    if (swap) out.push({ lineId: l.id, who: p.id, whoName: p.name, fromName: l.nameEn, reason, swap });
   }
   return out;
 }
 
 export interface VariantPlan {
-  /** update the original line (or delete it when null) */
-  original: { component: string; grams: number; qty: number } | null;
+  /** the original line is always removed; these per-person lines keep it for everyone else */
+  keepFor: { forUserId: string; grams: number; qty: number }[];
   /** add a new line for the person (null when the swap removes the food) */
-  added: { ingredientSlug: string; component: string; grams: number; qty: number; unit: string } | null;
+  added: { ingredientSlug: string; forUserId: string; grams: number; qty: number; unit: string } | null;
 }
 
 /**
- * Per-person variant: a shared ("both") line becomes the OTHER person's portion line, and the
- * person gets the swap as their own extra. Per-person lines hold ONE portion, base lines hold
- * `servings` portions — quantities are converted accordingly.
+ * Per-person variant: a shared line becomes one per-portion line for every OTHER household member, and the
+ * person gets the swap as their own extra. Per-person lines hold ONE portion, shared lines hold
+ * `servings` portions — quantities are converted accordingly. The person's own extra line is simply replaced.
  */
-export function planVariant(line: { component: string; grams: number; qty: number; unit: string }, swap: Swap, who: "alex" | "sam", servings: number): VariantPlan {
-  const other = who === "alex" ? "sam" : "alex";
-  const perPortion = line.component === "both" ? 1 / Math.max(1, servings) : 1;
+export function planVariant(line: { forUserId: string | null; grams: number; qty: number; unit: string }, swap: Swap, personId: string, servings: number, householdIds: string[]): VariantPlan {
+  const shared = line.forUserId == null;
+  const perPortion = shared ? 1 / Math.max(1, servings) : 1;
   const grams = line.grams * perPortion;
   const qty = line.qty * perPortion;
-  const original = line.component === "both" ? { component: other, grams, qty } : null;
-  const added = swap.to ? { ingredientSlug: swap.to, component: who, grams: Math.round(grams * swap.ratio), qty: Math.round(grams * swap.ratio), unit: "g" } : null;
-  return { original, added };
+  const keepFor = shared ? householdIds.filter((id) => id !== personId).map((forUserId) => ({ forUserId, grams, qty })) : [];
+  const added = swap.to ? { ingredientSlug: swap.to, forUserId: personId, grams: Math.round(grams * swap.ratio), qty: Math.round(grams * swap.ratio), unit: "g" } : null;
+  return { keepFor, added };
 }

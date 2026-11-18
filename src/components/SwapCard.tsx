@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Replace } from "lucide-react";
 import type { RecipeVM } from "@/lib/recipe-view";
+import { possessive } from "@/lib/household";
 
 /** Swap-this-for-that where a recipe breaks a person's rule, with a one-click per-person variant. */
 export function SwapCard({ swaps }: { swaps: RecipeVM["swaps"] }) {
@@ -25,15 +26,15 @@ export function SwapCard({ swaps }: { swaps: RecipeVM["swaps"] }) {
       <ul className="space-y-2 text-sm">
         {swaps.map((s) => (
           <li key={s.lineId + s.who} className="rounded-lg border border-line p-2">
-            <p><strong>{s.who === "alex" ? "Alex" : "Sam"}:</strong> {s.fromName} — {s.reason}. {s.swap.note}.</p>
+            <p><strong>{s.whoName}:</strong> {s.fromName} — {s.reason}. {s.swap.note}.</p>
             <button disabled={busy === s.lineId + s.who} onClick={() => apply(s.lineId, s.who)} className="btn-secondary !py-1 mt-1 text-xs">
-              {s.toName ? `Make ${s.who === "alex" ? "Alex's" : "Sam's"} portion with ${s.toName}` : `Leave it out of ${s.who === "alex" ? "Alex's" : "Sam's"} portion`}
+              {s.toName ? `Make ${possessive(s.whoName)} portion with ${s.toName}` : `Leave it out of ${possessive(s.whoName)} portion`}
             </button>
           </li>
         ))}
       </ul>
       {err && <p className="mt-2 text-sm text-clay-deep">{err}</p>}
-      <p className="mt-2 text-xs text-ink-muted">Changes only that person&apos;s portion; the other keeps the original.</p>
+      <p className="mt-2 text-xs text-ink-muted">Changes only that person&apos;s portion; everyone else keeps the original.</p>
     </div>
   );
 }

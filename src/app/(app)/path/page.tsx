@@ -1,3 +1,4 @@
+import { HOUSEHOLD_ORDER } from "@/lib/household";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { PageHeader, Chip } from "@/components/ui";
@@ -7,7 +8,7 @@ export default async function PathPage() {
   const [levels, recipes, users, cooks] = await Promise.all([
     prisma.level.findMany({ orderBy: { number: "asc" } }),
     prisma.recipe.findMany({ where: { kind: "lesson", status: "published" }, orderBy: { title: "asc" }, select: { id: true, slug: true, title: true, level: true } }),
-    prisma.user.findMany({ orderBy: { slug: "desc" }, select: { id: true, name: true } }),
+    prisma.user.findMany({ orderBy: HOUSEHOLD_ORDER, select: { id: true, name: true } }),
     prisma.cookLog.findMany({ select: { userId: true, recipeId: true, confidence: true } }),
   ]);
   const cooked = (uid: string, rid: string) => cooks.some((c) => c.userId === uid && c.recipeId === rid);

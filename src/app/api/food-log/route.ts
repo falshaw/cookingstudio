@@ -54,7 +54,7 @@ export async function POST(req: Request) {
   let label = "";
   let m;
   if (b.recipeId) {
-    const rm = await recipeEntryMacros(b.recipeId, b.portions, r.user.slug);
+    const rm = await recipeEntryMacros(b.recipeId, b.portions, r.user.id);
     if (!rm) return bad("recipe not found", 404);
     m = { kcal: rm.kcal, protein: rm.protein, netCarbs: rm.netCarbs, fat: rm.fat };
     label = `${rm.title}${b.portions !== 1 ? ` × ${b.portions}` : ""}`;

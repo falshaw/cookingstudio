@@ -8,7 +8,7 @@ import { evaluateWeek, fillFromFreezer, redMeatCounts, redMeatFits, solveWeek, t
 import { toRuleProfile } from "@/lib/recipe-data";
 import type { Macros } from "@/lib/nutrition";
 
-const line = (slug: string, o: Partial<RuleLine> = {}): RuleLine => ({ slug, nameEn: slug.replace(/-/g, " "), component: "both", grams: 300, isMeat: true, isFish: false, isOmega3: false, isAlcohol: false, isAddedSugar: false, isRefinedStarch: false, ...o });
+const line = (slug: string, o: Partial<RuleLine> = {}): RuleLine => ({ slug, nameEn: slug.replace(/-/g, " "), forUserId: null, grams: 300, isMeat: true, isFish: false, isOmega3: false, isAlcohol: false, isAddedSugar: false, isRefinedStarch: false, ...o });
 
 describe("isRedMeatLine (explicit list, isMeat required)", () => {
   it.each(["beef-mince", "beef-chunks", "beef-burger-patty", "beef-chuck-steak", "ribeye", "sirloin-steak", "pork-shoulder", "pork-shoulder-roast", "lamb-chops", "lamb-shoulder", "pancetta", "guanciale", "smoked-pork-loin", "pork-sausage", "chorizo", "veal-escalope", "goat-leg"])("%s is red meat", (slug) => {
@@ -24,23 +24,23 @@ describe("isRedMeatLine (explicit list, isMeat required)", () => {
 
 describe("red-meat portion", () => {
   it("splits the shared base by servings, adds own lines, ignores the other person's", () => {
-    const lines = [line("beef-mince", { grams: 250 }), line("pork-shoulder", { component: "sam", grams: 180 })];
+    const lines = [line("beef-mince", { grams: 250 }), line("pork-shoulder", { forUserId: "sam", grams: 180 })];
     expect(redMeatGrams(lines, "alex", 2)).toBe(125);
     expect(redMeatGrams(lines, "sam", 2)).toBe(305);
-    expect(isRedMeatPortion([line("sirloin-steak", { component: "alex", grams: 170 })], "sam", 2)).toBe(false);
+    expect(isRedMeatPortion([line("sirloin-steak", { forUserId: "alex", grams: 170 })], "sam", 2)).toBe(false);
   });
   it(`a small garnish under ${RED_MEAT_MIN_GRAMS} g is not a red-meat meal (40 g bacon at breakfast)`, () => {
-    expect(isRedMeatPortion([line("bacon", { component: "sam", grams: 40 })], "sam", 2)).toBe(false);
-    expect(isRedMeatPortion([line("bacon", { component: "sam", grams: 60 })], "sam", 2)).toBe(true);
+    expect(isRedMeatPortion([line("bacon", { forUserId: "sam", grams: 40 })], "sam", 2)).toBe(false);
+    expect(isRedMeatPortion([line("bacon", { forUserId: "sam", grams: 60 })], "sam", 2)).toBe(true);
   });
   it("weekly check fails only over the limit, and not at all without one", () => {
-    const alex = { ...toRuleProfile({ slug: "alex", name: "Alex", profile: null }), redMeatMaxPerWeek: 2 };
+    const alex = { ...toRuleProfile({ id: "alex", slug: "alex", name: "Alex", profile: null }), redMeatMaxPerWeek: 2 };
     expect(checkWeekRedMeat(alex, 2)).toEqual([]);
     expect(checkWeekRedMeat(alex, 3)[0]).toMatchObject({ level: "fail", code: "redmeat", msg: "Alex: 3 red-meat meals this week, max 2" });
     expect(checkWeekRedMeat({ ...alex, redMeatMaxPerWeek: null }, 9)).toEqual([]);
   });
   it("the profile value reaches the rule profile", () => {
-    const p = toRuleProfile({ slug: "alex", name: "Alex", profile: { vegetarian: false, vegBreakfastAllowed: [], avoidFoods: [], noAlcohol: false, noAddedSugar: false, noRefinedStarch: false, maxNetCarbsPerMeal: null, minProteinPerMeal: null, maxCookMinutes: null, omega3MinPerWeek: null, omega3MaxPerWeek: null, redMeatMaxPerWeek: 2 } });
+    const p = toRuleProfile({ id: "alex", slug: "alex", name: "Alex", profile: { vegetarian: false, vegBreakfastAllowed: [], avoidFoods: [], noAlcohol: false, noAddedSugar: false, noRefinedStarch: false, maxNetCarbsPerMeal: null, minProteinPerMeal: null, maxCookMinutes: null, omega3MinPerWeek: null, omega3MaxPerWeek: null, redMeatMaxPerWeek: 2 } });
     expect(p.redMeatMaxPerWeek).toBe(2);
   });
 });
@@ -48,7 +48,7 @@ describe("red-meat portion", () => {
 const m = { kcal: 500, protein: 35, carbs: 10, netCarbs: 8, fat: 20, satFat: 5, fibre: 4, sugar: 2 } as Macros;
 const cand = (slug: string, lines: RuleLine[], kind = "plan", mealTypes = ["lunch", "dinner"]): Candidate => ({
   id: slug, slug, title: slug, kind, mealTypes, totalMinutes: 20, servings: 2, lines,
-  macros: { generic: m, alex: m, sam: m }, scores: { alex: 80, sam: 80 }, context: { title: slug, cuisine: "", tags: [], sauceFamily: kind === "lesson" ? "tomato" : null },
+  macros: { generic: m, byUser: {} }, scores: {}, context: { title: slug, cuisine: "", tags: [], sauceFamily: kind === "lesson" ? "tomato" : null },
 });
 const beef = cand("mince-pepper-skillet", [line("beef-mince", { grams: 320 })]);
 const pork = cand("pulled-pork", [line("pork-shoulder", { grams: 360 })]);
@@ -57,7 +57,7 @@ const eggs = cand("eggs", [line("egg", { isMeat: false, grams: 200 })], "plan", 
 const bolo = cand("bolognese", [line("beef-mince", { grams: 500 })], "lesson", ["dinner"]);
 const all = [beef, pork, chicken, eggs, bolo];
 const byslug = new Map(all.map((c) => [c.slug, c]));
-const limited = [{ ...toRuleProfile({ slug: "alex", name: "Alex", profile: null }), redMeatMaxPerWeek: 2 }, { ...toRuleProfile({ slug: "sam", name: "Sam", profile: null }), redMeatMaxPerWeek: 2 }];
+const limited = [{ ...toRuleProfile({ id: "alex", slug: "alex", name: "Alex", profile: null }), redMeatMaxPerWeek: 2 }, { ...toRuleProfile({ id: "sam", slug: "sam", name: "Sam", profile: null }), redMeatMaxPerWeek: 2 }];
 
 describe("planner honours the limit", () => {
   it("evaluateWeek counts red-meat meals per person and fails over the limit", () => {

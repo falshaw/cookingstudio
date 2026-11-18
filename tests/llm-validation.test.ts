@@ -6,8 +6,8 @@ const good = {
     servings: 4,
   prepMinutes: 10,
   cookMinutes: 30,
-  ingredients: [{ name: "Chicken stock", grams: 1500, qty: 1.5, unit: "l", prep: "", component: "both" }],
-  steps: [{ text: "Bring the stock to a simmer.", why: "Hot stock tempers the eggs.", cue: "Small bubbles", mistake: "Boiling", who: "either", minutes: 5, technique: "stock", timerSeconds: 0, imagePrompt: "pot of stock" }],
+  ingredients: [{ name: "Chicken stock", grams: 1500, qty: 1.5, unit: "l", prep: "", for: "" }],
+  steps: [{ text: "Bring the stock to a simmer.", why: "Hot stock tempers the eggs.", cue: "Small bubbles", mistake: "Boiling", skill: "either", minutes: 5, technique: "stock", timerSeconds: 0, imagePrompt: "pot of stock" }],
 };
 
 describe("LLM JSON validation", () => {
@@ -28,12 +28,12 @@ describe("LLM JSON validation", () => {
     if (!r.ok) expect(r.error).toMatch(/not valid JSON/);
   });
   it("rejects wrong types and lists the path", () => {
-    const bad = { ...good, servings: "four", steps: [{ ...good.steps[0], who: "chef" }] };
+    const bad = { ...good, servings: "four", steps: [{ ...good.steps[0], skill: "chef" }] };
     const r = parseModelJson(RecipeDraft, JSON.stringify(bad));
     expect(r.ok).toBe(false);
     if (!r.ok) {
       expect(r.error).toContain("servings");
-      expect(r.error).toContain("steps.0.who");
+      expect(r.error).toContain("steps.0.skill");
     }
   });
   it("rejects negative grams and an empty ingredient list", () => {

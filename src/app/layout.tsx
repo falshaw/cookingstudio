@@ -27,7 +27,7 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "CookingStudio — learn to cook together",
   description:
-    "Cooking practice for two. Private, self-hosted.",
+    "Cooking practice for your household. Private, self-hosted.",
   robots: { index: false, follow: false },
   icons: { icon: "/favicon.svg", apple: "/icons/apple-touch-icon.png" },
   manifest: "/manifest.webmanifest",

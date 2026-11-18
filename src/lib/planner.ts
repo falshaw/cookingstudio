@@ -1,10 +1,11 @@
 // Week planner. The local model proposes a week from the plan-eligible library; CODE checks every portion
-// for both people (rules.ts) plus the weekly oily-fish count, rejects + regenerates on failure,
+// for every household member (rules.ts) plus the weekly oily-fish count, rejects + regenerates on failure,
 // and falls back to a deterministic solver that only uses passing recipes. The prompt carries
 // rules and forbidden foods only — never lab values or other health data.
 import { prisma } from "./prisma";
 import { checkPortion, checkWeekOmega3, checkWeekRedMeat, checkWeekTuna, hasFail, isOmega3Portion, isRedMeatPortion, isTunaMeal, tunaMaxPerWeek, type Issue, type RecipeContext, type RuleLine, type RuleProfile } from "./rules";
-import { compLines, loadProfiles, nutritionMap, recipeMacros, ruleLines, toRuleProfile, type PersonMacros } from "./recipe-data";
+import { compLines, eatersOf, loadProfiles, macrosFor, nutritionMap, recipeMacros, ruleLines, toRuleProfile, type PersonMacros } from "./recipe-data";
+import { pfOf, plates } from "./household";
 import { generateValidated } from "./ollama";
 import { PlanDraft } from "./llm-schema";
 import { mealScore } from "./meal-score";
@@ -25,7 +26,8 @@ export interface Candidate {
   servings: number;
   lines: RuleLine[];
   macros: PersonMacros;
-  scores: { alex: number; sam: number };
+  /** meal score per user id */
+  scores: Record<string, number>;
   context: RecipeContext;
 }
 
@@ -43,14 +45,19 @@ export interface SlotChoice {
 
 /** Plan + prep recipes, plus freezer sauces (kind "lesson") so frozen-portion slots can be evaluated. Sauces are
  *  never picked as fresh meals — solveWeek, the LLM list and swaps use `plannable()`. */
-export async function loadCandidates(pf: { alex: number; sam: number }): Promise<Candidate[]> {
+export async function loadCandidates(people: { id: string; portionFactor: number }[]): Promise<Candidate[]> {
   const recipes = await prisma.recipe.findMany({
     // freezer sauces = real sauces only (sauceFamily set), never rice, roasts or stocks
     where: { status: "published", OR: [{ kind: { in: ["plan", "prep"] } }, { ...FREEZER_SAUCE_WHERE }] },
     include: { ingredients: { include: { ingredient: true } } },
   });
   const nut = await nutritionMap(recipes.flatMap((r) => r.ingredients.map((i) => i.ingredient.fdcId)));
-  return recipes.map((r) => ({
+  return recipes.map((r) => {
+    const macros = recipeMacros(r.servings, compLines(r.ingredients, nut), people);
+    const gl = r.ingredients.map((i) => ({ forUserId: i.forUserId, grams: i.grams, slug: i.ingredient.slug, ref: i.ingredient.fdcId != null ? nut.get(i.ingredient.fdcId) ?? null : null }));
+    const scores: Record<string, number> = {};
+    for (const p of people) scores[p.id] = mealScore(macrosFor(macros, p.id), portionGl(gl, r.servings, p.id, pfOf(p)).gl).score;
+    return {
     id: r.id,
     slug: r.slug,
     title: r.title,
@@ -59,29 +66,26 @@ export async function loadCandidates(pf: { alex: number; sam: number }): Promise
     totalMinutes: r.prepMinutes + r.cookMinutes,
     servings: r.servings,
     lines: ruleLines(r.ingredients),
-    macros: recipeMacros(r.servings, compLines(r.ingredients, nut), pf),
+    macros,
     context: { title: r.title, cuisine: r.cuisine, tags: r.flavourTags, sauceFamily: r.sauceFamily },
-    scores: (() => {
-      const m = recipeMacros(r.servings, compLines(r.ingredients, nut), pf);
-      const gl = r.ingredients.map((i) => ({ component: i.component, grams: i.grams, slug: i.ingredient.slug, ref: i.ingredient.fdcId != null ? nut.get(i.ingredient.fdcId) ?? null : null }));
-      return { alex: mealScore(m.alex, portionGl(gl, r.servings, "alex", pf.alex).gl).score, sam: mealScore(m.sam, portionGl(gl, r.servings, "sam", pf.sam).gl).score };
-    })(),
-  }));
+    scores,
+    };
+  });
 }
 
 export const plannable = (cands: Candidate[]) => cands.filter((c) => c.kind === "plan" || c.kind === "prep");
 
-/** Red-meat meals per person in a set of choices (each eaten slot counts, prep repeats too). */
+/** Red-meat meals per person (keyed by slug) in a set of choices (each eaten slot counts, prep repeats too). */
 export function redMeatCounts(choices: { slug: string }[], cands: Map<string, Candidate> | Candidate[], people: RuleProfile[]): Record<string, number> {
   const get = (slug: string) => (cands instanceof Map ? cands.get(slug) : cands.find((c) => c.slug === slug));
   const out: Record<string, number> = {};
-  for (const p of people) out[p.slug] = choices.filter((s) => { const c = get(s.slug); return !!c && isRedMeatPortion(c.lines, p.slug, c.servings); }).length;
+  for (const p of people) out[p.slug] = choices.filter((s) => { const c = get(s.slug); return !!c && isRedMeatPortion(c.lines, p.id, c.servings); }).length;
   return out;
 }
 
 /** True when adding `c` once more keeps everyone at or under their red-meat limit (`counts` = before adding). */
 export function redMeatFits(c: Candidate, people: RuleProfile[], counts: Record<string, number>): boolean {
-  return people.every((p) => p.redMeatMaxPerWeek == null || !isRedMeatPortion(c.lines, p.slug, c.servings) || (counts[p.slug] ?? 0) < p.redMeatMaxPerWeek);
+  return people.every((p) => p.redMeatMaxPerWeek == null || !isRedMeatPortion(c.lines, p.id, c.servings) || (counts[p.slug] ?? 0) < p.redMeatMaxPerWeek);
 }
 
 /** Tuna meals in a set of choices (household count, each eaten slot counts). */
@@ -97,23 +101,24 @@ export function tunaFits(c: Candidate, count: number, max: number | null = tunaM
 
 export interface FreezerBatch { id: string; slug: string; left: number }
 
-/** Frozen sauce portions take over dinners (2 portions = dinner for two), Mon→Sun, never a locked, prepped or
- *  oily-fish slot, never the same sauce two days running, and only where the sauce passes both people's rules. */
+/** Frozen sauce portions take over dinners (one portion per household member), Mon→Sun, never a locked, prepped
+ *  or oily-fish slot, never the same sauce two days running, and only where the sauce passes everyone's rules. */
 export function fillFromFreezer(choices: SlotChoice[], cands: Map<string, Candidate>, people: RuleProfile[], batches: FreezerBatch[]): SlotChoice[] {
   const out = choices.map((s) => ({ ...s }));
-  const fish = (slug: string) => { const c = cands.get(slug); return !!c && people.some((p) => isOmega3Portion(c.lines, p.slug)); };
+  const fish = (slug: string) => { const c = cands.get(slug); return !!c && people.some((p) => isOmega3Portion(c.lines, p.id)); };
+  const need = plates(people);
   for (const b of batches) {
     const sauce = cands.get(b.slug);
     if (!sauce || sauce.kind !== "lesson" || !sauce.context.sauceFamily || hasFail(slotIssues(sauce, "dinner", people, true, true))) continue;
     let left = b.left;
-    for (let d = 0; d < 7 && left >= 2; d++) {
+    for (let d = 0; d < 7 && left >= need; d++) {
       const s = out.find((x) => x.day === d && x.meal === "dinner");
       if (!s || s.locked || s.precooked || s.freezerBatchId || fish(s.slug)) continue;
       if (out.some((x) => x.meal === "dinner" && Math.abs(x.day - d) === 1 && x.slug === b.slug)) continue;
       // a red-meat sauce (bolognese) never pushes anyone over their weekly red-meat limit
       if (!redMeatFits(sauce, people, redMeatCounts(out.filter((x) => x !== s), cands, people))) continue;
       Object.assign(s, { slug: b.slug, precooked: true, freezerBatchId: b.id });
-      left -= 2;
+      left -= need;
     }
   }
   return out;
@@ -135,10 +140,10 @@ export function fillLeftoverLunches(choices: SlotChoice[], cands: Map<string, Ca
   return out;
 }
 
-/** Cooked sauce batches in the freezer with at least one dinner for two left. */
-export async function loadFreezerBatches(): Promise<FreezerBatch[]> {
+/** Cooked sauce batches in the freezer with at least one household dinner (`need` portions) left. */
+export async function loadFreezerBatches(need = 2): Promise<FreezerBatch[]> {
   const rows = await prisma.prepBatch.findMany({ where: { cookedAt: { not: null }, location: "freezer", recipe: { ...FREEZER_SAUCE_WHERE } }, include: { recipe: { select: { slug: true } } }, orderBy: { cookedAt: "asc" } });
-  return rows.map((b) => ({ id: b.id, slug: b.recipe.slug, left: b.portions - b.eaten })).filter((b) => b.left >= 2);
+  return rows.map((b) => ({ id: b.id, slug: b.recipe.slug, left: b.portions - b.eaten })).filter((b) => b.left >= need);
 }
 
 /** Macro / time checks that a frozen sauce alone cannot meet — protein and carbs come from the fresh side cooked that night. */
@@ -147,10 +152,10 @@ const SAUCE_ONLY_SKIP = new Set(["protein", "netcarbs", "starch", "nutrition", "
 export function slotIssues(c: Candidate, meal: Meal, people: RuleProfile[], precooked: boolean, frozenSauce = false): Issue[] {
   if (frozenSauce) return slotIssues(c, meal, people, true).filter((i) => !SAUCE_ONLY_SKIP.has(i.code));
   const out: Issue[] = [];
-  if (!c.mealTypes.includes(meal)) out.push({ level: "fail", code: "meal", who: "both", msg: `${c.title} is not a ${meal} recipe` });
+  if (!c.mealTypes.includes(meal)) out.push({ level: "fail", code: "meal", who: "household", msg: `${c.title} is not a ${meal} recipe` });
   for (const p of people) if (p.dislikedRecipeIds?.includes(c.id)) out.push({ level: "fail", code: "disliked", who: p.slug, msg: `${p.name} disliked ${c.title}` });
   for (const p of people) {
-    const macros = p.slug === "alex" ? c.macros.alex : p.slug === "sam" ? c.macros.sam : c.macros.generic;
+    const macros = macrosFor(c.macros, p.id);
     out.push(...checkPortion(p, { title: c.title, meal, totalMinutes: c.totalMinutes, precooked: precooked || c.kind === "prep", lines: c.lines, macros, context: c.context }));
   }
   return out;
@@ -167,15 +172,16 @@ export interface WeekReport {
 export function evaluateWeek(choices: SlotChoice[], cands: Map<string, Candidate>, people: RuleProfile[]): WeekReport {
   const slots = choices.map((s) => {
     const c = cands.get(s.slug);
-    if (!c) return { day: s.day, meal: s.meal, slug: s.slug, issues: [{ level: "fail" as const, code: "unknown", who: "both", msg: `unknown recipe "${s.slug}"` }] };
+    if (!c) return { day: s.day, meal: s.meal, slug: s.slug, issues: [{ level: "fail" as const, code: "unknown", who: "household", msg: `unknown recipe "${s.slug}"` }] };
     return { day: s.day, meal: s.meal, slug: s.slug, issues: slotIssues(c, s.leftover ? "dinner" : s.meal, people, !!s.precooked || !!s.leftover, !!s.freezerBatchId) };
   });
+  // oily-fish (and red-meat) meals per person, keyed by slug
   const omega3: Record<string, number> = {};
   const week: Issue[] = [];
   for (const p of people) {
     const n = choices.filter((s) => {
       const c = cands.get(s.slug);
-      return c && isOmega3Portion(c.lines, p.slug);
+      return c && isOmega3Portion(c.lines, p.id);
     }).length;
     omega3[p.slug] = n;
     week.push(...checkWeekOmega3(p, n));
@@ -195,7 +201,8 @@ export function solveWeek(cands: Candidate[], people: RuleProfile[], locked: Slo
   const passing = (meal: Meal) => cands.filter((c) => !hasFail(slotIssues(c, meal, people, false)));
   const result: SlotChoice[] = [...locked];
   const taken = (d: number, m: Meal) => result.some((s) => s.day === d && s.meal === m);
-  const fishFor = (c: Candidate) => people.some((p) => isOmega3Portion(c.lines, p.slug));
+  const fishFor = (c: Candidate) => people.some((p) => isOmega3Portion(c.lines, p.id));
+  const need = plates(people);
   const omegaTarget = Math.max(0, ...people.map((p) => p.omega3MinPerWeek ?? 0));
   const omegaMax = Math.min(99, ...people.map((p) => p.omega3MaxPerWeek ?? 99));
   const count = () => result.filter((s) => { const c = cands.find((x) => x.slug === s.slug); return c && fishFor(c); }).length;
@@ -232,9 +239,10 @@ export function solveWeek(cands: Candidate[], people: RuleProfile[], locked: Slo
       const c = pick(list);
       result.push({ day: d, meal, slug: c.slug });
       used.set(c.slug, (used.get(c.slug) ?? 0) + 1);
-      // A prep batch (6 portions = 3 meals for two) fills the same meal on the next two days.
+      // A prep batch fills the same meal on the next days while its portions last (6 portions = 3 meals for two).
       if (c.kind === "prep") {
-        for (const nd of [d + 1, d + 2]) {
+        const more = Math.max(0, Math.floor(c.servings / need) - 1);
+        for (const nd of Array.from({ length: more }, (_, k) => d + 1 + k)) {
           if (nd > 6 || taken(nd, meal)) continue;
           if (fishFor(c) && count() >= omegaMax) break;
           if (!redOk(c)) break;
@@ -271,11 +279,7 @@ function rulesText(people: RuleProfile[]): string {
 export async function generatePlan(weekStart: Date, log: (m: string) => Promise<void>): Promise<{ planId: string; report: WeekReport; generatedBy: string }> {
   const users = await loadProfiles();
   const people = users.map(toRuleProfile);
-  const pf = {
-    alex: users.find((u) => u.slug === "alex")?.profile?.portionFactor ?? 1,
-    sam: users.find((u) => u.slug === "sam")?.profile?.portionFactor ?? 1,
-  };
-  const cands = await loadCandidates(pf);
+  const cands = await loadCandidates(eatersOf(users));
   const byslug = new Map(cands.map((c) => [c.slug, c]));
   const existing = await prisma.mealPlan.findUnique({ where: { weekStart }, include: { slots: { include: { recipe: true } } } });
   const locked: SlotChoice[] = (existing?.slots ?? []).filter((s) => s.locked).map((s) => ({ day: s.day, meal: s.meal as Meal, slug: s.recipe.slug, locked: true }));
@@ -284,10 +288,10 @@ export async function generatePlan(weekStart: Date, log: (m: string) => Promise<
   const favs = new Set(favRows.map((f) => f.recipeId));
   const eligible = plannable(cands).filter((c) => MEALS.some((m) => c.mealTypes.includes(m) && !hasFail(slotIssues(c, m, people, false))));
   const list = eligible
-    .map((c) => `${c.slug} | ${c.title} | meals: ${c.mealTypes.join("/")} | oily fish: ${people.some((p) => isOmega3Portion(c.lines, p.slug)) ? "yes" : "no"} | ${c.kind === "prep" ? "meal-prep batch" : `${c.totalMinutes} min`}${favs.has(c.id) ? " | FAVOURITE" : ""}`)
+    .map((c) => `${c.slug} | ${c.title} | meals: ${c.mealTypes.join("/")} | oily fish: ${people.some((p) => isOmega3Portion(c.lines, p.id)) ? "yes" : "no"} | ${c.kind === "prep" ? "meal-prep batch" : `${c.totalMinutes} min`}${favs.has(c.id) ? " | FAVOURITE" : ""}`)
     .join("\n");
   const lockedText = locked.length ? `Keep these fixed: ${locked.map((l) => `${DAYS[l.day]} ${l.meal}=${l.slug}`).join(", ")}.` : "";
-  const prompt = `Plan 7 days (Monday first) of breakfast, lunch and dinner for a couple who eat together.
+  const prompt = `Plan 7 days (Monday first) of breakfast, lunch and dinner for a household of ${people.length} who eat together.
 Use ONLY slugs from this list, each slot must use a recipe whose "meals" include that slot:
 ${list}
 
@@ -320,13 +324,13 @@ Answer JSON: {"days":[{"breakfast":"slug","lunch":"slug","dinner":"slug"}, ... 7
     generatedBy = "solver";
   }
   if (!choices) choices = solveWeek(cands, people, locked, weekStart.getTime() % 100000 || 7, favs);
-  const frozen = await loadFreezerBatches();
+  const frozen = await loadFreezerBatches(plates(people));
   choices = fillLeftoverLunches(fillFromFreezer(choices, byslug, people, frozen), byslug, people);
   const fromFreezer = choices.filter((c) => c.freezerBatchId).length;
   if (fromFreezer) await log(`${fromFreezer} dinner${fromFreezer === 1 ? "" : "s"} from frozen sauce portions`);
   const report = evaluateWeek(choices, byslug, people);
   await log(report.ok ? "week passes every rule" : "week still has rule failures (see report)");
-  const planId = await writePlan(weekStart, choices, byslug, generatedBy, report);
+  const planId = await writePlan(weekStart, choices, byslug, generatedBy, report, plates(people));
   return { planId, report, generatedBy };
 }
 
@@ -341,8 +345,8 @@ function toChoices(d: PlanDraft, locked: SlotChoice[]): SlotChoice[] {
   return out;
 }
 
-/** Persist the week: prep recipes become PrepBatches (cooked Sunday), their slots draw portions. */
-export async function writePlan(weekStart: Date, choices: SlotChoice[], cands: Map<string, Candidate>, generatedBy: string, report: WeekReport): Promise<string> {
+/** Persist the week: prep recipes become PrepBatches (cooked Sunday), each slot draws `need` portions (one per person). */
+export async function writePlan(weekStart: Date, choices: SlotChoice[], cands: Map<string, Candidate>, generatedBy: string, report: WeekReport, need = 2): Promise<string> {
   return prisma.$transaction(async (tx) => {
     const plan = await tx.mealPlan.upsert({
       where: { weekStart },
@@ -364,12 +368,12 @@ export async function writePlan(weekStart: Date, choices: SlotChoice[], cands: M
         source = "freezer";
       } else if (c.kind === "prep") {
         let b = batches.get(c.slug);
-        if (!b || b.left < 2) {
+        if (!b || b.left < need) {
           const row = await tx.prepBatch.create({ data: { planId: plan.id, recipeId: c.id, portions: c.servings, prepDay: 6 } });
           b = { id: row.id, left: c.servings };
           batches.set(c.slug, b);
         }
-        b.left -= 2;
+        b.left -= need;
         prepBatchId = b.id;
         source = "prep";
       }

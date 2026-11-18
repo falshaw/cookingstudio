@@ -97,7 +97,7 @@ export function ImportClient() {
                 </li>
               ))}
             </ul>
-            <button className="mt-2 text-sm inline-flex items-center gap-1 text-sea-deep" onClick={() => upd({ ingredients: [...draft.ingredients, { name: "", grams: 0, qty: 0, unit: "g", prep: "", component: "both" }] })}><Plus size={14} /> add ingredient</button>
+            <button className="mt-2 text-sm inline-flex items-center gap-1 text-sea-deep" onClick={() => upd({ ingredients: [...draft.ingredients, { name: "", grams: 0, qty: 0, unit: "g", prep: "", for: "" }] })}><Plus size={14} /> add ingredient</button>
           </div>
           <div>
             <h3 className="font-semibold mb-1">Steps</h3>

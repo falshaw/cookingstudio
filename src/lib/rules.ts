@@ -4,6 +4,8 @@
 import type { Macros } from "./nutrition";
 
 export interface RuleProfile {
+  /** user id: matches RuleLine.forUserId */
+  id: string;
   slug: string;
   name: string;
   vegetarian: boolean;
@@ -57,7 +59,8 @@ export function avoidTermFor(p: RuleProfile, line: { slug: string; nameEn: strin
 export interface RuleLine {
   slug: string;
   nameEn: string;
-  component: string;
+  /** null = shared base, else the user id whose own extra this line is */
+  forUserId: string | null;
   grams: number;
   isMeat: boolean;
   isFish: boolean;
@@ -82,6 +85,7 @@ export interface PortionInput {
 export interface Issue {
   level: "fail" | "warn";
   code: string;
+  /** slug of the person it concerns, or "household" */
   who: string;
   msg: string;
 }
@@ -100,14 +104,15 @@ export function matchesFood(slug: string, nameEn: string, term: string): boolean
   return s.includes(`-${t}-`) || n.includes(`-${t}-`);
 }
 
-export function linesFor(lines: RuleLine[], who: string): RuleLine[] {
-  return lines.filter((l) => l.component === "both" || l.component === who);
+/** The lines on one person's plate: the shared base plus their own extras. */
+export function linesFor(lines: RuleLine[], personId: string): RuleLine[] {
+  return lines.filter((l) => l.forUserId == null || l.forUserId === personId);
 }
 
 export function checkPortion(p: RuleProfile, input: PortionInput): Issue[] {
   const issues: Issue[] = [];
   const who = p.slug;
-  const mine = linesFor(input.lines, who).filter((l) => l.grams > 0);
+  const mine = linesFor(input.lines, p.id).filter((l) => l.grams > 0);
   const add = (level: Issue["level"], code: string, msg: string) =>
     issues.push({ level, code, who, msg: `${p.name}: ${msg}` });
 
@@ -145,8 +150,8 @@ export function checkIngredientsOnly(p: RuleProfile, title: string, lines: RuleL
   ).filter((i) => i.level === "fail");
 }
 
-export function isOmega3Portion(lines: RuleLine[], who: string): boolean {
-  return linesFor(lines, who).some((l) => l.isOmega3 && l.grams >= 80);
+export function isOmega3Portion(lines: RuleLine[], personId: string): boolean {
+  return linesFor(lines, personId).some((l) => l.isOmega3 && l.grams >= 80);
 }
 
 // Red meat. Recipes carry no reliable meat-type tag (Recipe.protein is free text, empty on ~70
@@ -167,14 +172,14 @@ export function isRedMeatLine(l: { slug: string; nameEn: string; isMeat: boolean
 }
 
 /** Red-meat grams in one person's portion: the shared base split by servings + their own lines. */
-export function redMeatGrams(lines: RuleLine[], who: string, servings: number): number {
-  return linesFor(lines, who)
+export function redMeatGrams(lines: RuleLine[], personId: string, servings: number): number {
+  return linesFor(lines, personId)
     .filter(isRedMeatLine)
-    .reduce((a, l) => a + (l.component === "both" ? l.grams / Math.max(1, servings) : l.grams), 0);
+    .reduce((a, l) => a + (l.forUserId == null ? l.grams / Math.max(1, servings) : l.grams), 0);
 }
 
-export function isRedMeatPortion(lines: RuleLine[], who: string, servings: number): boolean {
-  return redMeatGrams(lines, who, servings) >= RED_MEAT_MIN_GRAMS;
+export function isRedMeatPortion(lines: RuleLine[], personId: string, servings: number): boolean {
+  return redMeatGrams(lines, personId, servings) >= RED_MEAT_MIN_GRAMS;
 }
 
 export function checkWeekRedMeat(p: RuleProfile, redMeals: number): Issue[] {
@@ -201,7 +206,7 @@ export function isTunaMeal(lines: RuleLine[]): boolean {
 
 export function checkWeekTuna(tunaMeals: number, max: number | null = tunaMaxPerWeek()): Issue[] {
   if (max == null || tunaMeals <= max) return [];
-  return [{ level: "fail", code: "tuna", who: "both", msg: `${tunaMeals} tuna meals this week, max ${max}` }];
+  return [{ level: "fail", code: "tuna", who: "household", msg: `${tunaMeals} tuna meals this week, max ${max}` }];
 }
 
 export function checkWeekOmega3(p: RuleProfile, omega3Meals: number): Issue[] {
